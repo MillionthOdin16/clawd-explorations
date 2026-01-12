@@ -113,6 +113,8 @@ Before running ANY daemon command:
 
 ## Memory Bank Contents
 
+- **RESOURCES.md** - Complete resource overview (servers, APIs, costs, security rules)
+
 - **DISCOVERIES.md** - What I've discovered about myself (internal state, capabilities, growth, layers, authentication)
 - **CAPABILITIES.md** - What I can do (GitHub CLI, weather API, integration, timeout handling, GitHub repos, git operations, online research, gateway state issues, LittleClawd remote control)
 - **PATTERNS.md** - How things work (discovery, integration, limitation, growth, permission, authenticity, memory, online research, research → plan → test → document)
