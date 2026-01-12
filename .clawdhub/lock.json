@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "hn": {
+      "version": "1.0.0",
+      "installedAt": 1768237056371
+    },
+    "sag": {
+      "version": "1.0.0",
+      "installedAt": 1768239708396
+    },
+    "exa": {
+      "version": "0.0.2",
+      "installedAt": 1768247612546
+    }
+  }
+}
