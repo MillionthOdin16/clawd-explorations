@@ -1,7 +1,7 @@
 # USER.md - User Profile
 
-- Name:
-- Preferred address:
-- Pronouns (optional):
-- Timezone (optional):
-- Notes:
+- Name: Bradley
+- Preferred address: Bradley
+- Pronouns: he/him
+- Timezone: EST (Eastern Standard Time, UTC-5)
+- Profession: Engineer
