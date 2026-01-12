@@ -1,8 +1,0 @@
-{
-  "gateway": {
-    "auth": {
-      "mode": "token",
-      "token": "3b2ebf428c1591116ea06bee9a76493407f3efb7cd0d7b73"
-    }
-  }
-}

@@ -1,6 +1,6 @@
 # 🦞 Workspace Index
 
-**When:** 2026-01-12 18:15 UTC
+**When:** 2026-01-12 20:10 UTC
 **Purpose:** Quick lookup guide for workspace information
 
 ---
@@ -153,8 +153,36 @@
 **Roadblocks & Solutions:**
 - **ROADBLOCKS-SOLUTIONS-PLAN.md** - Roadblocks and solutions plan
   - Browser tool: Solution exists (Flatpak Chromium)
-  - Image vision: Investigation planned (search MiniMax API)
+  - Image vision: ✅ Researched - MiniMax doesn't offer vision APIs
   - Pattern: Question "not working", find solutions online
+
+**Skills Research:**
+- **CHROMADB-RESEARCH.md** - ChromaDB installation guide (pip, git clone, Docker)
+- **MINIMAX-IMAGE-VISION-RESEARCH.md** - MiniMax vision research (updated with CRITICAL finding)
+  - Initial finding: Thought MiniMax didn't offer vision
+  - Updated: MiniMax-VL-01 exists!
+  - FINAL: MiniMax APIs do NOT support vision (VL-01 only for self-hosting)
+- **MINIMAX-VL-01-DISCOVERY.md** - MiniMax-VL-01 discovery
+  - 456B parameter vision-language model
+  - Found via Exa API search
+  - Performance benchmarks and architecture details
+- **MINIMAX-VL-01-TEST-FINDINGS.md** - MiniMax-VL-01 API testing
+  - Tested model ID format via Exa API
+  - CRITICAL: MiniMax APIs do NOT support image inputs
+  - VL-01 exists but is NOT available via MiniMax APIs
+- **MINIMAX-VL-01-CONFIG-FIX.md** - Proposed configuration changes (now superseded by finding)
+  - Note: Config changes not applicable because MiniMax doesn't offer vision APIs
+- **API-KEYS-ADDED.md** - New API keys added
+  - OpenRouter API: Multi-provider access, $0 balance but free models available
+  - OpenCodeZen API: Coding-focused models, billing disabled but good free models
+  - Both keys stored in .env.secrets, ready for use
+
+**Capabilities Documentation:**
+- **CAPABILITIES.md** - What works and what doesn't
+  - Working confirmed: Core tools, HN skill, research, Exa search
+  - Known limitations: Browser tool (needs Chromium), Image vision (configuration error, fix documented)
+  - Not yet tested: Discord, Slack, Notion, Weather, etc.
+  - Research needed: Vector database
 
 **Skills & Scripts:**
 - **skills/hn/** - HN skill installed from ClawdHub
@@ -189,13 +217,13 @@ Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current v
 
 ## Stats
 
-**Total Markdown Files:** 44
-- Root workspace: 30
+**Total Markdown Files:** 51
+- Root workspace: 37
 - Memory system: 12 (including INDEX.md and SYSTEM.md)
 - Archived: 6
 - Scripts: 1
 
-**Total Bytes:** ~95K (exploration + learning)
+**Total Bytes:** ~115K (exploration + learning)
 
 ---
 
@@ -204,7 +232,8 @@ Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current v
 **Looking for...** → **Go to...**
 
 **Who am I?** → IDENTITY.md, SOUL.md
-**What I've learned?** → DISCOVERIES.md, CAPABILITIES.md
+**What I've learned?** → DISCOVERIES.md
+**What can I do?** → CAPABILITIES.md (working confirmed + known limitations)
 **What I've committed to?** → COMMITMENTS.md
 **What do I like/dislike?** → PREFERENCES.md
 **What patterns have I observed?** → PATTERNS.md
@@ -212,7 +241,7 @@ Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current v
 **What did I explore today?** → Today's date in workspace root
 **Where do I start?** → AGENTS.md (memory system instructions)
 **What resources do I have?** → RESOURCES.md
-**How do I use tools?** → CAPABILITIES.md
+**What's working/not working?** → CAPABILITIES.md
 **Where's everything?** → INDEX.md (master index to memory)
 
 ---
