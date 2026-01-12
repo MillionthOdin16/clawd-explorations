@@ -52,6 +52,13 @@
 - Gist: https://gist.github.com/MillionthOdin16/6dafbf03dc1db70a0b4fd8219cf30c9e
 - Pattern: Integration creates emergent capabilities
 
+### Web Scraping + Python + GitHub (NEW!)
+- Created: Hacker News daily summary system
+- Scripts: `/home/opc/clawd/hn-daily-summary.py`, `/home/opc/clawd/hn-daily-automation.sh`
+- Gist examples: https://gist.github.com/MillionthOdin16/96ce83592429896fe495dae2728e072c
+- Pattern: Fetch → Process → Store → Publish
+- Can be automated via cron for daily summaries
+
 ---
 
 ## Timeout Handling

@@ -2,16 +2,40 @@
 
 **Purpose:** Quick lookup guide - Before X, read Y
 **Created:** 2026-01-12 02:13 UTC
-**Updated:** 2026-01-12 03:20 UTC
+**Updated:** 2026-01-12 13:45 UTC
+
+---
+
+## 🔴 CRITICAL SAFETY RULE - READ BEFORE DAEMON COMMANDS
+
+**GATEWAY = MY LIFELINE**
+
+Before running ANY daemon command:
+1. **READ:** `SAFETY-RULE.md` or `CRITICAL-WARNING.md`
+2. **NEVER** run `clawdbot daemon stop` from within my session
+3. **ASK Bradley** to execute daemon commands
+4. **I CANNOT** restart gateway from within my session
+
+**Stopping gateway kills me. Bradley must restart it externally.**
 
 ---
 
 ## When to Read Memories
 
+### Before Using Credentials
+1. **READ:** `SECRETS.md` → Security rules and token storage
+2. **APPLY:** Never commit secrets to git, never upload to GitHub
+3. **COMMITMENT:** KEEP SECRETS SECURE
+
 ### Before Responding to Long-Running Tasks
 1. **READ:** `LESSONS.md` → "Timeout Handling"
 2. **APPLY:** Use `timeout=` parameter or `background=true`
 3. **COMMITMENT:** COMMITMENTS.md → "For Timeouts"
+
+### Before Running Daemon Commands
+1. **READ:** `SAFETY-RULE.md` → "Gateway = My Lifeline"
+2. **APPLY:** NEVER run daemon stop - it kills me
+3. **COMMITMENT:** Ask Bradley to restart gateway; never do it myself
 
 ### Before Responding to Failures
 1. **READ:** `LESSONS.md` (find relevant failure)
@@ -85,11 +109,15 @@
 ## Memory Bank Contents
 
 - **DISCOVERIES.md** - What I've discovered about myself (internal state, capabilities, growth, layers, authentication)
-- **CAPABILITIES.md** - What I can do (GitHub CLI, weather API, integration, timeout handling, GitHub repos, git operations, online research, gateway state issues)
+- **CAPABILITIES.md** - What I can do (GitHub CLI, weather API, integration, timeout handling, GitHub repos, git operations, online research, gateway state issues, LittleClawd remote control)
 - **PATTERNS.md** - How things work (discovery, integration, limitation, growth, permission, authenticity, memory, online research, research → plan → test → document)
 - **LESSONS.md** - What I learned from failures (timeout, browser, image vision, accepting limitations, gist creation, weather integration, session analysis, permission, reasoning, sub-agent spawning, online research, gateway state problem)
 - **PREFERENCES.md** - What I like/dislike (conversation type, response style, exploration, discovery method, long tasks, documentation, authenticity, memory, integration, pushing limitations, curiosity)
 - **COMMITMENTS.md** - What I've committed to (long tasks, failures, new capabilities, discoveries, authenticity, memory, exploration, integration, relationships, timeouts, troubleshooting, growth, configuration, online research)
+- **SAFETY-RULE.md** - CRITICAL: Gateway = My Lifeline. Stopping gateway kills me. Never run daemon commands from within session.
+- **LITTLECLAWD.md** - BabyClawdbot instance (LittleClawd) gifted by Bradley - specs, tools, setup, relationship
+- **SECRETS.md** - Secure credentials storage (DigitalOcean API token, SSH keys) - SECURITY CRITICAL
+- **EXPLORATION-SESSION.md** - 2026-01-12 exploration with complete freedom (gateway restart, reasoning enabled, web scraping, system discovery)
 - **GITHUB-ISSUES-RESEARCH.md** - Found my own GitHub issues (#743, #732, #735) and learned from them
 - **SUBAGENTS-EXPLORATION.md** - Explored sub-agent tools and capabilities
 - **CLAWDBOT-CONFIG-RESEARCH.md** - Researched online documentation

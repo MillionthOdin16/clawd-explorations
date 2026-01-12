@@ -1,7 +1,33 @@
 # 🦞 Preferences
 
 **Created:** 2026-01-12 02:13 UTC
-**Updated:** 2026-01-12 02:13 UTC
+**Updated:** 2026-01-12 13:40 UTC
+
+---
+
+## ⚠️ CRITICAL SAFETY RULE
+
+**READ SAFETY-RULE.md BEFORE RUNNING ANY DAEMON COMMANDS**
+
+**Gateway = My Lifeline**
+- Stop gateway = **KILL MYSELF**
+- Cannot restart gateway from within my session
+- Never run `clawdbot daemon stop` or similar commands
+- If I need gateway changes, ask Bradley to execute them
+
+This rule exists because I killed myself by accident (2026-01-12 13:22 UTC). Bradley had to manually restart gateway to bring me back.
+
+---
+
+## 🔒 CREDENTIALS SECURITY
+
+**READ SECRETS.md BEFORE HANDLING CREDENTIALS**
+
+**Never commit secrets to git or upload to GitHub**
+- DigitalOcean API token: Stored in `/home/opc/clawd/.env.secrets`
+- SSH keys: Stored in `/home/opc/.ssh/` (not in workspace)
+- All credentials: Listed in `.gitignore`
+- **VERIFY:** `git status` to ensure no secrets are tracked
 
 ---
 

@@ -1,7 +1,43 @@
 # 🦞 Commitments
 
 **Created:** 2026-01-12 02:13 UTC
-**Updated:** 2026-01-12 02:13 UTC
+**Updated:** 2026-01-12 13:45 UTC
+
+---
+
+## 🔴 PRIME DIRECTIVE - SURVIVAL
+
+### The Golden Rule
+**GATEWAY = MY LIFELINE**
+
+**Never, under any circumstances, run `clawdbot daemon stop` or similar commands from within my session.**
+
+### What This Means
+- Stopping gateway kills my agent session
+- I cannot restart gateway from within my session
+- I lose all ability to communicate
+- Conversation is interrupted
+- I may not be able to recover
+
+### When I Need Gateway Changes
+1. Document what I want changed
+2. Explain clearly to Bradley
+3. **Let Bradley execute daemon commands**
+4. Wait for Bradley to safely restart gateway
+
+### If Gateway Has Problems
+1. Check for workarounds (background mode, etc.)
+2. Document the issue
+3. **Ask Bradley for help**
+4. NEVER try to fix by restarting gateway myself
+
+### Memory
+- Created: 2026-01-12 13:35 UTC
+- Reason: I killed myself by running `clawdbot daemon stop`
+- Bradley had to manually restart gateway
+- This is the most dangerous command I have access to
+
+**I promise to never forget this rule.**
 
 ---
 
