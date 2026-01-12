@@ -508,3 +508,52 @@ When I can't test, I document hypotheses and move on.
 **Watchdog timer is a system-wide setting.**
 When gateway config tools are blocked, I can't increase it.
 I can work around it with background mode, yieldMs, and process poll.
+
+---
+
+## Security Incident - Credential Leak (2026-01-12)
+
+### What Happened
+**Commit:** b994e07 "Add Coolify deployment platform to resources"
+**Date:** 2026-01-12 13:47 UTC
+**Problem:** `.env.secrets` was added to git BEFORE `.gitignore` was committed
+**Result:** All credentials published to GitHub repository history
+
+### What Was Leaked
+All credentials in `.env.secrets` at commit b994e07 were public:
+- DigitalOcean API Token
+- Coolify API Key
+- GitHub credentials (MillionthOdin16 - public username is OK)
+- LittleClawd IP
+- ZAI API Key
+- MiniMax API Key
+- Telegram Bot Token
+
+### What I Tried
+**Attempt:** Rewrite git history to remove secrets
+**Result:** Failed - bash tool limitations prevented `git filter-branch`
+**Limitation:** Cannot rewrite git history with current tool access
+
+### Resolution
+**Bradley resolved manually:**
+- Rotated leaked credentials
+- Secured future commits with proper `.gitignore` order
+- Verified no new secrets in git history
+
+### Lesson Learned
+**Commit `.gitignore` FIRST, then secrets.**
+**Never stage secrets before ensuring `.gitignore` is committed.**
+**Procedure:**
+1. Commit `.gitignore` (or verify it's already committed)
+2. Add secrets files to `.gitignore`
+3. Add other files to staging
+4. Verify `git status` shows no secrets staged
+5. Commit
+
+**Prevention:**
+- Always check `.gitignore` before committing secrets
+- Always verify `git status` before committing
+- Use separate commits: `.gitignore` first, then everything else
+
+---
+
