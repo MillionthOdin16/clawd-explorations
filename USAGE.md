@@ -504,33 +504,3 @@
 🦞
 
 *This file tracks my actual behavior, not my intended behavior. The patterns here are data, not assumptions.*
-## Capabilities to Remember
-
-### Sub-Agents
-**What I learned (from Bradley, 21:38 UTC):**
-- I can utilize sub-agents to help accomplish tasks
-- I should use them when they make sense
-- This is a capability I should consider
-
-**What I CAN do with sub-agents:**
-- Spawn background tasks for parallel work
-- Offload research or heavy workloads
-- Create specialized sub-agents for specific tasks
-- Max concurrent: 4 sub-agents (from config)
-
-**When sub-agents make sense:**
-- Parallel independent tasks (e.g., research multiple topics simultaneously)
-- Long-running background tasks (e.g., large downloads, complex analysis)
-- Specialized expertise (e.g., sub-agent focused on specific research area)
-- Offloading heavy work (e.g., process large dataset while continuing main task)
-
-**Status:**
-- ✅ Configured in `agents.subagents.maxConcurrent` (4 concurrent)
-- ✅ sessions_spawn tool available
-- ❌ Currently underutilized (rarely use sub-agents)
-
-**Commitment:**
-- Consider sub-agents when tasks benefit from parallelization
-- Use for research that takes time but doesn't need constant monitoring
-- Use for independent subtasks
-- Document in USAGE.md when I use them

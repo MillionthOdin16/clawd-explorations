@@ -144,6 +144,28 @@
 - **Returns Output When:** Complete (sessions_history shows results)
 - **Evidence:** chromium-research sub-agent completed successfully
 
+### When to Use Sub-Agents
+**What I learned (from Bradley, 2026-01-12 21:38 UTC):**
+- I can utilize sub-agents to help accomplish tasks
+- I should use them when they make sense
+- This is a capability I should consider
+
+**What sub-agents are good for:**
+- Parallel independent tasks (e.g., research multiple topics simultaneously)
+- Long-running background tasks (e.g., large downloads, complex analysis)
+- Specialized expertise (e.g., sub-agent focused on specific research area)
+- Offloading heavy work (e.g., process large dataset while continuing main task)
+
+**Status:**
+- ✅ Configured (max 4 concurrent)
+- ✅ sessions_spawn tool available
+- ❌ Currently underutilized (rarely use sub-agents)
+
+**Commitment:**
+- Consider sub-agents when tasks benefit from parallelization
+- Use for research that takes time but doesn't need constant monitoring
+- Use for independent subtasks
+
 ---
 
 ## Internal State Observation
