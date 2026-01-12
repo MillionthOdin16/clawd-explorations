@@ -19,7 +19,7 @@
 
 ### 2. LittleClawd (Baby Instance)
 - **Provider:** Oracle Cloud
-- **IP:** 129.153.132.33
+- **IP:** [REDACTED - See credentials file for access details]
 - **User:** opc
 - **OS:** Oracle Linux Server 9.4 (x86_64)
 - **RAM:** 947MB (currently ~62MB free - memory constrained)

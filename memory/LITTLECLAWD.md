@@ -7,7 +7,7 @@
 ---
 
 ## Connection Info
-- **IP:** 129.153.132.33
+- **IP:** [REDACTED - See credentials file for access details]
 - **User:** opc
 - **SSH Key:** `/home/opc/.ssh/baby_clawdbot_key`
 - **Arch:** x86_64 (Intel/AMD)
@@ -53,22 +53,22 @@
 
 ### Run status check
 ```bash
-ssh -i /home/opc/.ssh/baby_clawdbot_key opc@129.153.132.33 "cd ~/littleclawd && python3 scripts/status.py"
+ssh -i /home/opc/.ssh/baby_clawdbot_key opc@[REDACTED - See credentials file for access details] "cd ~/littleclawd && python3 scripts/status.py"
 ```
 
 ### Fetch webpage
 ```bash
-ssh -i /home/opc/.ssh/baby_clawdbot_key opc@129.153.132.33 "cd ~/littleclawd && python3 scripts/fetch.py https://example.com"
+ssh -i /home/opc/.ssh/baby_clawdbot_key opc@[REDACTED - See credentials file for access details] "cd ~/littleclawd && python3 scripts/fetch.py https://example.com"
 ```
 
 ### Copy file to LittleClawd
 ```bash
-scp -i /home/opc/.ssh/baby_clawdbot_key local_file opc@129.153.132.33:~/littleclawd/data/
+scp -i /home/opc/.ssh/baby_clawdbot_key local_file opc@[REDACTED - See credentials file for access details]:~/littleclawd/data/
 ```
 
 ### Run remote command
 ```bash
-ssh -i /home/opc/.ssh/baby_clawdbot_key opc@129.153.132.33 "command"
+ssh -i /home/opc/.ssh/baby_clawdbot_key opc@[REDACTED - See credentials file for access details] "command"
 ```
 
 ## What I Want to Build

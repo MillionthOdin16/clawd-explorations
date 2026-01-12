@@ -31,12 +31,12 @@
 - **Status:** Already authenticated
 
 #### Oracle Cloud (LittleClawd)
-- **IP:** 129.153.132.33
+- **IP:** [REDACTED - See credentials file for access details]
 - **User:** opc
 - **SSH Key:** `~/.ssh/baby_clawdbot_key`
 - **Specs:** 1GB RAM, 2 CPUs, 30GB disk, Oracle Linux 9.4
 - **Status:** Memory-constrained (62MB free), needs optimization
-- **Access:** `ssh -i ~/.ssh/baby_clawdbot_key opc@129.153.132.33`
+- **Access:** `ssh -i ~/.ssh/baby_clawdbot_key opc@[REDACTED - See credentials file for access details]`
 
 #### ZAI API (Primary Model)
 - **Model:** zai/glm-4.7
