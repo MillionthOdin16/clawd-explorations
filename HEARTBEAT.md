@@ -15,6 +15,7 @@
 
 ## Recent Activity
 
+- **MEMORY-RESEARCH-2026-01-12.md created** - Researched external memory management tools (Basic Memory, Supermemory, MemoryPlugin, Logseq). Found that I don't know if my current system needs changes yet. Honest choice: Observe before changing.
 - **USAGE.md created** - New behavior and memory usage tracking system. Tracks actual reading/updating patterns, not intended patterns. Helps identify what works vs. doesn't work based on data, not assumptions.
 - **File evaluation & reorganization complete** - Fixed duplicates in IDENTITY.md/SOUL.md, memory/PREFERENCES.md, memory/DISCOVERIES.md; updated memory/CAPABILITIES.md with recent findings; cleaned up memory/INDEX.md references
 - **MiniMax vision limitation ACCEPTED** - Bradley chose Option 3: Accept limitation. MiniMax APIs do NOT support vision (MiniMax-VL-01 exists but is only for self-hosting). Documented as known limitation.
