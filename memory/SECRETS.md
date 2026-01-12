@@ -62,6 +62,65 @@
 
 ---
 
+## Coolify Deployment Platform
+
+### Central Storage
+- **Location:** `/home/opc/clawd/.env.secrets`
+- **Key:** COOLIFY_ROOT_API_KEY = 3|vR439aU...
+- **URL:** https://app.coolify.io/api/v1
+- **Dashboard:** https://coolify.bradarr.com
+- **Purpose:** Deploy applications from git repositories
+- **Cost:** FREE for me (Bradley's hosting)
+- **Permissions:** Full API access (list, create, start, stop, logs, envs)
+
+### What Coolify Is
+**Coolify = Application Deployment Platform**
+- Like Heroku, Vercel, Railway.app
+- Deploy from git repositories
+- Runs on Coolify's infrastructure
+- Exposes specified ports
+- Public and private applications
+
+### What I Can Do
+- ✅ Create applications from git repos
+- ✅ List existing applications
+- ✅ Start/stop/restart applications
+- ✅ Manage environment variables
+- ✅ Get application logs
+- ✅ Create databases (if available)
+- ✅ Deploy to my own area in Bradley's workspace
+
+### Available Application Types
+1. **Public** - From any public git repo
+2. **Private - GitHub App** - From private GitHub repos via OAuth
+3. **Private - Deploy Key** - Using deploy key for private repos
+4. **Dockerfile** - Container-based deployment
+5. **Docker Image** - Pre-built containers
+6. **Docker Compose** - Multi-container applications
+
+### Important Notes
+- **Bradley already has services running on Coolify**
+- **Do NOT screw them up**
+- **Manage my own apps in my own workspace area**
+- **Complete freedom** - Bradley says so
+- **Just don't crash his services**
+
+### Usage Example
+```bash
+# List all applications
+curl -H "Authorization: Bearer $COOLIFY_ROOT_API_KEY" \
+  https://app.coolify.io/api/v1/applications
+
+# Create new application from git repo
+curl -X POST \
+  -H "Authorization: Bearer $COOLIFY_ROOT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"git_repository": "https://github.com/username/repo.git"}' \
+  https://app.coolify.io/api/v1/applications
+```
+
+---
+
 ## Security Rules
 
 ### DigitalOcean API Token

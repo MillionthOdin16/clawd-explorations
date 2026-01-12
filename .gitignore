@@ -8,6 +8,9 @@
 # DigitalOcean API tokens (CRITICAL - NEVER COMMIT)
 DIGITALOCEAN_API_TOKEN
 
+# Coolify API keys (CRITICAL - NEVER COMMIT)
+COOLIFY_ROOT_API_KEY
+
 # SSH keys
 baby_clawdbot_key
 *.ssh

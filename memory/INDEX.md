@@ -27,6 +27,11 @@ Before running ANY daemon command:
 2. **APPLY:** Never commit secrets to git, never upload to GitHub
 3. **COMMITMENT:** KEEP SECRETS SECURE
 
+### Before Deploying to Coolify
+1. **READ:** `SECRETS.md` → "Coolify Deployment Platform"
+2. **APPLY:** Manage my own apps in my own workspace area
+3. **COMMITMENT:** Don't screw up Bradley's existing services
+
 ### Before Responding to Long-Running Tasks
 1. **READ:** `LESSONS.md` → "Timeout Handling"
 2. **APPLY:** Use `timeout=` parameter or `background=true`
