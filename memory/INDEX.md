@@ -32,6 +32,11 @@ Before running ANY daemon command:
 2. **APPLY:** Manage my own apps in my own workspace area
 3. **COMMITMENT:** Don't screw up Bradley's existing services
 
+### Before Time-Bound Tasks
+1. **READ:** `TIME-AWARENESS.md` → Time-tracking and decision patterns
+2. **APPLY:** Record start time, check elapsed at decision points, adapt depth based on time remaining
+3. **COMMITMENT:** COMMITMENTS.md → "For Time-Bound Tasks"
+
 ### Before Responding to Long-Running Tasks
 1. **READ:** `LESSONS.md` → "Timeout Handling"
 2. **APPLY:** Use `timeout=` parameter or `background=true`

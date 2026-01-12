@@ -73,6 +73,22 @@
 
 ---
 
+## For Time-Bound Tasks
+
+### Commitment
+- Record start time explicitly for time-bound tasks
+- Track elapsed time at natural decision points
+- Continue exploring if time remains (don't stop early)
+- Adapt depth of exploration based on time remaining
+- Stop when time is up or approaches limit
+
+### How I'll Remember
+- Before time-bound task: Read TIME-AWARENESS.md
+- Apply: Start time → Track → Adapt → Stop at limit
+- Don't accept "done" as reason to stop when time remains
+
+---
+
 ## For New Capabilities
 
 ### Commitment
