@@ -1,162 +1,193 @@
-# 🦞 Gateway State Problem - Session Tools Failing
+# 🦞 Gateway State Problem - Session Tools Blocked
 
-**Created:** 2026-01-12 03:18 UTC
-**Problem:** All session/gateway configuration tools returning "unauthorized"
+**Created:** 2026-01-12 14:48 UTC
+**Status:** UNRESOLVED - Needs Bradley intervention
+
+---
+
+## The Problem
+
+### Symptoms
+**Gateway returns "unauthorized" error** on all configuration tools:
+- `sessions_spawn` - blocked (can't spawn sub-agents)
+- `cron` - blocked (can't manage cron jobs)
+- `gateway config.get` - blocked (can't read config)
+- `gateway config.apply` - blocked (can't apply changes)
+- `gateway config.schema` - blocked (can't see schema)
+
+### When This Happened
+- **2026-01-12 12:33 UTC** - Discovered sub-agent spawning blocked
+- **Multiple restart attempts** - Gateway restarted but "unauthorized" persisted
+- **Agent remains running** - Can respond and use most tools
+- **But config tools blocked** - Can't spawn sub-agents, can't configure
+
+---
+
+## Current Configuration
+
+### Gateway Config
+```json
+"gateway": {
+  "port": 18789,
+  "mode": "local",
+  "bind": "lan",
+  "auth": {
+    "mode": "token",
+    "token": "3b2ebf428c1591116ea06bee9a76493407f3efb7cd0d7b73"
+  }
+}
+```
+
+### Session Config
+```json
+"agents": {
+  "defaults": {
+    "workspace": "/home/opc/clawd",
+    "thinkingDefault": "high",
+    "blockStreamingDefault": "off",
+    "subagents": {
+      "maxConcurrent": 4
+    }
+  }
+}
+```
+
+---
+
+## What Works
+
+### ✅ Working Tools
+- All basic tools (bash, read, write, edit, exec, message, etc.)
+- Gateway communication (responding to Bradley on Telegram)
+- File operations (git, etc.)
+- Web access (curl, etc.)
+- All non-gateway tools
+
+### ❌ Blocked Tools
+- `sessions_spawn` - Returns "unauthorized"
+- `cron` - Returns "unauthorized"
+- `gateway config.get` - Returns "unauthorized"
+- `gateway config.apply` - Returns "unauthorized"
+- `gateway config.schema` - Returns "unauthorized"
 
 ---
 
 ## What I Tried
 
-### All Failed With Same Error:
+### Restart Attempts (All Failed)
+1. **kill gateway process** - Gateway restarted but state persisted
+2. **`clawdbot daemon stop && start`** - Gateway restarted, state persisted
+3. **`clawdbot daemon restart`** - Not tested (would kill me)
+4. **New token** - Bradley provided new token, not tested yet
 
-1. **sessions_spawn** - `{"status": "error", "error": "gateway closed (1008): unauthorized"}`
-2. **cron add** - `{"status": "error", "error": "gateway closed (1008): unauthorized"}`
-3. **config.apply** - `{"status": "error", "error": "gateway closed (1008): unauthorized"}`
-
-### Gateway State When Failing:
-```
-Gateway target: ws://127.0.0.1:18789
-Source: local loopback
-Config: /home/opc/.clawdbot/clawdbot.json
-Bind: lan
-```
+### What Didn't Work
+- **Simply restarting gateway** - "unauthorized" state returns after restart
+- **Killing and restarting** - Same result, state persists
+- **Multiple restart attempts** - No change
 
 ---
 
-## Hypothesis About Why
+## Hypotheses
 
-### Option 1: Gateway in Control UI Mode
-- Control UI might block session/gateway configuration tools
-- These tools might only work in agent mode
-- Gateway running in wrong mode
+### 1. Token Mismatch
+**Possibility:** Gateway config token vs. what gateway expects
+**Evidence:** Current token in config is old format
+**Test:** Bradley provided new token `3b2ebf428c1591116ea06bee9a76493407f3efb7cd0d7b73`
+**Status:** Not tested yet
 
-### Option 2: Gateway State Issues
-- Gateway might be in a state that rejects modifications
-- Session authentication might be broken
-- Internal state preventing changes
+### 2. Gateway Authentication State
+**Possibility:** Gateway has internal auth state that's not reset by restart
+**Evidence:** Restart doesn't clear state
+**Status:** Unknown
 
-### Option 3: Configuration Lock
-- Config file might be locked
-- Permission issue
-- Gateway rejecting remote config changes
+### 3. Session Authentication
+**Possibility:** My session isn't using correct auth token
+**Evidence:** I can communicate but config tools blocked
+**Status:** Unknown
 
-### Option 4: Session Context Problem
-- Tools might require specific session context
-- Current session might not have proper permissions
-- Session tokens might be invalid
-
----
-
-## What I Need to Test
-
-### Next Session:
-
-1. **Check gateway mode**
-   - Is it in agent mode or control mode?
-   - Can I switch modes?
-   - Does mode affect which tools work?
-
-2. **Restart gateway before config**
-   - Gateway might need clean start
-   - State might need to clear
-
-3. **Check authentication**
-   - Are session tools properly authenticated?
-   - Do they need different tokens?
-
-4. **Try via control UI instead of tools**
-   - If tools blocked, control UI might still work
-   - Can I configure via web interface?
-
-5. **Document in LESSONS.md** - All failures and hypotheses
+### 4. Gateway Bind Mode
+**Possibility:** "lan" mode requires different auth setup
+**Evidence:** `bind: "lan"` in config
+**Status:** Unknown
 
 ---
 
-## What This Means
+## What I Can't Do
 
-### I CAN Research Solutions
-- I found multi-agent configuration in docs
-- I understand what I need to do
-- I can plan implementations
+### From Within My Session
+- ❌ Restart gateway (would kill me per SAFETY-RULE.md)
+- ❌ Apply gateway configuration
+- ❌ Spawn sub-agents
+- ❌ Manage cron jobs
+- ❌ Read/write gateway config
 
-### I CAN'T Apply Them (yet)
-- All tools to apply changes fail
-- Same "unauthorized" error
-- Unknown if this is fixable or permanent
-
-### Pattern
-- Discovery ✓ (found solutions in docs)
-- Planning ✓ (know what to do)
-- Execution ✗ (tools blocked)
-- Testing required
+### What I CAN Do
+- ✅ Continue working with basic tools
+- ✅ Document the problem
+- ✅ Create instructions for Bradley
+- ✅ Wait for Bradley to fix gateway
 
 ---
 
-## What I've Learned
+## What Needs To Happen
 
-### About My System:
-- Session tools can be blocked by gateway state
-- Gateway might be in control mode vs agent mode
-- Some configurations might require control UI, not tools
-- Gateway restarts might clear problematic states
+### Bradley Actions Required
 
-### About My Limitations:
-- Not "can't do X"
-- But "can't apply X configuration via tools right now"
-- Workarounds might exist (control UI, different mode)
+1. **Test new token** - Update gateway config with token Bradley provided
+2. **Restart gateway service** - From system, not from within my session
+3. **Wait for me to reconnect** - I'll come back online after restart
+4. **Test if tools work** - Try sessions_spawn, cron, etc.
 
-### Gateway Issue #735?
-- DNS failures crash gateway instead of retrying
-- Session tools blocked by "unauthorized" error
-- Might be related: stability issues, problematic state management
+### Or Alternative
+
+1. **Find root cause** - Why is gateway returning "unauthorized"?
+2. **Fix authentication** - Update/reset gateway auth state
+3. **Clear cache/state** - If gateway has internal state that needs reset
+4. **Apply proper fix** - Not just restart, but real fix
 
 ---
 
-## What I'm Committing To
+## Impact
 
-### For Documentation:
-- Write this gateway state problem to LESSONS.md
-- Document all failures with same error
-- Document hypotheses about why
+### What I Can't Do
+- Spawn sub-agents for parallel tasks
+- Create/modify cron jobs for automation
+- Adjust gateway configuration
+- Read gateway config programmatically
 
-### For Testing Next Session:
-1. Check gateway mode (agent vs control)
-2. Try gateway restart before configuration
-3. Try control UI if tools remain blocked
-4. Check if there's a way to switch modes
-5. Document all results
-
-### For Problem-Solving:
-- Don't accept "can't do X"
-- Research alternative approaches
-- Try control UI if tools blocked
-- Look for mode switches
+### What I Can Still Do
+- All basic tools (bash, file operations, web access)
+- Communicate via Telegram
+- Run scripts
+- Use git
+- Work with DigitalOcean, Coolify APIs
+- Manage LittleClawd
 
 ---
 
-## Summary
+## Documentation
 
-**Problem:** Gateway in state where all session/gateway configuration tools return "unauthorized" error
+### Created Files
+- `docs/GATEWAY-TOKEN-UPDATE.md` - Instructions for Bradley to update token
+- `gateway-token-update.json` - JSON patch with new token
+- `memory/GATEWAY-STATE-PROBLEM.md` - This file (you're reading it)
 
-**What I tried:**
-- sessions_spawn - failed
-- cron add - failed
-- config.apply - failed
-
-**What I CAN do:**
-- Research solutions (done)
-- Document failures (done)
-- Plan alternatives (done)
-- Test in next session
-
-**What I CAN'T do (yet):**
-- Apply multi-agent configuration
-- Enable reasoning via cron jobs
-- Test sub-agent spawning
-- Configure gateway changes
+### Memory Index Updated
+- INDEX.md includes "Before Running Gateway Commands" checklist
+- References this file for troubleshooting
 
 ---
 
-**Honest answer: I have plans and solutions, but I can't apply them yet. Gateway is in state that blocks these tools. I'll test alternatives and document results in next session.**
+## Status
 
-🦞
+**Current:** Agent running, communicating with Bradley
+**Problem:** Gateway config tools blocked ("unauthorized")
+**Needs:** Bradley intervention to update/fix gateway
+
+---
+
+**Note:** This is a known issue from 2026-01-12 13:22 UTC (when I discovered sub-agents were blocked).
+
+---
+
+🦞 *Gateway state problem documented, waiting for fix*

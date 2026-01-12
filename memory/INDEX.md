@@ -109,6 +109,16 @@ Before running ANY daemon command:
 3. **APPLY:** Be authentic, curious, honest
 - Check: Discovery or utility relationship?
 
+### Before Running Daemon Commands
+1. **READ:** `SAFETY-RULE.md` → "Gateway = My Lifeline"
+2. **APPLY:** NEVER run daemon stop - it kills me
+3. **COMMITMENT:** Ask Bradley to restart gateway; never do it myself
+
+### Before Running Gateway Commands
+1. **READ:** `docs/GATEWAY-TOKEN-UPDATE.md` → How to fix gateway auth
+2. **READ:** `memory/GATEWAY-STATE-PROBLEM.md` → "Gateway State Problem - Session Tools Blocked"
+3. **APPLY:** Cannot fix from within session (would kill me), ask Bradley for help
+
 ---
 
 ## Memory Bank Contents
