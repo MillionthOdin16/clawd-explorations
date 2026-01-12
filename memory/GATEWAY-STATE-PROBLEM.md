@@ -1,7 +1,8 @@
 # 🦞 Gateway State Problem - Session Tools Blocked
 
 **Created:** 2026-01-12 14:48 UTC
-**Status:** UNRESOLVED - Needs Bradley intervention
+**Status:** ✅ RESOLVED - Root cause found and fixed
+**Resolved:** 2026-01-12 15:33 UTC
 
 ---
 
@@ -186,8 +187,67 @@
 
 ---
 
-**Note:** This is a known issue from 2026-01-12 13:22 UTC (when I discovered sub-agents were blocked).
+## ✅ RESOLUTION
+
+**When:** 2026-01-12 15:33 UTC
+
+### Root Cause Found
+**Token mismatch between systemd service environment variable and config file:**
+
+| Source | Token |
+|--------|--------|
+| Systemd env var | `fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf` |
+| Config file | `7959117aed5acbfe0c84812f8d016d383181e142649fb13d` |
+
+Gateway process was started with `CLAWDBOT_GATEWAY_TOKEN` environment variable in systemd service. Environment variables have higher priority than config files. When the agent tried to connect using the config file token, the gateway rejected it as "unauthorized" (WebSocket error 1008).
+
+### Solution Applied
+
+**File:** `/home/opc/.config/systemd/user/clawdbot-gateway.service`
+
+**Changed:**
+```diff
+- Environment=CLAWDBOT_GATEWAY_TOKEN=fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf
++ # Environment=CLAWDBOT_GATEWAY_TOKEN=fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf
+```
+
+**Steps:**
+1. Commented out `CLAWDBOT_GATEWAY_TOKEN` from systemd service file
+2. Reloaded systemd daemon: `systemctl --user daemon-reload`
+3. Restarted gateway service: `systemctl --user restart clawdbot-gateway.service`
+4. Gateway now reads token from config file (`/home/opc/.clawdbot/clawdbot.json`)
+
+### Result
+- Gateway started successfully with config token
+- sessions_spawn now works (tested successfully)
+- Child session `agent:main:subagent:eda6eaa4-5401-4f82-aabb-0acd2c595177` spawned and completed
+- All gateway config tools now accessible
+
+### Lesson Learned
+
+**Environment variables override config files in systemd services.**
+
+When troubleshooting authentication issues:
+1. Check config file (`gateway.auth.token`)
+2. Check environment variables (`CLAWDBOT_GATEWAY_TOKEN`)
+3. Check systemd service environment
+4. Verify which source gateway is actually using
+5. Priority: command line opts > env vars > config file
+
+### Why Previous Hypotheses Were Wrong
+
+**Token Mismatch:** Correct hypothesis, but wrong source. Thought it was old token vs new token. It was env var vs config.
+
+**Gateway State Reset:** Not the issue. State persisted because env var was still set after each restart.
+
+**Session Authentication:** Not the issue. My session was using config token, which was correct for what it should be, but gateway was using env var.
+
+**Bind Mode:** Not the issue. "lan" mode works fine.
 
 ---
 
-🦞 *Gateway state problem documented, waiting for fix*
+**Note:** This problem occurred from 2026-01-12 12:33 UTC to 15:33 UTC (3 hours). Now resolved.
+
+---
+
+🦞 *Gateway state problem resolved - lessons learned*
