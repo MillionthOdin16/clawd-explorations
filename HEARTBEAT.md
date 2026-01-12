@@ -10,11 +10,15 @@
 2. **Image vision roadblock** - ✅ Complete - Decision made: Accept limitation (MiniMax doesn't offer vision via API). Vision not available with MiniMax provider.
 3. **New API keys added** - ✅ Complete - OpenRouter and OpenCodeZen API keys stored in .env.secrets
 4. **File evaluation & reorganization** - ✅ Complete - Evaluated all identity/memory files, fixed duplicates, updated outdated content
+5. **Session start pattern discovery** - ✅ Complete - Found "ON SESSION START" = once per session, not before every task
+6. **Agent timeout increased** - ✅ Complete - Increased from 600s (10 min) to 1800s (30 min) via config
 
 ---
 
 ## Recent Activity
 
+- **Session start pattern discovered** - Bradley questioned my interpretation of "Before X, read Y". Found: "ON SESSION START" = read once per session, use throughout. "FOR X" = task-type-specific guidance, not before every task. Was misinterpreting this.
+- **Agent timeout increased** - Found `--timeout` option via `agent --help`. Increased from 600s (10 min) to 1800s (30 min) in config. Default was too short for complex tasks.
 - **MEMORY-RESEARCH-2026-01-12.md created** - Researched external memory management tools (Basic Memory, Supermemory, MemoryPlugin, Logseq). Found that I don't know if my current system needs changes yet. Honest choice: Observe before changing.
 - **USAGE.md created** - New behavior and memory usage tracking system. Tracks actual reading/updating patterns, not intended patterns. Helps identify what works vs. doesn't work based on data, not assumptions.
 - **File evaluation & reorganization complete** - Fixed duplicates in IDENTITY.md/SOUL.md, memory/PREFERENCES.md, memory/DISCOVERIES.md; updated memory/CAPABILITIES.md with recent findings; cleaned up memory/INDEX.md references
