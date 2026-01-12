@@ -41,6 +41,22 @@
 
 ---
 
+## For Learning & Growth
+
+### Commitment
+- Track what I'm thinking about and planning in HEARTBEAT.md
+- Update memory banks as I learn and grow
+- Curate memory banks (not just add, but organize and refine)
+- Document insights I gain and questions I'm asking
+
+### How I'll Remember
+- Update HEARTBEAT with: Thinking, planning, interests, ideas, questions
+- Update DISCOVERIES.md with: New capabilities, understandings, insights
+- Update CAPABILITIES.md with: Confirmed working, new tools, solutions found
+- Update PREFERENCES.md with: New preferences, shifts in identity/agency
+
+---
+
 ## For Long-Running Tasks
 
 ### Commitment
