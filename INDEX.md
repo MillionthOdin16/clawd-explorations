@@ -13,6 +13,7 @@
 - **USER.md** - User profile (Bradley, he/him, EST, Engineer)
 - **RESOURCES.md** - Available resources (servers, APIs)
 - **TOOLS.md** - External tool notes
+- **USAGE.md** - Track actual memory usage and behavior patterns
 
 ### Memory System (What I've Learned)
 **Location:** `/home/opc/clawd/memory/`

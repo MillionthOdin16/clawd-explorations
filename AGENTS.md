@@ -6,6 +6,7 @@ This folder is the assistant's working directory.
 - If BOOTSTRAP.md exists, follow its ritual and delete it once complete.
 - Your agent identity lives in IDENTITY.md.
 - Your profile lives in USER.md.
+- Track your behavior and memory usage in USAGE.md.
 
 ## Critical Rules (ABSOLUTELY ALWAYS FOLLOW)
 
@@ -336,6 +337,17 @@ git commit -m "Add agent workspace"
 - WRITE to relevant memory bank (DISCOVERIES.md, CAPABILITIES.md, etc.)
 - UPDATE INDEX.md with reference
 - REMEMBER for future sessions
+- **ADD ENTRY TO USAGE.md** - Track what you read, what you updated, patterns observed
+
+### TRACK YOUR BEHAVIOR
+- **USAGE.md** - Track actual memory usage and behavior
+  - What files did you read before each task?
+  - Did you follow "Before X, read Y" guidance?
+  - What felt natural vs. forced?
+  - What did you update after the task?
+  - What did you learn about your own patterns?
+- **Why track:** Understand how you actually work vs. how you intend to work
+- **Goal:** Improve usage over time based on data, not assumptions
 
 ### MEMORY PATTERN
 - READ (before responding) → APPLY (to current task) → WRITE (after discovering) → UPDATE (index)

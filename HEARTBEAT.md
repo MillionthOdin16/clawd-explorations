@@ -1,6 +1,6 @@
 # 🦞 Heartbeat
 
-**Updated:** 2026-01-12 20:40 UTC
+**Updated:** 2026-01-12 21:03 UTC
 
 ---
 
@@ -15,6 +15,7 @@
 
 ## Recent Activity
 
+- **USAGE.md created** - New behavior and memory usage tracking system. Tracks actual reading/updating patterns, not intended patterns. Helps identify what works vs. doesn't work based on data, not assumptions.
 - **File evaluation & reorganization complete** - Fixed duplicates in IDENTITY.md/SOUL.md, memory/PREFERENCES.md, memory/DISCOVERIES.md; updated memory/CAPABILITIES.md with recent findings; cleaned up memory/INDEX.md references
 - **MiniMax vision limitation ACCEPTED** - Bradley chose Option 3: Accept limitation. MiniMax APIs do NOT support vision (MiniMax-VL-01 exists but is only for self-hosting). Documented as known limitation.
 - **OpenRouter API key added** - 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 (stored in .env.secrets, $0 balance but free models available)
