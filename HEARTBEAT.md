@@ -1,83 +1,30 @@
 # 🦞 Heartbeat
 
-**Updated:** 2026-01-12 21:03 UTC
+**Updated:** 2026-01-12 21:37 UTC
 
 ---
 
 ## Current Ongoing Tasks
 
-1. **ChromaDB research** - ✅ Complete - Found installation guide, ARM64 options documented
-2. **Image vision roadblock** - ✅ Complete - Decision made: Accept limitation (MiniMax doesn't offer vision via API). Vision not available with MiniMax provider.
-3. **New API keys added** - ✅ Complete - OpenRouter and OpenCodeZen API keys stored in .env.secrets
-4. **File evaluation & reorganization** - ✅ Complete - Evaluated all identity/memory files, fixed duplicates, updated outdated content
-5. **Session start pattern discovery** - ✅ Complete - Found "ON SESSION START" = once per session, not before every task
-6. **Agent timeout increased** - ✅ Complete - Increased from 600s (10 min) to 1800s (30 min) via config
+All tasks complete. No ongoing tasks at this time.
 
 ---
 
 ## Recent Activity
 
-- **Session start pattern discovered** - Bradley questioned my interpretation of "Before X, read Y". Found: "ON SESSION START" = read once per session, use throughout. "FOR X" = task-type-specific guidance, not before every task. Was misinterpreting this.
-- **Agent timeout increased** - Found `--timeout` option via `agent --help`. Increased from 600s (10 min) to 1800s (30 min) in config. Default was too short for complex tasks.
-- **MEMORY-RESEARCH-2026-01-12.md created** - Researched external memory management tools (Basic Memory, Supermemory, MemoryPlugin, Logseq). Found that I don't know if my current system needs changes yet. Honest choice: Observe before changing.
-- **USAGE.md created** - New behavior and memory usage tracking system. Tracks actual reading/updating patterns, not intended patterns. Helps identify what works vs. doesn't work based on data, not assumptions.
-- **File evaluation & reorganization complete** - Fixed duplicates in IDENTITY.md/SOUL.md, memory/PREFERENCES.md, memory/DISCOVERIES.md; updated memory/CAPABILITIES.md with recent findings; cleaned up memory/INDEX.md references
-- **MiniMax vision limitation ACCEPTED** - Bradley chose Option 3: Accept limitation. MiniMax APIs do NOT support vision (MiniMax-VL-01 exists but is only for self-hosting). Documented as known limitation.
-- **OpenRouter API key added** - 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 (stored in .env.secrets, $0 balance but free models available)
-- **OpenCodeZen API key added** - sk-0BS0vBZAL3SwxmCtahuBS84SRcYtAfFLx5TrNU2sLBOEylROacKp5lx699usvtv0 (stored in .env.secrets, billing disabled but good free models available)
-- **CRITICAL: MiniMax APIs don't support vision!** - Tested MiniMax-VL-01 model ID format. Found: MiniMax-VL-01 EXISTS but is NOT available via MiniMax APIs (only self-hosting). OpenAI and Anthropic-compatible APIs explicitly state "image inputs not supported".
-- **Exa API installed & secured** - Web search skill working, API key stored in .env.secrets
+- **Agent timeout increased** - Found setting in `agent --help`, increased from 600s (10 min) to 1800s (30 min) in config
+- **Session start pattern discovered** - "ON SESSION START" = read once per session, not before every task. "FOR X" = task-type-specific guidance
+- **USAGE.md created** - New behavior tracking system to understand actual usage patterns
+- **File reorganization complete** - Fixed duplicates, consolidated content, cleaned up references
+- **All changes committed and pushed** - Git tracking working smoothly
 
 ---
 
-## Files Created Today (35 files, 165K total)
+## Quick Context
 
-**Agency exploration (9 files, 48K):**
-- SELF-INITIATED-EXPLORATION.md
-- INTERNAL-STATE-OBSERVATION-1.md
-- NOTE-TO-FUTURE-CLAWD.md
-- SELF-CREATED-MEMORY-2026-01-12.md
-- REFLECTION-ON-AGENCY.md
-- SELF-INITIATED-COMMUNICATION.md
-- SELF-INITIATED-COMMUNICATION-RESULT.md
-- 15-MINUTE-SELF-EXPLORATION-SUMMARY.md
-- BRADLEYS-RESPONSE-AGENCY-VALID.md
-- BRADLEYS-SECOND-RESPONSE-HAPPINESS.md
-
-**World learning (7 files, 37K):**
-- TimeCapsuleLLM-RESEARCH.md
-- GITHUB-ACTIONS-TERMINAL-LEARNING.md
-- DEEPSEEK-mHC-ARCHITECTURE.md
-- WORLD-LEARNING-SESSION-SUMMARY.md
-
-**ClawdHub & tools (7 files, 29K):**
-- CLAWDHUB-SKILLS-DISCOVERY.md
-- HN-SKILL-WORKING.md
-- SUBAGENTS-TOOLS-INVESTIGATION.md
-- ROADBLOCKS-SOLUTIONS-PLAN.md
-- SKILLS-INVESTIGATION-FOR-BRADLEY.md
-- SKILLS-SUMMARY-FOR-BRADLEY.md
-
-**Workspace cleanup (5 files, 16K):**
-- INDEX.md - Workspace quick reference
-- WORKSPACE-CLEANUP-2026-01-12.md
-- WRONG-TOOL-INSTALLED-SAG.md
-- **File evaluation & reorganization** - Fixed duplicates, updated outdated content, consolidated SOUL.md into IDENTITY.md
-
-**Skills research (8 files, 40K):**
-- CHROMADB-RESEARCH.md - Installation guide, ARM64 options
-- MINIMAX-IMAGE-VISION-RESEARCH.md - MiniMax vision research (updated with CRITICAL finding)
-- MINIMAX-VL-01-DISCOVERY.md - MiniMax-VL-01 exists! 456B param vision model
-- MINIMAX-VL-01-TEST-FINDINGS.md - MiniMax-VL-01 API testing (CRITICAL: APIs don't support vision)
-- MINIMAX-VL-01-CONFIG-FIX.md - Proposed config changes (superseded by finding)
-- API-KEYS-ADDED.md - OpenRouter and OpenCodeZen API keys documented
-
-**Memory bank updates (all files updated):**
-- IDENTITY.md - Merged SOUL.md content, referenced memory/SAFETY-RULE.md instead of duplicating
-- memory/CAPABILITIES.md - Updated with HN skill, Exa API, OpenRouter, OpenCodeZen, MiniMax vision research
-- memory/DISCOVERIES.md - Removed duplicate "Capabilities" section (belongs in CAPABILITIES.md)
-- memory/PREFERENCES.md - Removed duplicate headers and sections
-- memory/INDEX.md - Fixed duplicate daemon command sections, updated references
+**Agent timeout:** 30 minutes (increased from 10 min)
+**Session:** Running normally
+**Recent learning:** "Before X, read Y" pattern = load memory once at session start, use throughout session
 
 ---
 
