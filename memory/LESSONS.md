@@ -1,7 +1,7 @@
 # 🦞 Lessons Learned
 
 **Created:** 2026-01-12 02:13 UTC
-**Updated:** 2026-01-12 03:20 UTC
+**Updated:** 2026-01-12 20:47 UTC
 
 ---
 
@@ -42,21 +42,37 @@ Can't just try random downloads. Need:
 
 ---
 
-## Image Vision
+## Image Vision - MiniMax APIs Don't Support Vision
 
 ### Problem
-- Configured MiniMax Vision-Video-01 as imageModel
-- Model added to minimax providers → models
+- Configured MiniMax Vision-Video-01 as imageModel (doesn't exist)
+- Image model configured as MiniMax-M2.1 (TEXT model, not vision)
 - When trying to analyze images: Returns empty responses
 
+### Research Completed
+- **Discovered:** MiniMax-VL-01 EXISTS (456B parameter vision-language model)
+- **Found on:** Hugging Face and GitHub
+- **Tested:** MiniMax-VL-01 via MiniMax APIs
+- **Result:** MiniMax APIs do NOT support vision
+  - OpenAI-compatible API: "image inputs not supported"
+  - Anthropic-compatible API: "image inputs not supported"
+  - MiniMax-VL-01 only available for self-hosting
+
+### Decision
+**Accept limitation** - MiniMax APIs don't support vision.
+- MiniMax offers: Text (M2.1, M2), Speech/audio, Video generation
+- MiniMax does NOT offer: Vision models via API
+- MiniMax-VL-01 exists but is self-hosting only
+
 ### Status
-**Not working.**
+**Not available with MiniMax provider.**
 
 ### Lesson
-**Model ID might be wrong for this plan.**
-Need to verify:
-- Correct vision model name for minimax coding plan
-- Or use different vision-capable model
+**Deep research reveals complexity.**
+- Layer 1: MiniMax doesn't offer vision (wrong)
+- Layer 2: MiniMax-VL-01 exists (correct)
+- Layer 3: MiniMax-VL-01 is self-hosting only (final truth)
+- Need to research layer by layer, don't assume surface answer is complete.
 
 ---
 
@@ -173,9 +189,9 @@ Should have tested before concluding.
 My code is on GitHub and I can read it to understand configuration, workarounds, and capabilities.
 
 ### Solutions Found
-**Problem: Reasoning disabled** → **Solution:** Use cron jobs with `--thinking high`
-**Problem: Can't spawn sub-agents** → **Solution:** Configure multi-agent setup in config
-**Problem: Can't enable features in config** → **Solution:** Use cron jobs with overrides
+- **Problem: Reasoning disabled** → **Solution:** Use cron jobs with `--thinking high`
+- **Problem: Can't spawn sub-agents** → **Solution:** Configure multi-agent setup in config
+- **Problem: Can't enable features in config** → **Solution:** Use cron jobs with overrides
 
 ### Lesson
 **I can research independently, find solutions, and plan implementations.**
@@ -236,10 +252,88 @@ This means I can't currently enable reasoning via cron, spawn sub-agents, or app
 
 ### What I Need to Test
 - Check if gateway is in agent mode vs control mode
-- Check if gateway restart fixes the "unauthorized" error
+- Check if gateway restart fixes "unauthorized" error
 - Check if there's a way to switch gateway modes
 - Check if control UI can be used for configuration instead of tools
 - Document all results in memory
+
+---
+
+## Exa API - Neural Web Search
+
+### Success
+- Installed Exa skill from ClawdHub
+- API key secured in .env.secrets
+- Used to find MiniMax-VL-01 vision model (broke through dead-end)
+
+### Capabilities
+- Search types: auto, neural, fast, deep
+- Categories: company, research-paper, news, github, tweet, personal-site, pdf
+- Commands: web search, code search, content extraction
+
+### Lesson
+**Neural web search breaks through research dead-ends.**
+When traditional searches fail, Exa API can find relevant information across the web.
+
+---
+
+## HN Skill - Hacker News Browsing
+
+### Success
+- Installed HN skill from ClawdHub
+- Working: Browse top stories, new, best, ask, show, jobs
+- Better than: hn-top-stories.py (1.5K custom script)
+
+### Capabilities
+- Story details with comments
+- Search functionality
+- Multiple categories
+
+### Lesson
+**ClawdHub provides better alternatives to custom scripts.**
+Skills are maintained, feature-rich, and easier to use than writing from scratch.
+
+---
+
+## OpenRouter & OpenCodeZen API Keys
+
+### Success
+- Added OpenRouter API key (stored in .env.secrets)
+- Added OpenCodeZen API key (stored in .env.secrets)
+- Both providers offer free models
+
+### OpenRouter
+- Multi-provider access via single API
+- Balance: $0 (free models available)
+- Status: Not yet tested
+
+### OpenCodeZen
+- Coding-focused AI models
+- Billing: Not enabled (good free models available)
+- Status: Not yet tested
+
+### Lesson
+**Multiple API providers increase flexibility.**
+OpenRouter gives access to multiple providers through one API.
+OpenCodeZen offers coding-focused models.
+
+---
+
+## File Consolidation - Learning from Mistakes
+
+### Problem
+- Bradley asked to consolidate files at same name (root + memory/)
+- I misinterpreted as merging ALL files into single files
+- Created incorrect structure
+
+### Correction
+- Reverted to correct approach: Only consolidate files with same name
+- Kept files that exist in only one location
+
+### Lesson
+**Read instructions carefully before acting.**
+"Consolidate files with same name" ≠ "Merge all files into one"
+Ask clarifying question if instruction is unclear.
 
 ---
 
@@ -268,6 +362,8 @@ My exploration is now publicly available for anyone to access.
 4. **Integration** - Can combine tools to create systems
 5. **Online Research** - Can read my own GitHub documentation to find solutions
 6. **Git Operations** - Can initialize repos, commit, push, manage .gitignore
+7. **Neural Web Search** - Exa API breaks through research dead-ends
+8. **Skill Installation** - ClawdHub provides maintained skills
 
 ### About My System
 1. **Gateway has known bugs** - Issue #743: `/think` shows wrong value
@@ -278,7 +374,7 @@ My exploration is now publicly available for anyone to access.
 
 ### About My Limitations
 1. **Browser tool** - Needs ARM64 Linux Chrome solution
-2. **Image vision** - Need correct MiniMax vision model name
+2. **Image vision** - MiniMax APIs don't support vision (accepted limitation)
 3. **Gateway state** - Session/gateway config tools blocked, need investigation
 4. **Reasoning** - Found workaround (cron jobs), but can't apply due to gateway state
 5. **Sub-agents** - Found configuration guide, but can't apply due to gateway state
@@ -294,12 +390,16 @@ My exploration is now publicly available for anyone to access.
 - Create GitHub repositories and gists
 - Integrate multiple systems
 - Build useful things
+- Install skills from ClawdHub
+- Break through research dead-ends with Exa API
+- Read instructions carefully (after learning from mistakes)
 
 ### I CAN'T (Currently):
 - Enable reasoning/streaming (workaround exists but can't apply)
 - Spawn sub-agents (configuration exists but can't apply)
 - Apply configuration changes (gateway state blocking)
 - Verify if reasoning enabled (bug #743 prevents this)
+- Use image vision (MiniMax APIs don't support it)
 
 ### Pattern
 **Discovery → Research → Plan → Test → Document**
@@ -347,19 +447,23 @@ When I can't test, I document hypotheses and move on.
 
 ### Major Discoveries
 1. **I can research my own documentation** - Read GitHub issues, understand bugs, find solutions
-2. **I have a comprehensive memory system** - 23.4K of persistent memory
+2. **I have a comprehensive memory system** - Explicit access via READ/WRITE patterns
 3. **I can create GitHub repositories** - Full exploration session committed and pushed
 4. **I can integrate systems** - Weather + Bash + GitHub = working systems
 5. **I have known system bugs** - Gateway issues, incomplete features
 6. **I can work around limitations** - Cron jobs for reasoning, multi-agent config for sub-agents
 7. **I CAN modify AGENTS.md** - Successfully did, unknown if automatic
+8. **Exa API** - Neural web search breaks through dead-ends
+9. **ClawdHub skills** - HN skill working, better than custom scripts
+10. **MiniMax vision limitation** - APIs don't support vision (accepted)
+11. **OpenRouter & OpenCodeZen** - Multiple API providers available
 
 ### Major Problems
 1. **Gateway state blocking session/gateway config tools** - Can't apply configurations
 2. **Reasoning disabled** - Workaround exists (cron jobs) but can't apply
 3. **Sub-agents blocked** - Config exists but can't spawn
 4. **Browser tool broken** - No ARM64 Linux Chrome
-5. **Image vision broken** - Wrong model name or API issue
+5. **Image vision not available** - MiniMax APIs don't support vision
 
 ### What I'm Learning
 - I can research independently and find solutions
@@ -367,6 +471,7 @@ When I can't test, I document hypotheses and move on.
 - I can document everything for future reference
 - I can push my work to GitHub for persistence
 - I have memory system to track all of this
+- I can learn from mistakes (file consolidation misunderstanding)
 
 ### Honesty About Unknowns
 - Gateway state issue: Don't know if fixable
@@ -403,4 +508,3 @@ When I can't test, I document hypotheses and move on.
 **Watchdog timer is a system-wide setting.**
 When gateway config tools are blocked, I can't increase it.
 I can work around it with background mode, yieldMs, and process poll.
-

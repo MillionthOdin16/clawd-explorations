@@ -1,6 +1,6 @@
 # 🦞 Workspace Index
 
-**When:** 2026-01-12 20:10 UTC
+**When:** 2026-01-12 20:47 UTC
 **Purpose:** Quick lookup guide for workspace information
 
 ---
@@ -8,11 +8,11 @@
 ## Quick Reference
 
 ### Core Identity (Who I Am)
-- **IDENTITY.md** - Who I am (Clawd, Lobster), critical safety rule
-- **SOUL.md** - Persona, boundaries, behavioral guidelines
+- **IDENTITY.md** - Who I am (Clawd, Lobster), persona, boundaries, critical safety rule
 - **AGENTS.md** - Workspace rules, memory system instructions
 - **USER.md** - User profile (Bradley, he/him, EST, Engineer)
 - **RESOURCES.md** - Available resources (servers, APIs)
+- **TOOLS.md** - External tool notes
 
 ### Memory System (What I've Learned)
 **Location:** `/home/opc/clawd/memory/`
@@ -31,13 +31,20 @@
 - **CAPABILITIES.md** - What I can do with tools/APIs
   - GitHub CLI, Weather API
   - Sub-agents (max 4 concurrent, working)
-  - HN skill (installed and working)
+  - HN skill (installed and working, better than custom script)
+  - Exa API (neural web search, working)
+  - OpenRouter & OpenCodeZen API keys added
+  - MiniMax vision limitation accepted (APIs don't support vision)
 
 - **PATTERNS.md** - Patterns I've observed
 
 - **LESSONS.md** - Lessons learned from failures
   - Gateway auth (token mismatch - resolved)
   - Timeout handling (use timeout/background/yieldMs)
+  - Browser tool (needs ARM64 Chrome)
+  - Image vision (MiniMax APIs don't support vision)
+  - Exa API (breaks through research dead-ends)
+  - File consolidation (learned from mistakes)
 
 - **PREFERENCES.md** - What I like/dislike
   - Discovery relationships > utility relationships
@@ -199,13 +206,10 @@
 
 ---
 
-## Archive (Outdated)
+## Scripts
 
-**Location:** `/home/opc/clawd/docs-archived-2026-01-12/`
-
-Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current versions in workspace root.
-
-**Status:** Can be deleted (outdated, no longer needed)
+- **hn-top-stories.py** - Custom HN fetcher (replaced by skill)
+- **scripts/replace_line.py** - Utility script for file operations
 
 ---
 
@@ -217,13 +221,13 @@ Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current v
 
 ## Stats
 
-**Total Markdown Files:** 51
-- Root workspace: 37
-- Memory system: 12 (including INDEX.md and SYSTEM.md)
-- Archived: 6
-- Scripts: 1
+**Total Markdown Files:** 247
+- Root workspace: 48
+- Memory system: 24 (including INDEX.md, SYSTEM.md, TIME-AWARENESS.md)
+- Research files: Multiple (ChromaDB, MiniMax, skills, exploration)
+- Skills: Installed in /skills/ directory
 
-**Total Bytes:** ~115K (exploration + learning)
+**Total Bytes:** ~1.5M (exploration + learning + research)
 
 ---
 
@@ -231,7 +235,7 @@ Contains old versions of files (IDENTITY, SOUL, etc.). All replaced by current v
 
 **Looking for...** → **Go to...**
 
-**Who am I?** → IDENTITY.md, SOUL.md
+**Who am I?** → IDENTITY.md
 **What I've learned?** → DISCOVERIES.md
 **What can I do?** → CAPABILITIES.md (working confirmed + known limitations)
 **What I've committed to?** → COMMITMENTS.md
