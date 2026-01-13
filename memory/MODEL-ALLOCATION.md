@@ -13,7 +13,7 @@
 | Provider | Model | Context | Best For | Notes |
 |----------|-------|---------|----------|-------|
 | **ZAI** | `zai/glm-4.7` | 200K | Complex reasoning, creative work | ** |
-| **MiniBEST OVERALL**Max** | `MiniMax-M2.1` | 200K | Fast general tasks, coding | **SUBSCRIPTION - USE THIS!** |
+| **MiniMax** | `MiniMax-M2.1` | 200K | Fast general tasks, coding | **SUBSCRIPTION - USE THIS!** |
 | **MiniMax** | `MiniMax-Vision-Video-01` | 128K | Image & video understanding | **SUBSCRIPTION - USE THIS!** |
 
 **Why:** Bradley pays for ZAI and MiniMax subscriptions - higher performance than free alternatives.
