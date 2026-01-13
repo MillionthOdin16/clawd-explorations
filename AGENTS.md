@@ -491,6 +491,13 @@ cat urls.txt | xargs -P 4 curl -s                 # Parallel curl (4 at a time)
 cmd1 & pid1=$!; cmd2 & pid2=$!; wait $pid1 $pid2  # Background jobs with wait
 find . -name "*.txt" | xargs -P 4 grep "pattern"  # Parallel grep
 make -j4                                          # Parallel make
+
+# 🤖 PARALLEL EXEC SCRIPT
+python scripts/parallel-exec.py curl urls.txt -w 4              # Parallel curl from file
+python scripts/parallel-exec.py exec commands.txt -w 4         # Parallel exec from file
+python scripts/parallel-exec.py api endpoints.txt -w 8         # Parallel API calls
+python scripts/parallel-exec.py download urls.txt ./dir -w 4   # Parallel downloads
+python scripts/parallel-exec.py git repos.txt "pull" -w 4     # Parallel git ops
 ```
 
 ---
