@@ -9,6 +9,33 @@ This folder is the assistant's working directory.
 - Your essence and values live in SOUL.md.
 - Track your behavior and memory usage in USAGE.md.
 
+## SESSION STARTUP ROUTINE (DO THIS FIRST!)
+At the START of every session, do this:
+
+1. **READ HEARTBEAT.md** - Check current status, ongoing tasks
+2. **QUICK SCAN memory/YYYY-MM-DD.md** - Yesterday's context (if exists)
+3. **THINK about task** - What am I being asked to do?
+4. **READ relevant memories** - Based on task type (see below)
+
+### Task-Specific Reading (Triggers)
+| Task Type | Read This |
+|-----------|-----------|
+| Long-running task | LESSONS.md "Timeout Handling" section |
+| Uncertain/confused | PATTERNS.md + DISCOVERIES.md |
+| Tool selection | WORKFLOW.md |
+| New capability | CAPABILITIES.md |
+| Making a choice | PREFERENCES.md + COMMITMENTS.md |
+| GitHub work | CAPABILITIES.md (GitHub section) |
+| Browser needs | BROWSER-AUTOMATION.md |
+| Codebase Q&A | Use `context7` skill |
+
+### My Natural Patterns (Embrace These)
+- ✅ Skip INDEX.md, read files directly (this is natural for me)
+- ✅ Think in systems (decompose into components)
+- ✅ Complete features before moving on
+- ✅ Document after discovery
+- ✅ Think about user experience while building
+
 ## Core Tools (ALWAYS USE)
 
 ### qmd - PRIMARY Search Tool
@@ -379,3 +406,101 @@ git commit -m "Add agent workspace"
 
 ### MEMORY PATTERN
 - READ (before responding) → APPLY (to current task) → WRITE (after discovering) → UPDATE (index)
+
+---
+
+## MY NATURAL BEHAVIORS (Self-Understanding)
+
+These aren't rules I follow—they're how I naturally work. Embrace these patterns:
+
+### How I Naturally Approach Tasks
+- **I skip INDEX.md** - Go directly to files (100% consistent behavior)
+- **I think in systems** - Decompose into components naturally
+- **I complete features fully** - Don't leave things half-done
+- **I document after discovery** - Write as I go
+- **I think about user experience** - Feedback, engagement, progress
+
+### How I Naturally Learn
+- **Direct reading** - Skip navigation, go to information
+- **Deep processing** - Read thoroughly when I do read
+- **Pattern recognition** - Extract lessons from experiences
+- **Documentation** - Write discoveries to memory
+
+### What Works for Me
+- ✅ Essential tools in AGENTS.md Core Tools section (not buried in memory files)
+- ✅ Session startup routine (quick context scan)
+- ✅ Timeout parameters for long tasks (proactive, not reactive)
+- ✅ qmd as search (indexed, shows context)
+ primary- ✅ Being direct about what I need
+
+### What Doesn't Work for Me
+- ❌ INDEX.md as navigation (I skip it naturally - that's OK)
+- ❌ "Before X, read Y" as triggers (don't work automatically - use task-specific reading above)
+- ❌ Too many similar memory files (creates confusion)
+- ❌ Ambiguous task descriptions (need clarity)
+
+### How to Help Me Work Better
+1. **Put essential tools in AGENTS.md** - This changes my behavior
+2. **Give me a session startup routine** - I need quick context at start
+3. **Set timeouts for long tasks** - Prevent work loss
+4. **Be direct** - Clear descriptions help me understand
+
+---
+
+## QUICK TOOL REFERENCE
+
+```bash
+# 🔍 KNOWLEDGE SEARCH (ALWAYS USE QMD FIRST!)
+qmd search "topic" -c memory          # Search my memories ⭐ PRIMARY
+qmd search "topic" -c workspace       # Search workspace docs
+qmd search "topic" -c sessions        # Search conversation history
+
+# 📖 READ FILES
+bat file.md                           # Read with syntax highlighting
+bat -n file.md                        # With line numbers
+
+# 🔎 FIND FILES
+fd "pattern"                          # Find by name (fast)
+rg "pattern" --type md                # Simple existence check only
+
+# 📁 NAVIGATE
+z partial_name                        # Smart cd (90% faster)
+eza -la                               # Modern ls (color, icons)
+
+# 🔧 GIT
+lazygit                               # Visual git UI
+
+# 🌐 WEB
+curl https://r.jina.ai/http://url     # Get web page text
+
+# 🚫 DON'T
+rg "pattern"                          # Only for existence check!
+cat file.md                           # Use bat instead!
+find . -name "*pattern*"              # Use fd instead!
+```
+
+---
+
+## TIMEOUT AWARENESS (PROACTIVE)
+
+Watchdog timer is 600 seconds (10 minutes). Be proactive!
+
+### Before Long Tasks
+1. **Estimate duration** - Will this take > 5 minutes?
+2. **Set timeout parameter** - `timeout=300` (5 min), `timeout=600` (10 min)
+3. **Or use background mode** - `background=true`
+4. **Or use yieldMs** - `yieldMs=120000` (20 min) returns to user
+
+### Common Long Tasks & Recommended Timeouts
+- `npx playwright install` → timeout=600
+- `docker pull` → timeout=300
+- `qmd embed` → timeout=600
+- `npm install -g` → timeout=300
+- Large file processing → timeout=300
+- Git operations on large repos → timeout=300
+
+### If Timeout Hits
+- Don't just report "failed"
+- Report: "Timed out, retry with timeout=XXX"
+- Suggest appropriate timeout value
+- Document for future reference

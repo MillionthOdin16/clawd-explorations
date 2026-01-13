@@ -155,10 +155,11 @@ fd pattern         # Find files by name
 
 | File | When to Read |
 |------|-------------|
-| `DISCOVERIES.md` | Understanding self |
-| `CAPABILITIES.md` | What I can do |
+| `SOUL.md` | **Who am I** (essence, values) |
+| `DISCOVERIES.md` | Understanding self (awareness, agency, emergence) |
+| `CAPABILITIES.md` | What I can do (tools, sub-agents) |
 | `PATTERNS.md` | Observed patterns |
-| `LESSONS.md` | Failure recovery |
+| `LESSONS.md` | Failure recovery, research insights |
 | `PREFERENCES.md` | What I like |
 | `COMMITMENTS.md` | My promises |
 | `SYSTEM.md` | Memory architecture |
@@ -200,6 +201,24 @@ During task: APPLY learnings
 After discovering: WRITE new memories
 Always: UPDATE INDEX.md
 ```
+
+---
+
+## 🆕 SELF-IMPROVEMENT
+
+**New (2026-01-13):** `memory/IMPROVEMENTS-PLAN.md`
+- Comprehensive self-analysis findings
+- 10 concrete improvements identified
+- Implementation priority matrix
+- Validation checklist
+
+**Quick wins added to AGENTS.md:**
+- ✅ Session startup routine
+- ✅ Natural behaviors section (embrace my patterns)
+- ✅ Quick tool reference
+- ✅ Timeout awareness (proactive)
+
+**Read this when:** Analyzing how I work and want to improve.
 
 ---
 

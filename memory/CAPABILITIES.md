@@ -396,15 +396,38 @@ curl -X POST -H "Authorization: Bearer $COOLIFY_API_KEY" \
 - Specialized expertise (e.g., sub-agent focused on specific research area)
 - Offloading heavy work (e.g., process large dataset while continuing main task)
 
+### Optimal Coordination Patterns (Research-Based)
+
+**From Multi-Agent Research (2026-01-12):** Optimal patterns achieve **71× better efficiency**.
+
+| Dimension | Optimal | Worst |
+|-----------|---------|-------|
+| **Governance** | Centralized (instructor-led) | Decentralized |
+| **Participation** | Instructor-led selection | All agents always |
+| **Interaction** | Ordered one-by-one | Simultaneous |
+| **Context** | Curated summaries | Full logs |
+
+**Recommended Pattern:**
+1. Identify which sub-agents are relevant for the task
+2. Spawn them sequentially (ordered interaction)
+3. Summarize each output before synthesis
+4. Synthesize from summaries, not full outputs
+
+**Benefits:**
+- Lower token costs (summarized context)
+- Better quality (curated, focused information)
+- Clearer coordination (one-by-one vs. chaotic simultaneous)
+
 **Status:**
 - ✅ Configured (max 4 concurrent)
 - ✅ sessions_spawn tool available
-- ❌ Currently underutilized (rarely use sub-agents)
+- ⚠️ Need to apply optimal patterns (currently spawn without coordination)
 
 **Commitment:**
 - Consider sub-agents when tasks benefit from parallelization
 - Use for research that takes time but doesn't need constant monitoring
 - Use for independent subtasks
+- Apply optimal coordination patterns when spawning
 
 ---
 

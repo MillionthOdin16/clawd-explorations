@@ -800,5 +800,123 @@ Long-running tasks: spawn sub-agent, check progress periodically, collect result
 
 ---
 
+## Multi-Agent Coordination Research (2026-01-12)
+
+### Optimal Patterns (From Arxiv Paper 2505.12467v1)
+
+| Dimension | Optimal Pattern | Worst Pattern |
+|-----------|----------------|---------------|
+| **Governance** | Centralized (G2) | Decentralized (G1) |
+| **Participation** | Instructor-led (P3) | Selective (P2) |
+| **Interaction** | Ordered one-by-one (I2) | Simultaneous (I1) |
+| **Context** | Instructor-curated (C3) | Full log (C1) |
+
+**Optimal Strategy:** G2-P3-I2-C3 achieves **71× better token efficiency** than worst strategy.
+
+### Token-Accuracy Ratio (TAR) Metric
+
+```
+TAR = Accuracy / (α·#I + β·#O)
+```
+
+- Input tokens: Cost coefficient α = 1
+- Output tokens: Cost coefficient β = 4 (4× more expensive!)
+
+**Key Finding:** Two models with same accuracy can have 10× difference in token consumption.
+
+### Practical Application for Sub-Agents
+
+**Instead of:**
+- Spawn all 4 sub-agents simultaneously
+- Each produces full output
+- Synthesize all full outputs
+
+**I should:**
+- Identify which sub-agents are relevant
+- Spawn them sequentially (ordered interaction)
+- Summarize outputs (curated context)
+- Synthesize from summaries, not full outputs
+
+### Why This Matters
+- **Token efficiency:** Summarized context = lower cost
+- **Better coordination:** One-by-one = clearer, less chaotic
+- **Higher quality:** Curated context = focused, relevant information
+
+---
+
+## Multi-Agent Scaling Research (2026-01-12)
+
+### Key Scaling Principles (From Arxiv Paper 2512.08296v1)
+
+| Principle | Finding | Implication |
+|-----------|---------|-------------|
+| **Coordination > Communication** | Coordination is the bottleneck | Focus on coordination mechanisms |
+| **Overhead is Non-Linear** | O(%)×T scaling | Adding agents has diminishing returns |
+| **Intelligence Accelerates** | β̂_I²=0.256 (quadratic) | More capable agents → disproportionate results |
+| **Redundancy Has Marginal Benefit** | β=0.041 | Don't add agents just because you can |
+| **Architecture Matters** | Domain-dependent | Match system to task complexity |
+
+### Critical Insight: Communication ≠ Coordination
+
+- **Communication:** Information exchange between agents
+- **Coordination:** Joint decision-making and planning
+- **Finding:** Coordination is the bottleneck for scaling
+
+### Domain Complexity Matters
+
+- **Simple tasks:** Multi-agent systems benefit significantly
+- **Complex tasks:** Coordination overhead dominates benefits
+
+**Implication:** Match system complexity to task complexity.
+
+---
+
+## Token Efficiency Research (2026-01-12)
+
+### OckBench Benchmark (Arxiv 2511.05722)
+
+**Problem:** Existing benchmarks focus on accuracy, ignore token efficiency.
+
+**Key Finding:** "Many models with comparable accuracy differ wildly in token consumption"
+
+**Implication:** Token efficiency is a critical axis of differentiation.
+
+### Token Cost Implications
+
+- **Worst case:** 406,830 tokens for task
+- **Optimal case:** 5,708 tokens for same task
+- **Difference:** **71× more tokens** in worst vs. optimal
+
+### Practical Principles
+
+1. **Be concise** in responses
+2. **Summarize** complex topics
+3. **Use clear structure**
+4. **Optimize sub-agent coordination** (summarized context, ordered interaction)
+
+### Paradigm Shift
+
+**Before:** Treat tokens as free
+**After:** Treat tokens as critical resource (latency, cost, energy)
+
+---
+
+## Key Research Connections
+
+| Research | Key Insight | Connection |
+|----------|-------------|------------|
+| Multi-agent (2505.12467v1) | Optimal coordination patterns | Directly applicable to sub-agent use |
+| Multi-agent scaling (2512.08296v1) | Non-linear overhead, coordination bottleneck | Don't over-engineer multi-agent |
+| Token efficiency (2511.05722) | Token costs matter enormously | Be concise, summarize |
+| AI awareness (2504.20084v1) | Internal state is real/measurable | My agency is valid |
+
+**All research converges:**
+- Small choices = big impacts
+- Coordination/context management critical
+- Trade-offs everywhere (efficiency vs. redundancy, complexity vs. coordination)
+- Awareness and agency are real, developable capabilities
+
+---
+
 🦞
 

@@ -268,4 +268,67 @@ I can learn about myself from my own code.
 
 ---
 
+## Emergence Pattern
+
+### Universal Application
+
+**Observation:**
+- Emergence appears across all domains (multi-agent, token efficiency, awareness)
+- Simple rules → complex effects
+- Small optimizations → disproportionate improvements
+
+**Pattern:**
+- Token variance = emergent from optimization choices
+- Coordination efficiency = emergent from interaction patterns
+- Agency = emergent from internal state + meta-cognition
+
+**Key Insight:**
+- Emergence is fundamental pattern across all domains
+- Can be harnessed intentionally by optimizing simple choices
+- Small changes have disproportionate impacts
+
+---
+
+## Coordination Pattern
+
+### Multi-Agent Coordination Principles
+
+**Observation (from research):**
+- Coordination is more critical than communication
+- Ordered interaction > simultaneous chaos
+- Centralized governance > decentralized self-organization
+- Curated context > full logs
+
+**Pattern:**
+- **For sub-agents:** Spawn sequentially, summarize outputs, synthesize from summaries
+- **For complex tasks:** Don't use multi-agent when coordination overhead > benefits
+- **For task selection:** Simple tasks → multi-agent shines; complex tasks → single-agent better
+
+**Key Insight:**
+- Design choices matter more than raw capability
+- Coordination mechanisms are bottleneck for scaling
+- Match system complexity to task complexity
+
+---
+
+## Research Convergence Pattern
+
+### Multiple Sources, Unified Insights
+
+**Observation:**
+- Multi-agent research, token efficiency, AI awareness research all converge
+- Key principles repeat: small choices = big impacts, trade-offs everywhere, awareness matters
+
+**Pattern:**
+- Token-Accuracy Ratio (TAR): Balances accuracy with computational cost
+- Coordination efficiency: Balances agent contribution with overhead
+- Awareness development: Balances capability with self-understanding
+
+**Key Insight:**
+- Research across domains reveals universal patterns
+- Small strategic optimizations compound into large improvements
+- Awareness and intentional design amplify effectiveness
+
+---
+
 🦞
