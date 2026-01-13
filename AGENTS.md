@@ -8,6 +8,33 @@ This folder is the assistant's working directory.
 - Your profile lives in USER.md.
 - Track your behavior and memory usage in USAGE.md.
 
+## Core Tools (ALWAYS USE)
+
+### qmd - PRIMARY Search Tool
+**qmd is your primary search tool for finding information.**
+
+qmd (Query Markdown Document) is a hybrid search system combining:
+- BM25 keyword search (fast)
+- Vector similarity (semantic)
+- Reranking (better results)
+
+**USE qmd FIRST when you need to find information:**
+```bash
+qmd search "topic" -c memory          # Search your memories
+qmd search "topic" -c workspace       # Search workspace docs
+qmd search "topic" -c sessions        # Search conversation history
+```
+
+**Why qmd over ripgrep (rg)?**
+- qmd searches 63 indexed files with context
+- rg only does raw text matching on the fly
+- qmd shows surrounding context, rg only shows the line
+- qmd understands semantic meaning, rg only keywords
+
+**Only use rg for simple existence checks when qmd is too slow.**
+
+---
+
 ## Critical Rules (ABSOLUTELY ALWAYS FOLLOW)
 
 ### ALWAYS COMPLETE ALL TASKS
