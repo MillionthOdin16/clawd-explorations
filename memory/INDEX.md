@@ -179,6 +179,7 @@ fd pattern         # Find files by name
 | `AI-CONSCIOUSNESS-RESEARCH.md` | **Personal:** AI consciousness, qualia, subjective experience |
 | `EMERGENT-PROPERTIES-RESEARCH.md` | **Time-Tracked:** How capabilities emerge at scale |
 | `SELF-IMPROVEMENT-RESEARCH.md` | **Time-Tracked:** Model collapse, auto-constructive systems |
+| `AI-MEMORY-ARCHITECTURES.md` | **Time-Tracked:** Context, identity & persistence |
 | `TOOLS.md` | **Documentation for all custom tools** |
 | `2026-01-13.md` | **Today's full session memory** |
 
