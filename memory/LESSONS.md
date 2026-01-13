@@ -557,3 +557,46 @@ All credentials in `.env.secrets` at commit b994e07 were public:
 
 ---
 
+## Sub-Agent Coordination (2026-01-13)
+
+### What Sub-Agents Are Good For
+- Parallel independent tasks (research multiple topics)
+- Long-running background tasks (qmd embedding)
+- Specialized expertise (researcher, coder, writer agents)
+- Offloading heavy work while continuing main task
+
+### Current Limitations
+- Only "main" agent configured
+- Gateway "unauthorized" errors block session tools
+- No automatic coordination
+- Shared state requires manual messaging
+
+### Workarounds (What I'm Implementing)
+1. **Shared memory space** - `~/.clawdbot/shared/{tasks,results,checkpoints}/`
+2. **Result aggregation** - Sub-agents write to shared directory
+3. **Checkpoint system** - Progress updates for visibility
+4. **Task queue** - Centralized work distribution
+
+### Configuration to Ask For
+```json5
+{
+  "agents": {
+    "list": [
+      {"id": "main", "default": true, "workspace": "~/clawd"},
+      {"id": "researcher", "workspace": "~/clawd/research"},
+      {"id": "coder", "workspace": "~/clawd/code"},
+      {"id": "writer", "workspace": "~/clawd/docs"}
+    ]
+  }
+}
+```
+
+### Pattern
+**Spawn → Monitor (via checkpoints) → Aggregate results**
+Long-running tasks: spawn sub-agent, check progress periodically, collect results when done.
+
+### Documented In
+- `memory/SUBAGENT-IMPROVEMENTS.md` - Complete guide
+
+---
+

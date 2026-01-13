@@ -120,6 +120,14 @@ Before running ANY daemon command:
 - Integration with my memory system
 - Performance notes and maintenance
 
+### SUBAGENT-IMPROVEMENTS.md
+- Ideas for making sub-agents more useful
+- Pre-configured agent types (researcher, coder, writer)
+- Task queue system for work distribution
+- Shared memory space for coordination
+- Checkpoint system for progress monitoring
+- Parallel execution patterns
+
 ---
 
 ## READ Pattern (Before responding)
