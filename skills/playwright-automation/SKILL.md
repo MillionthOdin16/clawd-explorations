@@ -106,6 +106,20 @@ asyncio.run(run_task())
 | Screenshots | ✅ Yes | ✅ Yes |
 | Multi-browser | ✅ 3 engines | Chrome only |
 
+## When to Use
+
+| Task | Tool | Why |
+|------|------|-----|
+| Simple content extraction | **r.jina.ai** (curl) | No browser needed, faster |
+| Interactive/JavaScript pages | **playwright** | Renders JS, can click/type |
+| Screenshots | **playwright** | Full page capture |
+| Quick URL to markdown | **r.jina.ai** | `curl https://r.jina.ai/http://url` |
+
+## See Also
+
+- **Full workflow guide:** `memory/WORKFLOW.md` - Decision tree for when to use playwright vs r.jina.ai
+- **Browser automation:** `memory/BROWSER-AUTOMATION.md` - Clawdbot browser vs browser-use vs playwright
+
 ## Notes
 
 - Uses Firefox by default (works on ARM64)

@@ -1,0 +1,53 @@
+# Pending Commit - Progressive Disclosure Update
+
+**Date:** 2026-01-13 15:35 UTC
+
+## Files Modified
+
+### 1. `memory/INDEX.md` - COMPLETELY REWRITTEN
+**Pattern applied:** Progressive disclosure
+- Kept under 400 lines
+- Clear decision tree at top
+- References to detailed files below
+- "When to Read" section for each memory
+
+### 2. `memory/WORKFLOW.md` - LEANER
+**Pattern applied:** Reference to detailed content
+- Reduced from ~400 lines to ~100 lines
+- Quick decision tree + quick reference
+- "DETAILED REFERENCE" section points to `HIGH-IMPACT-TOOLS.md`
+
+### 3. `skills/ripgrep/SKILL.md` - Updated
+- Added "See Also" section referencing WORKFLOW.md
+
+### 4. `skills/playwright-automation/SKILL.md` - Updated  
+- Added "When to Use" section with r.jina.ai comparison
+
+## Key Progressive Disclosure Pattern Applied
+
+```
+INDEX.md (quick ref) → WORKFLOW.md (decision tree) → HIGH-IMPACT-TOOLS.md (detailed)
+```
+
+## To Commit
+
+```bash
+cd /home/opc/clawd
+git add -A
+git commit -m "Apply progressive disclosure pattern to memory files
+
+- Rewrote INDEX.md as quick reference (<400 lines) with decision tree
+- Leanified WORKFLOW.md to ~100 lines with reference to HIGH-IMPACT-TOOLS.md
+- Updated ripgrep and playwright SKILL.md with cross-references
+- Pattern: INDEX → WORKFLOW → HIGH-IMPACT-TOOLS (three-level loading)"
+```
+
+## What This Achieves
+
+1. **Quick lookup** - INDEX.md answers "before X, read Y"
+2. **Decision tree** - WORKFLOW.md answers "what tool do I use?"
+3. **Deep details** - HIGH-IMPACT-TOOLS.md has full research
+4. **Lean context** - Each file is <500 lines, references detailed content
+
+---
+*Generated during progressive disclosure refactor*

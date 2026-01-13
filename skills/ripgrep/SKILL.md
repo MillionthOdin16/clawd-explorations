@@ -82,6 +82,11 @@ brew install ripgrep  # macOS
 cargo install ripgrep # Linux/ARM64
 ```
 
+## See Also
+
+- **Full workflow guide:** `memory/WORKFLOW.md` - Decision tree for when to use ripgrep vs other tools
+- **Tool comparison:** `memory/HIGH-IMPACT-TOOLS.md` - Why ripgrep over grep
+
 ## Files
 
 - `scripts/rg.py` - CLI wrapper
