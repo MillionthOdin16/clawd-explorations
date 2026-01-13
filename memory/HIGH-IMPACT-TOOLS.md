@@ -14,16 +14,27 @@
 | **Development** | github, coding-agent |
 | **Search** | exa, hn, qmd, web |
 | **Content** | summarize, video-frames |
-| **Automation** | coolify, playwright-automation (just added!) |
+| **Automation** | coolify, playwright-automation |
 | **Notes** | notion, obsidian |
 
-### Recently Added (From Earlier Analysis)
-| Tool | Status | Stars |
-|------|--------|-------|
-| **r.jina.ai** | ✅ Works via curl | 9.6k |
-| **playwright-automation** | ✅ Just created | N/A |
-| **xh** | 📋 Recommended | 7.4k |
-| **surge** | 📋 Recommended | N/A |
+### ✅ INSTALLED TODAY (via Homebrew)
+| Tool | Stars | Status |
+|------|-------|--------|
+| **fzf** | ⭐ 76k | ✅ Installed v0.67 |
+| **ripgrep (rg)** | ⭐ 58k | ✅ Installed v15.1 + skill created! |
+| **bat** | ⭐ 56k | ✅ Installed v0.26 |
+| **fd** | ⭐ 41k | ✅ Installed v10.3 |
+| **lazygit** | ⭐ 70k | ✅ Installed v0.58 |
+| **zoxide** | ⭐ 32k | ✅ Installed v0.9.8 |
+| **eza** | ⭐ 19k | ✅ Installed v0.23 |
+
+### 📋 Still Recommended
+| Tool | Status |
+|------|--------|
+| **r.jina.ai** | ✅ Works via curl |
+| **yq** | 📋 Install for YAML/JSON |
+| **bottom** | 📋 Install for monitoring |
+| **hyperfine** | 📋 Install for benchmarking |
 
 ---
 
