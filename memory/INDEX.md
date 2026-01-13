@@ -180,6 +180,7 @@ I APPLY learnings to current situation
 - Choices: Read PREFERENCES.md + COMMITMENTS.md
 - Gateway issues: Read LESSONS.md (gateway state problem)
 - GitHub work: Read CAPABILITIES.md (GitHub CLI, repos)
+- **Uncertain about topic?** Read QMD-WORKFLOW.md → use `qmd search "topic"`
 - Coolify deployment: Read COOLIFY-WORKSPACE.md
 
 ### Always Write After Discovering

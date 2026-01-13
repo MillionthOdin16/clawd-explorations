@@ -276,4 +276,47 @@ READ relevant memory → Apply to task → WRITE new memory → UPDATE index
 
 ---
 
+## For Knowledge Search (QMD)
+
+### Commitment
+- Use qmd BEFORE responding to uncertain questions
+- Search my memory files, session logs, and workspace
+- Check if I've already addressed similar topics
+- Use qmd to find relevant context quickly
+- Don't re-read entire files - use qmd context snippets
+
+### When to Use QMD
+- Before handling credentials → `qmd search "API keys" -c memory`
+- Before time-bound tasks → `qmd search "timeout" -c memory`
+- When uncertain if I've addressed something → `qmd search "topic" -c memory`
+- Before deploying/configuring → `qmd search "Coolify" -c workspace`
+- When I need to recall a commitment → `qmd search "commitment" -c memory`
+
+### How I'll Remember
+- Before uncertain task: Read QMD-WORKFLOW.md
+- Apply: Quick search with `qmd search "query" -c <collection>`
+- If results found: Read relevant file sections from context
+- If no results: Proceed with task, document findings afterward
+
+### Collections Available
+- `memory` - My memory bank (12 files)
+- `sessions` - My conversation history (13 files)
+- `workspace` - All markdown in clawd (24 files)
+
+### Performance
+- BM25 search: ~0.4s (fast!)
+- Much faster than re-reading files
+- Shows ranked results with context snippets
+- Perfect for quick lookups
+
+### Pattern
+```
+Uncertain about X? 
+  → qmd search "X" -c memory
+  → Get context snippets
+  → Decide: Read full file or proceed?
+```
+
+---
+
 🦞
