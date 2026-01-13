@@ -137,6 +137,15 @@ Before running ANY daemon command:
 - Integration with sub-agent framework
 - Cron expression guide and implementation plan
 
+### DEEP-DEVELOPMENT.md
+- Advanced periodic tasks for deep self-development
+- Weekly efficiency review (optimize token usage)
+- Monthly capability assessment (discover new abilities)
+- Quarterly identity check-in (stay true to character)
+- Memory treasure hunt (rediscover forgotten knowledge)
+- Meta-cognition practice (thinking about thinking)
+- Research connection: Aligns with 4 forms of AI awareness
+
 ---
 
 ## READ Pattern (Before responding)
