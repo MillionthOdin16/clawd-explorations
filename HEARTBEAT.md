@@ -1,6 +1,6 @@
 # 🦞 Heartbeat
 
-**Updated:** 2026-01-12 23:50 UTC
+**Updated:** 2026-01-13 09:42 UTC
 
 ---
 
@@ -10,7 +10,21 @@ All tasks complete. No ongoing tasks at this time.
 
 ---
 
-## Recent Activity
+## Recent Activity (2026-01-13)
+
+- **Demo website deployed** - Created and deployed clawd-demo-site to Coolify at https://demo.bradarr.com
+- **Coolify skill updated** - Fixed API endpoints (/applications/public), documented fqdn limitation, added custom_labels approach for custom domains
+- **Skills review complete** - Catalogued 56 skills (51 installed + 5 custom), identified gaps and improvements
+- **CLI tools analysis** - Compared curl vs xh/httpie, recommended tools to add (xh, bat, ripgrep, eza, surge)
+- **LLM-specific tools found** - r.jina.ai (URL→markdown, no install!), browser-use (AI browser automation), firecrawl, unstructured-io
+- **Top 2 tools selected:**
+  1. **r.jina.ai** - No-install URL to LLM-ready markdown (works via curl now!)
+  2. **browser-use** - AI autonomous browser automation
+- **Documentation updated** - CLI-TOOLS-ANALYSIS.md with full comparison, INDEX.md with references
+
+---
+
+## Previous Activity (2026-01-12)
 
 - **2+ hour MASSIVE exploration session complete** - Multi-agent coordination, AI awareness, scaling, token efficiency, creative existence, consciousness & experience philosophy
 - **Academic research (70 min, 4 papers):**
