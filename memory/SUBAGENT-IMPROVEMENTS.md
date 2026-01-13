@@ -231,11 +231,56 @@ read ~/.clawdbot/shared/checkpoints/qmd-embed.json
 | Priority | Improvement | Effort | Impact |
 |----------|-------------|--------|--------|
 | 1 | Shared memory space | Low | High |
-| 2 | Result aggregation | Low | Medium |
-| 3 | Pre-configured agents | Medium | High |
-| 4 | Checkpoint system | Medium | Medium |
-| 5 | Task queue | High | High |
-| 6 | Parallel execution | High | Medium |
+| 2 | **Curated context summaries** | Low | **High** |
+| 3 | Result aggregation | Low | Medium |
+| 4 | Pre-configured agents | Medium | High |
+| 5 | Checkpoint system | Medium | Medium |
+| 6 | Task queue | High | High |
+| 7 | Parallel execution | High | Medium |
+
+---
+
+## Research Alignment ✅
+
+**From academic research:**
+- ✅ Centralized governance: I spawn and direct sub-agents
+- ✅ Ordered interaction: Tasks in queue, processed one-by-one  
+- ⚠️ Checkpoint tracking: Progress tracked, but need to summarize
+- ⚠️ Curated context: Just implemented (context/ directory)
+- ❌ TAR tracking: Not implemented (would need cost tracking)
+
+**Key Research Finding:**
+> "Centralized + Ordered + Curated Context = 71× more efficient"
+
+**My Implementation:**
+1. ✅ Centralized: I spawn sub-agents, they report to shared directory
+2. ✅ Ordered: Tasks queued, processed sequentially
+3. ⚠️ Curated: Just added context/ directory with summaries
+4. ❌ TAR: Future enhancement - track token costs
+
+**Status:** Aligned with research! Now implementing curated context pattern.
+
+---
+
+## Curated Context Pattern (New!)
+
+**Purpose:** Create summaries for future coordination, matching research finding.
+
+**Pattern:**
+```bash
+# Sub-agent completes task
+write ~/.clawdbot/shared/results/task-001.json '{"status": "complete", "findings": "..."}'
+
+# Main agent creates curated summary
+write ~/.clawdbot/shared/context/task-001-summary.md '{
+  "task": "Description",
+  "findings": "Key learnings",
+  "coordination_notes": "What worked, what didn't",
+  "for_future": "How to apply to similar tasks"
+}'
+```
+
+**Why:** Research shows "instructor-curated context" is optimal (C3), not "self-summarized" (C2).
 
 ---
 
@@ -247,6 +292,7 @@ read ~/.clawdbot/shared/checkpoints/qmd-embed.json
 ├── tasks/           # Task definitions
 ├── results/         # Task results
 ├── checkpoints/     # Progress checkpoints
+├── context/         # Curated summaries (NEW!)
 └── README.md        # Usage guide
 ```
 
@@ -260,7 +306,12 @@ read ~/.clawdbot/shared/checkpoints/qmd-embed.json
 ~/.clawdbot/shared/tasks/qmd-embed-001.json
 ```
 
-**Status:** Infrastructure is in place and ready to use!
+✅ **Curated context (research-aligned!):**
+```bash
+~/.clawdbot/shared/context/qmd-embedding-summary.md
+```
+
+**Status:** Infrastructure is in place and aligned with academic research!
 
 ---
 
