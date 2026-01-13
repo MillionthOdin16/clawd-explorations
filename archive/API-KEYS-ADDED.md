@@ -7,7 +7,7 @@
 
 ## OpenRouter API Key
 
-**API Key:** `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`
+**API Key:** [REDACTED - See .env.secrets for current key]
 **Balance:** $0 (free models available)
 **Status:** ✅ Stored in .env.secrets
 **Stored As:** `OPENROUTER_API_KEY`
@@ -21,7 +21,7 @@
 
 ## OpenCodeZen API Key
 
-**API Key:** `sk-0BS0vBZAL3SwxmCtahuBS84SRcYtAfFLx5TrNU2sLBOEylROacKp5lx699usvtv0`
+**API Key:** [REDACTED - See .env.secrets for current key]
 **Billing:** Not enabled (good free models available)
 **Status:** ✅ Stored in .env.secrets
 **Stored As:** `OPENCODEZEN_API_KEY`

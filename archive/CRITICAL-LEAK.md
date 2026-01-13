@@ -17,16 +17,9 @@
 **Problem:** `.env.secrets` was added to git BEFORE `.gitignore` was committed. This means `.env.secrets` is now in git history and published to GitHub.
 
 ### What Was Leaked
-The `.env.secrets` file at commit b994e07 contained:
-- **DigitalOcean API Token:** `dop_v1_496db1d5bf3aa3d9437cc7a302164684...`
-- **Coolify API Key:** `3|vR439aUiuJqbvEo5BeFjLM0KKiNXN5DAxOA4x3wUf973dd2d`
-- **GitHub credentials:** `MillionthOdin16`
-- **LittleClawd IP:** `129.153.132.33`
-- **ZAI API Key:** `a4015b61a7ec4dc3989df2d07adcb6e6.GqxCiny7jTT58SDX`
-- **MiniMax API Key:** `sk-api-8nEaxeqJc4W39lTQT1qYzWdVVYvYP8HersQTnL5BupgZx8iLNV3h5v3G0XwTqnx3qoFEqLKG9-Ywgzn4zRdh4OzRdh4OzAzeH68DNlhTZcSQQuqfDXSh6SCAyylA`
-- **Telegram Bot Token:** `8221252276:AAEB2trr7UkZZF4of2QegH_c2nT_gJNs9iE`
+The `.env.secrets` file at commit b994e07 contained sensitive credentials. All keys have been revoked and new ones generated.
 
-**All credentials are PUBLIC in GitHub repository history.**
+**All credentials are PUBLIC in GitHub repository history and have been ROTATED.**
 
 ---
 

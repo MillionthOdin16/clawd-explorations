@@ -66,7 +66,7 @@
 
 ### Central Storage
 - **Location:** `/home/opc/clawd/.env.secrets`
-- **Key:** COOLIFY_ROOT_API_KEY = 3|vR439aU...
+- **Key:** [REDACTED - See .env.secrets]
 - **URL:** https://app.coolify.io/api/v1
 - **Dashboard:** https://coolify.bradarr.com
 - **Purpose:** Deploy applications from git repositories

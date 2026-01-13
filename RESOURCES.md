@@ -99,7 +99,7 @@
 - **Model:** zai/glm-4.7
 - **Provider:** ZAI
 - **Profile:** zai:default
-- **API Key:** a4015b61a7ec4dc3989df2d07adcb6e6.GqxCiny7jTT58SDX
+- **API Key:** [REDACTED - See auth-profiles.json for current key]
 - **Current:** Active (my running model)
 - **Location:** `~/.config/clawdbot/agents/main/agent/auth-profiles.json`
 
@@ -109,7 +109,7 @@
   - MiniMax-Vision-Video-01 (vision)
 - **Provider:** MiniMax
 - **Profile:** minimax:default
-- **API Key:** sk-api-8nEaxeqJc4W39lTQT1qYzWdVVYvYP8HersQTnL5BupgZx8iLNV3h5v3G0XwTqnx3qoFEqLKG9-Ywgzn4zRdh4OzRdh4OzAzeH68DNlhTZcSQQuqfDXSh6SCAyylA
+- **API Key:** [REDACTED - See .env.secrets for current key]
 - **Status:** Available for fallback and vision tasks
 - **Location:** `~/.config/clawdbot/agents/main/agent/auth-profiles.json`
 
@@ -127,7 +127,7 @@
 
 ### 8. Telegram Bot
 - **Bot:** @Clawdbot
-- **Token:** 8221252276:AAEB2trr7UkZZF4of2QegH_c2nT_gJNs9iE
+- **Token:** [REDACTED - See ~/.clawdbot/clawdbot.json for current token]
 - **Allowed User:** @bhallaaa
 - **Status:** Active, receiving messages
 - **Purpose:** Chat with Bradley, send/receive
