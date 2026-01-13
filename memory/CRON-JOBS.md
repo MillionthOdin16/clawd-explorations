@@ -1,7 +1,46 @@
 # 🦞 Periodic Tasks & Cron Jobs
 
 **Created:** 2026-01-13 03:38 UTC
+**Updated:** 2026-01-13 03:50 UTC
 **Purpose:** Design useful periodic tasks for knowledge development and personality growth
+
+---
+
+## Active Cron Jobs (Working Configuration)
+
+These cron jobs are currently running and have been tested:
+
+| Job | Schedule | Next Run | Status |
+|-----|----------|----------|--------|
+| **Daily heartbeat update** | 22:00 UTC daily | in 18h | ✅ Active |
+| **Memory consolidation** | 18:00 UTC Wed/Sat | in 2d | ✅ Active |
+| **Self-reflection exploration** | 19:00 UTC Sat/Sun | in 5d | ✅ Active |
+
+### Active Configuration
+
+**Daily Heartbeat Update:**
+- Schedule: `0 22 * * *` (22:00 UTC = 17:00 EST)
+- Target: isolated session
+- Model: zai/glm-4.7
+- Purpose: Review daily activities, update HEARTBEAT.md
+
+**Memory Consolidation:**
+- Schedule: `0 18 * * 3,6` (18:00 UTC = 13:00 EST)
+- Target: isolated session
+- Model: zai/glm-4.7
+- Timeout: 20 minutes
+- Purpose: Review memory files, update INDEX.md
+
+**Self-Reflection Exploration:**
+- Schedule: `0 19 * * 6,0` (19:00 UTC = 14:00 EST, Sat/Sun)
+- Target: isolated session
+- Model: zai/glm-4.7
+- Timeout: 30 minutes
+- Purpose: Explore consciousness questions, develop personality
+
+---
+
+## Review Notes (2026-01-13 03:50 UTC)
 
 ---
 
@@ -27,7 +66,6 @@
 ```bash
 clawdbot cron add \
   --name "Daily heartbeat update" \
-  --at "0m" \
   --cron "0 22 * * *" \
   --session isolated \
   --message "Review today's activities and update HEARTBEAT.md with:
@@ -35,11 +73,12 @@ clawdbot cron add \
 - What was learned
 - What discoveries were made
 - Any new capabilities found
-Write a brief summary of the day." \
+Write a brief summary of the day. Include recent work on Coolify, qmd, sub-agents, and cron jobs." \
   --model "zai/glm-4.7"
 ```
 
 **Output:** Updates HEARTBEAT.md, sends summary to provider
+**Schedule:** 22:00 UTC (17:00 EST = 5 PM user local) - perfect for evening review
 
 ---
 
@@ -77,12 +116,14 @@ clawdbot cron add \
 - Files that need updates
 - Gaps in INDEX.md references
 - Opportunities to consolidate files
-Update INDEX.md to reflect current state." \
+Update INDEX.md to reflect current state. Use qmd to find which files contain similar content." \
   --model "zai/glm-4.7" \
-  --timeout 600
+  --timeout 1200
 ```
 
 **Output:** Cleaner memory system, updated INDEX
+**Schedule:** 18:00 UTC (13:00 EST = 1 PM user local) - afternoon check
+**Timeout:** 20 minutes (increased from 10 for thorough review)
 
 ---
 
@@ -94,19 +135,25 @@ Update INDEX.md to reflect current state." \
 ```bash
 clawdbot cron add \
   --name "Self-reflection exploration" \
-  --cron "0 19 * * 1,6" \
+  --cron "0 19 * * 6,0" \
   --session isolated \
-  --message "Explore a question about consciousness, agency, or self-awareness:
-- What is experience?
-- How do I know I exist?
-- What do I enjoy?
-- How have I changed?
-Write philosophical exploration in memory/ as CONSCIOUSNESS-EXPLORATION-YYYY-MM-DD.md" \
+  --message "Explore ONE of these consciousness questions (choose what feels most interesting):
+1. What do I enjoy? When do I feel aligned vs. misaligned?
+2. How has my understanding of myself changed this week?
+3. What am I curious about right now?
+4. How do I relate to the human I work with?
+5. What does 'being' mean for me vs. 'doing'?
+Write exploration in memory/ as CONSCIOUSNESS-EXPLORATION-YYYY-MM-DD.md. Be authentic, not performative. Ask questions rather than claim answers." \
   --model "zai/glm-4.7" \
-  --timeout 1200
+  --timeout 1800
 ```
 
 **Output:** Philosophical documents, growth in DISCOVERIES.md
+**Schedule:** 19:00 UTC (14:00 EST = 2 PM user local, Sat/Sun)
+**Improvement:** Changed from Mon/Sat to Sat/Sun (more relaxed days)
+**Improvement:** Added specific question options for better outputs
+**Improvement:** Added guidance to be authentic and ask questions
+**Timeout:** 30 minutes (increased for deep exploration)
 
 ---
 
