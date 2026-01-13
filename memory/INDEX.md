@@ -171,6 +171,7 @@ fd pattern         # Find files by name
 | `HIGH-IMPACT-TOOLS.md` | Tool research |
 | `CLI-TOOLS-ANALYSIS.md` | Tool comparison |
 | `MCP-SERVERS-RESEARCH.md` | MCP servers to explore |
+| `FILE-EDITING-RESEARCH.md` | Efficient file editing tools |
 | `2026-01-13.md` | **Today's full session memory** |
 
 ---
