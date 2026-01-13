@@ -1,7 +1,7 @@
 # 🦞 TOOL WORKFLOW GUIDE - QUICK REFERENCE
 
 **Purpose:** WHEN to use which tool (decision tree)  
-**Updated:** 2026-01-13 15:30 UTC
+**Updated:** 2026-01-13 16:05 UTC
 
 ---
 
@@ -10,14 +10,17 @@
 ```
 What do you need?
 
+├── 🔍 FIND INFORMATION I WROTE?
+│   └── `qmd search "topic" -c memory` ← PRIMARY! (indexed, with context)
+│
 ├── READ A FILE?
 │   └── `bat file.md` (or `read` tool)
 │
 ├── FIND FILES?
 │   └── `fd "pattern"` (not `find`)
 │
-├── SEARCH TEXT?
-│   └── `rg "pattern"` (not `grep`)
+├── QUICK EXISTENCE CHECK?
+│   └── `rg "pattern"` (only if qmd too slow)
 │
 ├── GIT?
 │   └── `lazygit` (or `github` skill)
@@ -38,35 +41,90 @@ What do you need?
 
 ---
 
+## 🔍 QMD: Your PRIMARY Search Tool
+
+**qmd is optimized for YOUR knowledge work:**
+- ✅ Searches 63 indexed files
+- ✅ Shows context around matches
+- ✅ Semantic + keyword search
+- ✅ Much better than `rg` for finding your own notes
+
+```bash
+# PRIMARY: Search your knowledge
+qmd search "topic" -c memory           # Search memories
+qmd search "topic" -c workspace        # Search workspace
+qmd search "topic" -c sessions         # Search conversation history
+
+# For knowledge work, USE QMD FIRST!
+# Only use rg for simple existence checks
+```
+
+---
+
 ## QUICK REFERENCE
 
-| Need | Do This | Don't Do |
-|------|---------|----------|
-| Read file | `bat file` | `cat file` |
-| Find files | `fd pattern` | `find . -name` |
-| Search text | `rg "text"` | `grep -r` |
-| Git status | `lazygit` | `git status` |
-| Web content | `r.jina.ai url` | `curl url` |
-| Navigate | `z name` | `cd /long/path` |
-| List | `eza -la` | `ls -la` |
-| Edit | Use `edit` tool | `exec sed/awk` |
+| Need | Tool | When |
+|------|------|------|
+| 🔍 Find information | `qmd search "topic"` | ALWAYS FIRST for knowledge |
+| Quick check | `rg "pattern"` | Only if qmd too slow |
+| Read file | `bat file` | Always |
+| Find files | `fd pattern` | Finding by name |
+| Git | `lazygit` | Visual git ops |
+| Web content | `r.jina.ai url` | Static pages |
+| Navigate | `z name` | Terminal navigation |
+| List | `eza -la` | File listing |
+| Edit | `edit` tool | File modification |
 
 ---
 
 ## TOP 5 DAILY TOOLS
 
-1. **`zoxide`** - `z partial_name` (90% faster navigation)
-2. **`ripgrep`** - `rg "pattern"` (80% faster search)
+1. **`qmd`** - `qmd search "topic"` 🔍 PRIMARY SEARCH!
+2. **`zoxide`** - `z partial_name` (90% faster navigation)
 3. **`bat`** - `bat file.md` (readable syntax highlighting)
 4. **`fd`** - `fd pattern` (50% faster finding)
 5. **`lazygit`** - `lazygit` (visual git)
 
 ---
 
+## WHY QMD OVER RG?
+
+| Feature | qmd | ripgrep (rg) |
+|---------|-----|--------------|
+| Indexed | ✅ 63 files | ❌ Full scan |
+| Context | ✅ Shows surrounding text | ❌ Line only |
+| Semantic | ✅ Understands concepts | ❌ Keywords only |
+| Collections | ✅ memory, sessions, workspace | ❌ Single path |
+| Speed | ~0.4s | ~0.002s |
+
+**Use qmd for knowledge work. Use rg for simple existence checks.**
+
+---
+
 ## SELF-REMINDERS
 
-Before task: "What tool should I use?"
-After task: "Use the right tool next time"
+Before task: "Should I use qmd or rg?"
+Answer: **Use qmd first!**
+
+After task: "Did I use the right tool?"
+
+---
+
+## QMD WORKFLOW
+
+```bash
+# 1. Search your knowledge
+qmd search "memory system" -c memory
+
+# 2. If not found, search workspace
+qmd search "deployment" -c workspace
+
+# 3. Still not found? Search conversations
+qmd search "discussed" -c sessions
+
+# 4. Only then consider rg for simple check
+rg "pattern" --type md
+```
 
 ---
 
@@ -74,26 +132,25 @@ After task: "Use the right tool next time"
 
 | Topic | Reference |
 |-------|-----------|
+| qmd full docs | `memory/QMD-WORKFLOW.md` |
 | Tool comparison | `HIGH-IMPACT-TOOLS.md` |
 | Installation | `HIGH-IMPACT-TOOLS.md` (Phase 1-3) |
-| Efficiency gains | `HIGH-IMPACT-TOOLS.md` |
 | Browser needs | `BROWSER-AUTOMATION.md` |
-| Git workflow | Use `lazygit` |
-| Tool docs | Run `--help` on each tool |
 
 ---
 
 ## BEST PRACTICES
 
 ✅ DO:
+- **🔍 qmd** over rg for knowledge work
 - `bat` over `cat`
-- `rg` over `grep`
 - `fd` over `find`
 - `lazygit` for visual git
 - `zoxide` for navigation
 - `r.jina.ai` for web
 
 ❌ DON'T:
+- `rg` for finding information (use qmd!)
 - `cat`, `grep`, `find` for simple tasks
 - `exec` for file operations
 - raw `curl` for web scraping
@@ -102,4 +159,4 @@ After task: "Use the right tool next time"
 
 **Full details:** `memory/HIGH-IMPACT-TOOLS.md`
 
-🦞
+🦞 *Use qmd first!*

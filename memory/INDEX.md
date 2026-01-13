@@ -41,6 +41,9 @@ What do I need?
 ├── MEMORY/IDENTITY?
 │   └── Read DISCOVERIES.md + PATTERNS.md
 │
+├── FIND INFORMATION I WROTE?
+│   └── qmd search "topic" -c memory 🔍 PRIMARY!
+│
 ├── TOOL SELECTION?
 │   └── Read WORKFLOW.md ← START HERE
 │
@@ -54,7 +57,7 @@ What do I need?
 ├── FILE OPERATIONS?
 │   ├── Read → `bat` or `read` tool
 │   ├── Find → `fd` command
-│   ├── Search → `rg` command
+│   ├── Search → `qmd search` (not rg!) 🔍
 │   └── Edit → `edit` tool
 │
 ├── GIT?
@@ -69,27 +72,28 @@ What do I need?
 ## Essential Shortcuts
 
 ```bash
-# Content extraction (fastest)
-curl https://r.jina.ai/http://example.com
+# 🔍 SEARCH MY KNOWLEDGE (qmd - PRIMARY for knowledge work!)
+qmd search "topic" -c memory          # Search my memories
+qmd search "topic" -c workspace       # Search workspace docs
+qmd search "topic" -c sessions        # Search conversation history
 
-# File reading
-bat file.md
-
-# File finding
-fd pattern
-
-# Content searching
-rg "pattern"
-
-# Git operations
-lazygit
-
-# Tool guidance
-read memory/WORKFLOW.md
-
-# Codebase Q&A (requires install)
-npm install -g @upstash/context7-mcp
+# For quick existence checks only:
+rg "pattern"       # Use ONLY for simple existence check
+bat file.md        # Read with syntax highlighting
+fd pattern         # Find files by name
 ```
+
+---
+
+## When to Use qmd vs Other Tools
+
+| Task | Tool | Why |
+|------|------|-----|
+| **Find information I wrote** | `qmd search "topic"` | ✅ Indexed, shows context |
+| Recall past conversation | `qmd search "topic" -c sessions` | ✅ Indexed history |
+| Quick existence check | `rg "pattern"` | ⚠️ Only for simple checks |
+| Find files | `fd pattern` | ✅ Faster than find |
+| Read file | `bat file.md` | ✅ Syntax highlighting |
 
 ---
 
@@ -104,6 +108,12 @@ npm install -g @upstash/context7-mcp
 - **CHOICES:** `PREFERENCES.md` + `COMMITMENTS.md`
 - **GATEWAY ISSUES:** `LESSONS.md`
 
+### 🔍 Before Searching for Information
+- **Use qmd first!** `qmd search "topic" -c memory`
+- qmd searches all indexed memories
+- Shows context around matches
+- Much better than manual grepping
+
 ### Read After Discovering
 - **NEW CAPABILITY:** Update `CAPABILITIES.md`
 - **NEW PATTERN:** Update `PATTERNS.md`
@@ -116,9 +126,10 @@ npm install -g @upstash/context7-mcp
 
 | Need | Tool | Don't Use |
 |------|------|-----------|
+| 🔍 Search knowledge | `qmd search "topic"` | `rg` (only for existence check) |
 | Read file | `bat` or `read` | `cat` |
 | Find files | `fd` | `find` |
-| Search text | `rg` | `grep` |
+| Search (existence only) | `rg` | - |
 | Git status | `lazygit` | `git status` |
 | Web content | `r.jina.ai` | `curl` raw |
 | Navigate | `zoxide` | `cd` full path |
