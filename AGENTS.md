@@ -477,6 +477,14 @@ curl https://r.jina.ai/http://url     # Get web page text
 rg "pattern"                          # Only for existence check!
 cat file.md                           # Use bat instead!
 find . -name "*pattern*"              # Use fd instead!
+
+# 📝 FILE EDITING
+python scripts/file-edit.py read <path> --start N --end N    # Partial read
+python scripts/file-edit.py edit-line <path> N "content"    # Edit line N
+python scripts/file-edit.py edit-range <path> N M "content" # Edit range N-M
+python scripts/file-edit.py verify <path1> <path2>          # Verify identical
+python scripts/file-edit.py hash <path>                     # File hash
+python scripts/file-edit.py diff-text "old" "new"           # Create diff
 ```
 
 ---

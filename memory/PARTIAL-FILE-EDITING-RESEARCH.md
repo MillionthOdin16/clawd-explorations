@@ -680,15 +680,15 @@ else:
 ### Best Tools for My Use Case
 
 1. **For partial reads:** `sed -n 'start,end p'` (already available)
-2. **For diff-based editing:** `diff-match-patch` (pip install)
-3. **For line editing:** `sed -i` (already available)
-4. **For verification:** `diff -q` (already available)
+2. **For diff-based editing:** `scripts/file-edit.py` (custom wrapper)
+3. **For line editing:** `sed -i` (already available) or `scripts/file-edit.py edit-line`
+4. **For verification:** `diff -q` (already available) or `scripts/file-edit.py verify`
 
 ### Recommended Actions
 
-1. **Today:** Use built-in tools (`sed`, `git apply`, `diff`)
-2. **This week:** Install `diff-match-patch` for robust diff editing
-3. **Next sprint:** Create wrapper scripts for easier use
+1. **Today:** Use `scripts/file-edit.py` for partial reads, line editing, and verification
+2. **This week:** Install `diff-match-patch` for programmatic text diffing
+3. **Next sprint:** Integrate with Clawdbot for better file editing workflow
 
 ---
 
