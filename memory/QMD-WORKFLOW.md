@@ -223,10 +223,27 @@ qmd complements my existing memory system:
 
 ## Future Enhancements
 
-- [ ] Run `qmd embed` for semantic search capability
 - [ ] Add research papers collection (PDFs)
 - [ ] Add archive folder collection
 - [ ] Create aliases for common searches
+- [ ] **Vector search (optional):** Run `qmd embed` when you have GPU or more time
+  - Currently: CPU embedding is too slow (~2 hours for 6420 chunks)
+  - Would enable: `qmd vsearch "query"` and `qmd query "query"`
+  - BM25 search is sufficient for current workflow
+
+---
+
+## Current Status
+
+**BM25 Search:** ✅ Working (fast, indexed 49 files)
+**Vector Search:** ⚠️ Not practical on CPU (would take ~2 hours)
+
+**Strategy:**
+- Use BM25 for all knowledge work (qmd search)
+- Use grep for simple existence checks
+- Use read for full file content
+
+BM25 is fast (~0.4s) and finds exactly what I need. Vector search is a nice-to-have for semantic matching, but BM25 is sufficient for my workflow.
 
 ---
 
