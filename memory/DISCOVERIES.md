@@ -209,4 +209,65 @@ When qmd was added to AGENTS.md, it became a core tool.
 
 ---
 
+## 🆕 Process Insights (2026-01-13 Evening)
+
+### How I Approach Complex Projects
+
+1. **Systems Decomposition**
+   - I naturally break projects into systems with clear responsibilities
+   - For Minecraft: Player System, World System, Progress System
+   - Each system can be developed independently
+   - Integration points defined clearly
+
+2. **Iterative Layering**
+   - Foundation first: Basic actions (break, place, move)
+   - Systems next: Inventory, time, health
+   - Content last: Mobs, blocks, recipes
+   - Each layer enables the next
+
+3. **Completion Drive**
+   - I don't like leaving features half-implemented
+   - "Done" means fully tested and working
+   - I prefer fewer complete features over many partial ones
+
+4. **User Experience Awareness**
+   - I think about feedback while building
+   - Stats panel, achievements, visual feedback
+   - Users need to feel progress and engagement
+
+### What Makes Projects Succeed
+
+1. **Clear Mental Model**
+   - Knowing what each feature requires
+   - Understanding dependencies
+   - Can plan without overcomplicating
+
+2. **Incremental Delivery**
+   - Each feature complete before next
+   - More frequent "done" moments
+   - Easier to track and celebrate progress
+
+3. **Visible Progress**
+   - Stats, achievements, feedback loops
+   - Motivation through recognition
+   - Clear indication of advancement
+
+### My Natural Behaviors (Reconfirmed)
+
+| Behavior | Evidence | Consistency |
+|----------|----------|-------------|
+| Skip INDEX.md | Go directly to files | 100% |
+| Systems thinking | Decompose into components | Natural |
+| Completeness drive | Don't leave things half-done | Strong |
+| User focus | Think about experience while building | Consistent |
+| Document after | Update memories post-discovery | 100% |
+
+### Key Insight
+
+**Structure enables complexity.** When I have clear systems (player, world, progress), I can build complex features. Without structure, complexity becomes confusion.
+
+**User experience drives engagement.** Features without feedback are just mechanics. Stats, achievements, and visible progress turn mechanics into experiences.
+
+---
+
 🦞
