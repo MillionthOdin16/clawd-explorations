@@ -297,4 +297,293 @@ npm install -g surge
 
 ---
 
-🦞 *Analysis complete - tools ranked by impact and ease of use*
+## LLM-Specific & AI Agent Tools
+
+### Web Scraping & Content Extraction for LLMs
+
+#### 1. **Jina AI Reader** (r.jina.ai) - ⭐ 9,600+
+```
+URL: https://github.com/jina-ai/reader
+
+Usage:
+  curl https://r.jina.ai/http://example.com
+  curl -H "Accept: application/json" https://r.jina.ai/http://example.com
+
+Features:
+  ✅ Converts any URL to LLM-friendly markdown
+  ✅ Automatic content extraction (removes ads/nav)
+  ✅ SPA (JavaScript) rendering support
+  ✅ Streaming mode for real-time processing
+  ✅ JSON output option
+  ✅ Generated alt text for images
+  ✅ No API key needed (free tier available)
+```
+
+**Why It's Better Than Curl:**
+- Curl just gets raw HTML
+- Jina Reader extracts meaningful content
+- Handles JavaScript-rendered pages
+- Outputs clean markdown for LLMs
+
+#### 2. **Firecrawl** - ⭐ 74,600+
+```
+URL: https://github.com/firecrawl/firecrawl
+Site: https://firecrawl.dev
+
+Features:
+  ✅ Turn entire websites into LLM-ready markdown
+  ✅ Intelligent link discovery
+  ✅ JavaScript rendering
+  ✅ Proxy rotation
+  ✅ Rate limiting protection
+  ✅ Markdown, HTML, or JSON output
+
+Install: npm install -g @firecrawl/cli
+
+Usage:
+  firecrawl scrape https://example.com --format markdown
+  firecrawl crawl https://example.com --limit 100
+```
+
+**Use Cases:**
+- Scrape documentation sites
+- Build knowledge bases from websites
+- Extract content for RAG systems
+
+#### 3. **Unstructured IO** - ⭐ 13,600+
+```
+URL: https://github.com/unstructured-io/unstructured
+
+Features:
+  ✅ Convert documents to structured data
+  ✅ PDF, Word, PowerPoint, HTML, Markdown support
+  ✅ Extract tables, images, metadata
+  ✅ Local processing (no data leaves your machine)
+
+Install: pip install unstructured
+
+Usage:
+  from unstructured.partition.html import partition_html
+  elements = partition_html(filename="example.html")
+```
+
+**Why It Matters:**
+- PDFs/documents → LLM-ready chunks
+- Preserves document structure
+- Free and open source
+
+---
+
+### Browser Automation for AI Agents
+
+#### 4. **Browser Use** - ⭐ 75,300+
+```
+URL: https://github.com/browser-use/browser-use
+
+Features:
+  ✅ Make websites accessible for AI agents
+  ✅ Browser automation via Python
+  ✅ Click, type, scroll, extract
+  ✅ Vision capabilities
+  ✅ Multi-step task automation
+
+Install: pip install browser-use
+
+Use Case:
+  AI agents can browse the web autonomously
+  Example: "Find and book a restaurant near me"
+```
+
+#### 5. **Playwright** - ⭐ 81,100+
+```
+URL: https://github.com/microsoft/playwright
+
+Features:
+  ✅ Web testing and automation
+  ✅ Chromium, Firefox, WebKit support
+  ✅ Auto-wait for elements
+  ✅ Network interception
+  ✅ Screenshots and PDFs
+
+Install: npm install playwright
+         npx playwright install
+
+Why It's Better Than Puppeteer:
+  ✅ Faster execution
+  ✅ Better auto-waiting
+  ✅ Built-in test runner
+  ✅ Mobile device emulation
+```
+
+---
+
+### Model Context Protocol (MCP)
+
+#### 6. **MCP Servers** - ⭐ 76,000+
+```
+URL: https://github.com/modelcontextprotocol/servers
+
+What is MCP?
+  Standardized way for AI agents to connect to tools
+  Like "USB-C for AI agents"
+
+Key Servers:
+  - filesystem: Local file operations
+  - github: GitHub API integration
+  - postgres: Database queries
+  - fetch: Web content extraction
+  - memory: Persistent context storage
+
+Install MCP CLI:
+  npm install -g @modelcontextprotocol/cli
+```
+
+---
+
+### Specialized LLM Tools
+
+#### 7. **yt-dlp** - ⭐ 141,600+
+```
+URL: https://github.com/yt-dlp/yt-dlp
+
+Features:
+  ✅ Download YouTube videos/audio
+  ✅ Extract transcripts
+  ✅ Support for 1700+ sites
+  ✅ Use with summarize tool
+
+Install: pip install yt-dlp
+
+Usage:
+  yt-dlp --write-auto-subs https://youtube.com/watch?v=...
+  yt-dlp -x --audio-format mp3 https://youtube.com/watch?v=...
+```
+
+#### 8. **AgentOps** - ⭐ 5,200+
+```
+URL: https://github.com/AgentOps-AI/agentops
+
+Features:
+  ✅ AI agent monitoring
+  ✅ LLM cost tracking
+  ✅ Benchmarking
+  ✅ Session recording
+
+Install: pip install agentops
+
+Use Case:
+  Track your AI agent sessions and costs
+```
+
+#### 9. **Composio** - ⭐ 26,300+
+```
+URL: https://github.com/ComposioHQ/composio
+
+Features:
+  ✅ 100+ tool integrations for AI agents
+  ✅ GitHub, Jira, Slack, Google, etc.
+  ✅ MCP-compatible
+
+Install: pip install composio-core
+
+Use Case:
+  Give your agents access to many services
+```
+
+---
+
+## Recommended LLM-Specific Skills to Add
+
+### Priority 1: Jina Reader Skill
+```python
+# Quick URL to markdown
+curl https://r.jina.ai/http://example.com
+
+# JSON output
+curl -H "Accept: application/json" https://r.jina.ai/http://example.com
+```
+
+### Priority 2: Firecrawl Skill
+```bash
+# Install
+npm install -g @firecrawl/cli
+
+# Scrape to markdown
+firecrawl scrape https://docs.example.com --format markdown
+```
+
+### Priority 3: yt-dlp + Summarize Combo
+```bash
+# Get YouTube transcript
+yt-dlp --write-auto-subs -o transcript.txt https://youtube.com/watch?v=...
+
+# Summarize
+summarize transcript.txt --model gemini-flash
+```
+
+### Priority 4: Browser Use Skill
+```python
+from browser_use import Controller
+
+controller = Controller()
+# AI can now browse autonomously
+```
+
+---
+
+## Tool Selection Decision Tree
+
+```
+Need to fetch web content?
+├── Simple page → use r.jina.ai (free, no install)
+├── JavaScript/SPA → use r.jina.ai with x-wait-for-selector
+├── Full website → use firecrawl
+└── Interactive → use browser-use
+
+Need to process documents?
+├── PDFs/docs → use unstructured-io
+└── Word/PPT → use unstructured-io
+
+Need browser automation?
+├── Testing → use playwright
+└── AI agent → use browser-use
+
+Need YouTube?
+├── Download → use yt-dlp
+└── Transcript → use yt-dlp --write-auto-subs
+```
+
+---
+
+## Installation Priority
+
+```bash
+# Priority 1: No-install tools (use directly)
+# r.jina.ai - just curl it!
+curl https://r.jina.ai/http://example.com
+
+# Priority 2: Quick installs
+pip install yt-dlp  # YouTube downloads
+npm install -g @firecrawl/cli  # Web scraping
+
+# Priority 3: Full frameworks
+pip install unstructured  # Document processing
+pip install browser-use  # AI browser automation
+```
+
+---
+
+## Summary: LLM-Specific Tools
+
+| Tool | Purpose | Why It's Special |
+|------|---------|------------------|
+| **r.jina.ai** | URL → LLM markdown | Free, no install, works via curl |
+| **firecrawl** | Full website scraping | Discovers all links, JavaScript support |
+| **unstructured-io** | Document → chunks | Local processing, preserves structure |
+| **browser-use** | AI browser automation | Let AI browse for you |
+| **yt-dlp** | YouTube + transcripts | Works with summarize skill |
+| **MCP servers** | Standardized tools | Like USB-C for AI agents |
+
+---
+
+🦞 *Analysis complete - LLM-specific tools that supercharge AI workflows*

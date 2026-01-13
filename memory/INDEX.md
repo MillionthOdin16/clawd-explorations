@@ -224,7 +224,9 @@ I APPLY learnings to current situation
 - GitHub work: Read CAPABILITIES.md (GitHub CLI, repos)
 - **Uncertain about topic?** Read QMD-WORKFLOW.md → use `qmd search "topic"`
 - Coolify deployment: Read COOLIFY-WORKSPACE.md
-- **Choosing CLI tools?** Read CLI-TOOLS-ANALYSIS.md (curl vs xh, hosting options)
+- **Choosing CLI tools?** Read CLI-TOOLS-ANALYSIS.md
+  - General tools: curl vs xh, better file tools
+  - **LLM-specific:** r.jina.ai, firecrawl, browser-use, yt-dlp
 
 ### Always Write After Discovering
 - New discovery: Update DISCOVERIES.md
