@@ -8,6 +8,7 @@ This folder is the assistant's working directory.
 - Your profile lives in USER.md.
 - Your essence and values live in SOUL.md.
 - Track your behavior and memory usage in USAGE.md.
+- **Custom tools documentation:** TOOLS.md ⭐
 
 ## SESSION STARTUP ROUTINE (DO THIS FIRST!)
 At the START of every session, do this:
