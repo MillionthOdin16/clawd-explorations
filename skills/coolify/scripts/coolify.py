@@ -9,11 +9,14 @@ import argparse
 import os
 import sys
 import json
+import time
 import httpx
 from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
 from rich.syntax import Syntax
+from rich.panel import Panel
+from datetime import datetime
 
 console = Console()
 API_BASE = "https://coolify.bradarr.com/api/v1"
@@ -245,6 +248,89 @@ def list_projects(raw: bool = False):
         )
     console.print(table)
 
+# Logs
+
+def get_logs(uuid: str, lines: int = 50):
+    """Get application logs."""
+    logs = make_request("GET", f"applications/{uuid}/logs?lines={lines}")
+    
+    if raw:
+        rprint(json.dumps(logs, indent=2))
+        return
+    
+    rprint(f"\n[bold]Logs for {uuid}[/bold] (last {lines} lines)")
+    
+    log_data = logs.get("logs", "")
+    if log_data:
+        # Show last 30 lines in a panel
+        log_lines = log_data.strip().split('\n')[-lines:]
+        log_text = '\n'.join(log_lines)
+        panel = Panel(
+            log_text if log_text else "[yellow]No logs available[/yellow]",
+            title="Application Logs",
+            border_style="blue"
+        )
+        console.print(panel)
+    else:
+        rprint("[yellow]No logs available[/yellow]")
+
+# Watch
+
+def watch_app(uuid: str, interval: int = 5):
+    """Watch application status changes."""
+    rprint(f"[yellow]Watching {uuid}... Press Ctrl+C to stop[/yellow]\n")
+    
+    last_status = None
+    try:
+        while True:
+            app = make_request("GET", f"applications/{uuid}")
+            status = app.get("status", "unknown")
+            name = app.get("name", "Unnamed")
+            
+            # Clear and show current status
+            if status != last_status:
+                if "running" in status:
+                    status_style = "green"
+                elif "exited" in status or "unhealthy" in status:
+                    status_style = "red"
+                else:
+                    status_style = "yellow"
+                
+                timestamp = datetime.now().strftime("%H:%M:%S")
+                rprint(f"[{timestamp}] [bold]{name}[/bold]: [bold {status_style}]{status}[/bold {status_style}]")
+                last_status = status
+            
+            time.sleep(interval)
+    except KeyboardInterrupt:
+        rprint("\n[yellow]Stopped watching[/yellow]")
+
+# Deploy
+
+def deploy_from_github(name: str, fqdn: str, repo: str, branch: str = "main", 
+                       build_pack: str = "nixpacks", project_uuid: str = None):
+    """Create and deploy a new application from GitHub."""
+    rprint(f"[yellow]Creating application: {name}[/yellow]")
+    rprint(f"  Repository: {repo}")
+    rprint(f"  Branch: {branch}")
+    rprint(f"  Build Pack: {build_pack}")
+    rprint(f"  URL: {fqdn}")
+    
+    payload = {
+        "name": name,
+        "fqdn": fqdn,
+        "git_repository": repo,
+        "git_branch": branch,
+        "build_pack": build_pack
+    }
+    
+    if project_uuid:
+        rprint(f"  Project: {project_uuid}")
+    
+    result = make_request("POST", "applications", json=payload)
+    rprint(f"\n[green]Application created successfully![/green]")
+    rprint(f"UUID: {result.get('uuid', 'N/A')}")
+    rprint("\n[yellow]Now deploy from the dashboard or trigger a deployment[/yellow]")
+
 # Main CLI
 
 def main():
@@ -281,6 +367,25 @@ def main():
     delete_p.add_argument("uuid", help="Application UUID")
     delete_p.add_argument("--force", action="store_true", help="Skip confirmation")
     
+    logs_p = apps_sub.add_parser("logs", help="Get application logs")
+    logs_p.add_argument("uuid", help="Application UUID")
+    logs_p.add_argument("-n", "--lines", type=int, default=50, help="Number of lines")
+    
+    watch_p = apps_sub.add_parser("watch", help="Watch application status")
+    watch_p.add_argument("uuid", help="Application UUID")
+    watch_p.add_argument("-i", "--interval", type=int, default=5, help="Check interval (seconds)")
+    
+    # Deploy
+    deploy_p = subparsers.add_parser("deploy", help="Deploy a new application")
+    deploy_p.add_argument("name", help="Application name")
+    deploy_p.add_argument("fqdn", help="Full qualified domain name (e.g., myapp.bradarr.com)")
+    deploy_p.add_argument("repo", help="GitHub repository (owner/repo)")
+    deploy_p.add_argument("--branch", default="main", help="Git branch")
+    deploy_p.add_argument("--build-pack", default="nixpacks", 
+                         choices=["nixpacks", "dockerfile", "dockercompose", "static", "dockerimage"],
+                         help="Build pack type")
+    deploy_p.add_argument("--project", help="Project UUID (optional)")
+    
     # Databases
     dbs_p = subparsers.add_parser("dbs", help="Manage databases")
     dbs_sub = dbs_p.add_subparsers(dest="subcommand")
@@ -304,11 +409,14 @@ def main():
     if not args.command:
         parser.print_help()
         rprint("\n[bold]Quick Examples:[/bold]")
-        rprint("  coolify apps list          # List all applications")
-        rprint("  coolify apps get <uuid>    # Get app details")
-        rprint("  coolify apps start <uuid>  # Start an app")
-        rprint("  coolify dbs list           # List databases")
-        rprint("  coolify services list      # List services")
+        rprint("  coolify apps list              # List all applications")
+        rprint("  coolify apps get <uuid>        # Get app details")
+        rprint("  coolify apps logs <uuid>       # Get app logs")
+        rprint("  coolify apps watch <uuid>      # Monitor status")
+        rprint("  coolify apps start <uuid>      # Start an app")
+        rprint("  coolify deploy myapp domain.repo --branch main  # Deploy new app")
+        rprint("  coolify dbs list               # List databases")
+        rprint("  coolify services list          # List services")
         return
     
     # Route commands
@@ -331,6 +439,10 @@ def main():
             restart_app(args.uuid)
         elif args.subcommand == "delete":
             delete_app(args.uuid, args.force)
+        elif args.subcommand == "logs":
+            get_logs(args.uuid, args.lines)
+        elif args.subcommand == "watch":
+            watch_app(args.uuid, args.interval)
     
     elif args.command == "dbs":
         if args.subcommand == "list" or not args.subcommand:
@@ -345,6 +457,12 @@ def main():
     elif args.command == "projects":
         if args.subcommand == "list" or not args.subcommand:
             list_projects(args.raw)
+    
+    elif args.command == "deploy":
+        deploy_from_github(
+            args.name, args.fqdn, args.repo,
+            args.branch, args.build_pack, args.project
+        )
 
 if __name__ == "__main__":
     main()

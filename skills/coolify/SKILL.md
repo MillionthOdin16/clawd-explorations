@@ -30,10 +30,26 @@ COOLIFY_API_KEY="your-api-key"
 ```bash
 uv run {baseDir}/scripts/coolify.py apps list              # List all apps
 uv run {baseDir}/scripts/coolify.py apps get <uuid>        # Get app details
+uv run {baseDir}/scripts/coolify.py apps logs <uuid>       # Get app logs
+uv run {baseDir}/scripts/coolify.py apps watch <uuid>      # Monitor status
 uv run {baseDir}/scripts/coolify.py apps start <uuid>      # Start app
 uv run {baseDir}/scripts/coolify.py apps stop <uuid>       # Stop app
 uv run {baseDir}/scripts/coolify.py apps restart <uuid>    # Restart app
 uv run {baseDir}/scripts/coolify.py apps delete <uuid>     # Delete app
+```
+
+### Deploy New Application
+```bash
+uv run {baseDir}/scripts/coolify.py deploy <name> <fqdn> <repo> [--branch main] [--build-pack nixpacks]
+```
+
+**Example:**
+```bash
+# Deploy a Node.js app
+uv run {baseDir}/scripts/coolify.py deploy "My Dashboard" dashboard.bradarr.com owner/repo --branch main --build-pack nixpacks
+
+# Deploy with Dockerfile
+uv run {baseDir}/scripts/coolify.py deploy "API" api.bradarr.com owner/api --build-pack dockerfile
 ```
 
 ### Databases
