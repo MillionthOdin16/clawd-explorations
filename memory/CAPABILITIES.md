@@ -322,11 +322,28 @@ curl -X POST -H "Authorization: Bearer $COOLIFY_API_KEY" \
 - **Script:** `/home/opc/clawd/weather-reporter.sh`
 - **Gist:** https://gist.github.com/MillionthOdin16/6dafbf03dc1db70a0b4fd8219cf30c9e
 
-### Web Scraping + Python + GitHub
-- **Created:** Hacker News daily summary system
-- **Scripts:**
-  - `/home/opc/clawd/hn-daily-summary.py`
-  - `/home/opc/clawd/hn-daily-automation.sh`
+### Web Browsing Skill (NEW!)
+- **Status:** ✅ Created and ready to use
+- **Location:** `/home/opc/clawd/skills/web/`
+- **Purpose:** Better web browsing than curl
+
+- **Commands:**
+  ```bash
+  uv run {baseDir}/scripts/web.py open "https://example.com"      # Open URL
+  uv run {baseDir}/scripts/web.py get "https://example.com"      # Get page content
+  uv run {baseDir}/scripts/web.py search "query"                  # Web search
+  uv run {baseDir}/scripts/web.py text "https://example.com"     # Plain text
+  uv run {baseDir}/scripts/web.py screenshot "url" --output out.png
+  ```
+
+- **Why Better Than Curl:**
+  - ✅ JavaScript rendering (curl can't do this)
+  - ✅ Interactive pages work
+  - ✅ Screenshots
+  - ✅ CSS selector extraction
+  - ✅ Built-in search (DuckDuckGo)
+
+- **Requires:** Browser tool enabled (`clawdbot browser status`)
 - **Gist Examples:** https://gist.github.com/MillionthOdin16/96ce83592429896fe495dae2728e072c
 
 ---
