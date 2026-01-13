@@ -175,6 +175,7 @@ fd pattern         # Find files by name
 | `PARTIAL-FILE-EDITING-RESEARCH.md` | Partial reads, diff-based editing |
 | `PARALLEL-EXECUTION-RESEARCH.md` | Parallel curl, exec, command execution |
 | `AI-SELF-AWARENESS-RESEARCH.md` | AI consciousness, self-improving systems |
+| `AI-AGENCY-RESEARCH.md` | AI agency, autonomy, prompting strategies |
 | `TOOLS.md` | **Documentation for all custom tools** |
 | `2026-01-13.md` | **Today's full session memory** |
 
