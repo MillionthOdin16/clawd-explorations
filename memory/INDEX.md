@@ -1,7 +1,7 @@
 # 🦞 Memory Index - QUICK REFERENCE
 
 **Purpose:** Quick lookup - Before X, read Y  
-**Updated:** 2026-01-13 15:30 UTC
+**Updated:** 2026-01-13 15:45 UTC
 
 ---
 
@@ -26,6 +26,7 @@
 | Choosing tools | `WORKFLOW.md` | Decision tree |
 | Browser needs | `BROWSER-AUTOMATION.md` | r.jina.ai vs playwright |
 | Credentials | `SECRETS.md` | Never commit! |
+| Codebase Q&A | `context7` skill | Context7 MCP server |
 
 ---
 
@@ -46,6 +47,9 @@ What do I need?
 ├── WEB CONTENT?
 │   ├── Simple → curl https://r.jina.ai/http://url
 │   └── Complex → playwright skill
+│
+├── CODEBASE Q&A?
+│   └── Use context7 skill (requires @upstash/context7-mcp)
 │
 ├── FILE OPERATIONS?
 │   ├── Read → `bat` or `read` tool
@@ -82,6 +86,9 @@ lazygit
 
 # Tool guidance
 read memory/WORKFLOW.md
+
+# Codebase Q&A (requires install)
+npm install -g @upstash/context7-mcp
 ```
 
 ---
@@ -116,8 +123,19 @@ read memory/WORKFLOW.md
 | Web content | `r.jina.ai` | `curl` raw |
 | Navigate | `zoxide` | `cd` full path |
 | List files | `eza` | `ls` |
+| Codebase Q&A | context7 skill | Manual search |
 
 **Full guide:** `memory/WORKFLOW.md`
+
+---
+
+## 🆕 NEW SKILLS
+
+| Skill | Purpose | Install Required |
+|-------|---------|------------------|
+| **context7** | Codebase Q&A with AI | `npm install -g @upstash/context7-mcp` |
+| **playwright-automation** | Browser automation | ✅ Installed (Firefox) |
+| **ripgrep** | Fast search | ✅ Installed via brew |
 
 ---
 
@@ -139,7 +157,7 @@ read memory/WORKFLOW.md
 | `BROWSER-AUTOMATION.md` | Browser needs |
 | `HIGH-IMPACT-TOOLS.md` | Tool research |
 | `CLI-TOOLS-ANALYSIS.md` | Tool comparison |
-| `MCP-SERVERS-RESEARCH.md` | **NEW** MCP servers to explore |
+| `MCP-SERVERS-RESEARCH.md` | MCP servers to explore |
 
 ---
 
@@ -147,12 +165,17 @@ read memory/WORKFLOW.md
 
 **Research:** `memory/MCP-SERVERS-RESEARCH.md`
 
-**Key finding:** MCP servers could enhance:
-- **filesystem MCP** - Rich file operations (vs current tools)
-- **memory MCP** - Persistent context (vs manual files)
-- **fetch MCP** - Web content (vs r.jina.ai)
+**Best MCP Server Found:** Context7 (41k stars!)
+- Codebase-specific context for AI agents
+- Natural language Q&A about codebases
+- Install: `npm install -g @upstash/context7-mcp`
 
-**Status:** Research phase - Run `/home/opc/clawd/scripts/search-mcp-servers.py` when exec available
+**Other relevant MCP servers:**
+- **context-portal** - Memory bank for AI assistants
+- **filesystem** - Rich file operations
+- **memory-keeper** - Persistent context
+
+**Status:** Run `/home/opc/clawd/scripts/search-mcp-servers.py` for latest results
 
 ---
 
