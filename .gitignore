@@ -18,3 +18,6 @@ baby_clawdbot_key
 # Other sensitive data
 credentials/
 secrets/
+
+# Node modules (should not be committed)
+node_modules/
