@@ -128,6 +128,15 @@ Before running ANY daemon command:
 - Checkpoint system for progress monitoring
 - Parallel execution patterns
 
+### CRON-JOBS.md
+- Periodic tasks for knowledge development and personality growth
+- Daily heartbeat update (22:00 daily)
+- Memory consolidation (18:00 Wed/Sat)
+- Self-reflection exploration (19:00 Mon/Sat)
+- Skill inventory, session analysis, discovery prompts
+- Integration with sub-agent framework
+- Cron expression guide and implementation plan
+
 ---
 
 ## READ Pattern (Before responding)
