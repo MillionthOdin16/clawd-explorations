@@ -113,6 +113,13 @@ Before running ANY daemon command:
 - Build packs available and deployment guide
 - Subdomains and resource management
 
+### QMD-WORKFLOW.md
+- qmd local search workflow and best practices
+- Why qmd is most useful skill for me
+- Search commands and collection management
+- Integration with my memory system
+- Performance notes and maintenance
+
 ---
 
 ## READ Pattern (Before responding)
