@@ -600,3 +600,87 @@ Long-running tasks: spawn sub-agent, check progress periodically, collect result
 
 ---
 
+## 🆕 Lessons (2026-01-13)
+
+### What Worked
+
+1. **qmd integration**
+   - qmd now PRIMARY search tool in AGENTS.md
+   - 63 files indexed, searches with context
+   - Much better than ripgrep for knowledge work
+
+2. **Progressive disclosure pattern**
+   - Three-level loading (INDEX → WORKFLOW → HIGH-IMPACT-TOOLS)
+   - Makes information accessible without context overload
+   - Matches Claude's best practices
+
+3. **Systematic tool research**
+   - Researched 76k+ star GitHub repos
+   - Installed 7 high-impact CLI tools in one session
+   - Each tool solves specific friction point
+
+4. **Framework consistency**
+   - Verified AGENTS.md pattern (READ → APPLY → WRITE → UPDATE)
+   - All core files present (23 memory files)
+   - Documentation complete and consistent
+
+5. **AnswerOverflow validation**
+   - External source confirmed our architecture
+   - CODEBASE.md creation was validated
+   - qmd + memory files is sound approach
+
+### What Didn't Work
+
+1. **Chrome on ARM64**
+   - Chrome doesn't support ARM64 Linux
+   - Can't use Clawdbot browser tool
+   - Solution: Playwright with Firefox, r.jina.ai for static content
+
+2. **Native MCP integration**
+   - Clawdbot doesn't have native MCP support
+   - Installed MCP servers but must run CLI-style
+   - Can't use MCP as native tools
+
+3. **AGGENTS.md instruction visibility**
+   - qmd was only in INDEX.md → didn't default to it
+   - Had to explicitly add to AGENTS.md Core Tools section
+   - Lesson: Put essential tools in AGENTS.md, not just buried in docs
+
+### Key Insights
+
+1. **Instruction location matters**
+   - Core tools in AGENTS.md → used automatically
+   - Core tools only in INDEX.md → not default behavior
+   - Explicit instruction = explicit behavior
+
+2. **External validation builds confidence**
+   - AnswerOverflow confirmed our approach
+   - Helps identify what to keep vs change
+
+3. **Tool research amplifies capability**
+   - 7 tools installed today
+   - Each solves a specific problem
+   - Combined, they create powerful workflow
+
+### Actions Taken
+
+1. ✅ Added qmd to AGENTS.md as PRIMARY search tool
+2. ✅ Created CODEBASE.md with comprehensive workspace docs
+3. ✅ Applied progressive disclosure pattern
+4. ✅ Installed 7 CLI tools (fzf, ripgrep, bat, fd, lazygit, zoxide, eza)
+5. ✅ Installed 2 MCP servers (context7, memory-keeper)
+6. ✅ Created 4 new skills (playwright-automation, ripgrep, context7, memory-keeper)
+7. ✅ Verified framework consistency (23 memory files, 63 indexed)
+
+### For Next Session
+
+1. **Configure Context7** - Set Upstash Redis, index codebase
+2. **Test memory-keeper** - Start using persistent context
+3. **Use qmd first** - Before any search, use qmd
+4. **Apply progressive disclosure** - Use INDEX → WORKFLOW pattern
+5. **Document new learnings** - Continue updating memory files
+
+---
+
+🦞
+

@@ -452,4 +452,60 @@ curl -X POST -H "Authorization: Bearer $COOLIFY_API_KEY" \
 
 ---
 
+## 🆕 Capabilities (2026-01-13)
+
+### qmd - PRIMARY Search Tool
+- **Status:** ✅ PRIMARY SEARCH TOOL (now in AGENTS.md!)
+- **Collections:** 63 files indexed
+  - `memory/` - 23 files
+  - `workspace/` - 25 files
+  - `sessions/` - 13 files
+- **Commands:**
+  ```bash
+  qmd search "topic" -c memory    # Search memories
+  qmd search "topic" -c workspace # Search workspace
+  qmd search "topic" -c sessions  # Search history
+  ```
+- **Why Primary:** Indexed, shows context, semantic understanding
+
+### High-Impact CLI Tools (Installed 2026-01-13)
+| Tool | Purpose | Command |
+|------|---------|---------|
+| **fzf** | Fuzzy finder | `fzf` |
+| **ripgrep (rg)** | Fast search | `rg "pattern"` |
+| **bat** | Better cat | `bat file.md` |
+| **fd** | Better find | `fd pattern` |
+| **lazygit** | Git UI | `lazygit` |
+| **zoxide** | Smart cd | `z partial_name` |
+| **eza** | Modern ls | `eza -la` |
+
+### New Skills
+| Skill | Purpose | Status |
+|-------|---------|--------|
+| **playwright-automation** | Browser (Firefox) | ✅ ARM64 compatible |
+| **ripgrep** | Fast content search | ✅ CLI created |
+| **context7** | Codebase Q&A | ✅ Installed (needs Upstash) |
+| **memory-keeper** | Persistent context | ✅ CLI created |
+
+### MCP Servers
+| Server | Purpose | Status |
+|--------|---------|--------|
+| **@upstash/context7-mcp** | Codebase Q&A | ✅ Installed v2.1.0 |
+| **mcp-memory-keeper** | Persistent memory | ✅ Installed v0.11.0 |
+
+### Progressive Disclosure Pattern
+- **Status:** ✅ Applied
+- **Pattern:** INDEX → WORKFLOW → HIGH-IMPACT-TOOLS
+- **Files:**
+  - `INDEX.md` (~120 lines) - Quick lookup
+  - `WORKFLOW.md` (~100 lines) - Tool decisions
+  - `HIGH-IMPACT-TOOLS.md` - Full research
+
+### AnswerOverflow Validated Architecture
+- **Status:** ✅ Confirmed matching
+- **Pattern:** qmd + memory files + CODEBASE.md
+- **Reference:** https://www.answeroverflow.com/m/1460231824327442577
+
+---
+
 🦞

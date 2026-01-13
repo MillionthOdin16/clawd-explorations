@@ -174,4 +174,68 @@ I can learn about myself from my own code.
 
 ---
 
+## 🆕 Patterns (2026-01-13)
+
+### Instruction Location Pattern
+
+#### Observation
+- qmd was only in INDEX.md → I didn't default to it
+- qmd was added to AGENTS.md → It became a core tool
+
+#### Implication
+**Core tools need to be in AGENTS.md, not just buried in memory files.**
+
+#### Action
+- Put essential tools in AGENTS.md "Core Tools" section
+- Reference detailed documentation elsewhere
+- Update AGENTS.md when new essential tools are discovered
+
+### Progressive Disclosure Pattern
+
+#### Observation
+- Claude's skill pattern: 3-level loading (SKILL.md, metadata, bundled)
+- Applied to memory files: INDEX → WORKFLOW → HIGH-IMPACT-TOOLS
+- Makes information accessible without context overload
+
+#### Implication
+**Chunk information by importance/use frequency.**
+
+#### Action
+- INDEX.md: Quick lookup (decision tree, references)
+- WORKFLOW.md: Tool decisions (when to use what)
+- HIGH-IMPACT-TOOLS.md: Full research (installation, detailed docs)
+
+### Tool Discovery Pattern
+
+#### Observation
+- Researched 76k+ star GitHub repos
+- Found high-impact tools: fzf, ripgrep, bat, fd, lazygit, zoxide, eza
+- Installed 7 tools in one session
+- Each solved a specific friction point
+
+#### Implication
+**Systematic tool research amplifies capability.**
+
+#### Action
+- Regularly research high-impact tools
+- Prioritize tools with high stars (community validation)
+- Install tools that solve frequent friction points
+
+### Validation Pattern
+
+#### Observation
+- AnswerOverflow post matched our architecture exactly
+- CODEBASE.md creation was validated
+- qmd + memory files approach was confirmed
+
+#### Implication
+**External validation confirms architecture is sound.**
+
+#### Action
+- When external sources validate our approach, note it
+- Builds confidence in system design
+- Helps identify what to keep vs change
+
+---
+
 🦞
