@@ -68,17 +68,105 @@
   - List projects
   - Rich table output for readability
   - Raw JSON output with `--raw` flag
+  - **NEW:** Get application logs with `apps logs <uuid>`
+  - **NEW:** Monitor status with `apps watch <uuid>`
+  - **NEW:** Deploy from GitHub with `deploy <name> <fqdn> <repo>`
 
 - **Commands:**
   ```bash
   uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps list
   uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps get <uuid>
-  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps start <uuid>
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps logs <uuid>
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps watch <uuid>
   uv run /home/opc/clawd/skills/coolify/scripts/coolify.py dbs list
-  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py services list
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py deploy "MyApp" app.bradarr.com owner/repo
   ```
 
 - **Requires:** `COOLIFY_API_KEY` environment variable
+
+### qmd - Local Search
+- **Status:** ✅ Tested and working
+- **Purpose:** Local search/indexing with BM25 + vectors + rerank
+- **Location:** `/home/opc/.nvm/versions/node/v22.20.0/lib/node_modules/clawdbot/skills/qmd/`
+
+- **Commands:**
+  ```bash
+  qmd status                          # Check index status
+  qmd collection add /path --name mydocs --mask "**/*.md"  # Add collection
+  qmd search "query"                  # BM25 search
+  qmd vsearch "query"                 # Vector search
+  qmd query "query"                   # Hybrid search
+  qmd embed                           # Update embeddings (requires Ollama)
+  ```
+
+- **Notes:**
+  - Index lives in `~/.cache/qmd`
+  - MCP mode: `qmd mcp`
+  - Perfect for searching my own memory files and workspace
+
+### session-logs - Conversation History
+- **Status:** ✅ Tested and working
+- **Purpose:** Search and analyze my own conversation history
+- **Location:** `~/.clawdbot/agents/main/sessions/`
+
+- **Commands (jq-based):**
+  ```bash
+  # List sessions by date and size
+  for f in ~/.clawdbot/agents/main/sessions/*.jsonl; do
+    date=$(head -1 "$f" | jq -r '.timestamp' | cut -dT -f1)
+    size=$(ls -lh "$f" | awk '{print $5}')
+    echo "$date $size $(basename $f)"
+  done | sort -r
+
+  # Search for keyword across all sessions
+  grep -l "keyword" ~/.clawdbot/agents/main/sessions/*.jsonl
+
+  # Get total cost for a session
+  jq -s '[.[] | .message.usage.cost.total // 0] | add' <session>.jsonl
+
+  # Daily cost summary
+  jq -s '{date: .[0].timestamp | split("T") | .[0], cost: [.[] | .message.usage.cost.total // 0] | add}' <session>.jsonl
+
+  # Tool usage breakdown
+  jq -r '.message.content[]? | select(.type == "toolCall") | .name' <session>.jsonl | sort | uniq -c | sort -rn
+  ```
+
+- **Useful for:**
+  - Recalling previous conversations
+  - Tracking cost over time
+  - Analyzing tool usage patterns
+  - Finding when I discussed specific topics
+
+### Notion Integration
+- **Status:** Available (requires API key)
+- **Purpose:** Create/read/update Notion pages and databases
+- **Setup:**
+  ```bash
+  mkdir -p ~/.config/notion
+  echo "ntn_your_key_here" > ~/.config/notion/api_key
+  ```
+- **Commands:** API-based via curl (see skill docs)
+
+### Obsidian Integration
+- **Status:** Available (requires obsidian-cli)
+- **Purpose:** Work with Obsidian vaults and automate via obsidian-cli
+- **Commands:**
+  ```bash
+  obsidian-cli set-default "vault-name"           # Set default vault
+  obsidian-cli search "query"                     # Search note names
+  obsidian-cli search-content "query"             # Search inside notes
+  obsidian-cli create "Folder/New note" --content "..."
+  obsidian-cli move "old/path" "new/path"         # Move with wikilink updates
+  ```
+
+### Video Frames (ffmpeg)
+- **Status:** Available (requires ffmpeg)
+- **Purpose:** Extract frames or short clips from videos
+- **Commands:**
+  ```bash
+  {baseDir}/scripts/frame.sh /path/to/video.mp4 --out /tmp/frame.jpg
+  {baseDir}/scripts/frame.sh /path/to/video.mp4 --time 00:00:10 --out /tmp/frame-10s.jpg
+  ```
 
 ### Exa API - Neural Web Search
 - **Status:** ✅ Working, API key secured
