@@ -134,38 +134,92 @@ memory/
 
 ## Recommended MCP Servers to Explore
 
-### Priority 1: filesystem MCP
+### Priority 1: Context7 ⭐⭐⭐⭐⭐
+**GitHub:** https://github.com/upstash/context7 (41k stars!)
+
+**What it does:**
+- Provides code-base specific context to AI agents
+- Indexes codebase → Stores in Redis → Queries for context
+- Perfect for documentation Q&A
+
+**Install:**
 ```bash
-# Install
+npm install -g @upstash/context7-mcp
+```
+
+**Use case:** "What does function X do?" → Context7 provides relevant code
+
+### Priority 2: context-portal (Memory Bank) ⭐⭐⭐⭐
+**GitHub:** https://github.com/GreatScottyMac/context-portal (721 stars)
+
+**What it does:**
+- Memory bank MCP server
+- Project-specific knowledge base
+- Automatic context memory for AI assistants
+
+**Use case:** "Remember what we discussed about X" → context-portal retrieves
+
+### Priority 3: filesystem MCP ⭐⭐⭐⭐
+**GitHub:** https://github.com/modelcontextprotocol/servers (official)
+
+**What it does:**
+- Rich file operations via MCP
+- Pattern matching, recursive operations
+
+**Install:**
+```bash
 npm install -g @modelcontextprotocol/server-filesystem
-
-# Use for:
-# - Rich file operations
-# - Pattern-based file finding
-# - Batch file updates
 ```
 
-### Priority 2: memory MCP
+### Priority 4: memory-keeper ⭐⭐⭐
+**GitHub:** https://github.com/mkreyman/mcp-memory-keeper (84 stars)
+
+**What it does:**
+- Persistent context management
+- Stores and retrieves context across sessions
+
+---
+
+## Best MCP Servers Found (from search)
+
+| Server | Stars | Purpose | Priority |
+|--------|-------|---------|----------|
+| **context7** | 41,772 | Codebase docs Q&A | ⭐⭐⭐⭐⭐ |
+| **mcp-tools** | 1,435 | CLI for MCP servers | ⭐⭐⭐⭐ |
+| **microsoft-docs-mcp** | 1,280 | Microsoft docs | ⭐⭐⭐⭐ |
+| **context-portal** | 721 | Memory bank | ⭐⭐⭐⭐ |
+| **memory-mesh** | 326 | Knowledge graph | ⭐⭐⭐ |
+| **filesystem-go** | 580 | File operations | ⭐⭐⭐ |
+| **mcp-documentation** | 264 | Documentation | ⭐⭐⭐ |
+
+---
+
+## Skills to Create
+
+### 1. **context7-skill**
 ```bash
-# Install
-npm install -g @modelcontextprotocol/server-memory
-
-# Use for:
-# - Persistent context
-# - Automatic memory updates
-# - Cross-session learning
+# Query codebase documentation
+uv run scripts/context7.py query "How does the memory system work?"
 ```
 
-### Priority 3: fetch MCP
+### 2. **context-portal-skill** (future)
 ```bash
-# Install
-npm install -g @modelcontextprotocol/server-fetch
-
-# Use for:
-# - Web content extraction
-# - Alternative to r.jina.ai
-# - Standardized web requests
+# Store/retrieve context
+uv run scripts/context-portal.py remember "Key insight about X"
+uv run scripts/context-portal.py recall "What do we know about X?"
 ```
+
+---
+
+## Current Tool vs MCP Comparison
+
+| Task | Current Tool | MCP Alternative | Worth Switching? |
+|------|-------------|-----------------|------------------|
+| Codebase Q&A | `qmd search` | **context7** | ✅ Yes! (41k stars!) |
+| Memory recall | Manual | **context-portal** | ⚠️ Worth exploring |
+| File operations | `read`/`fd` | filesystem MCP | ❌ Current works fine |
+| Web content | r.jina.ai | fetch MCP | ⚠️ Maybe |
+| GitHub | `gh` skill | github MCP | ❌ gh works fine |
 
 ---
 
