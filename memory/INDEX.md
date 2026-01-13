@@ -173,6 +173,7 @@ fd pattern         # Find files by name
 | `MCP-SERVERS-RESEARCH.md` | MCP servers to explore |
 | `FILE-EDITING-RESEARCH.md` | Efficient file editing tools |
 | `PARTIAL-FILE-EDITING-RESEARCH.md` | Partial reads, diff-based editing |
+| `PARALLEL-EXECUTION-RESEARCH.md` | Parallel curl, exec, command execution |
 | `2026-01-13.md` | **Today's full session memory** |
 
 ---
