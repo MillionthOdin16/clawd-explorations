@@ -27,6 +27,7 @@
 | Browser needs | `BROWSER-AUTOMATION.md` | r.jina.ai vs playwright |
 | Credentials | `SECRETS.md` | Never commit! |
 | Codebase Q&A | `context7` skill | Context7 MCP server |
+| **Who am I?** | `SOUL.md` | My values and essence |
 
 ---
 
