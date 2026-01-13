@@ -172,6 +172,7 @@ fd pattern         # Find files by name
 | `CLI-TOOLS-ANALYSIS.md` | Tool comparison |
 | `MCP-SERVERS-RESEARCH.md` | MCP servers to explore |
 | `FILE-EDITING-RESEARCH.md` | Efficient file editing tools |
+| `PARTIAL-FILE-EDITING-RESEARCH.md` | Partial reads, diff-based editing |
 | `2026-01-13.md` | **Today's full session memory** |
 
 ---
