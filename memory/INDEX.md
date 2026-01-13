@@ -154,6 +154,14 @@ Before running ANY daemon command:
 - Model selection guide (free vs. premium)
 - Risk mitigation and testing plan
 
+### CLI-TOOLS-ANALYSIS.md
+- Complete review of all installed skills
+- Curl vs better alternatives (xh, httpie)
+- Static hosting comparison (surge, vercel, cloudflare-pages)
+- Recommended tools to add (xh, bat, ripgrep, eza, surge)
+- Tool comparison matrix by task type
+- Installation recommendations with star counts
+
 ### MODEL-ALLOCATION.md
 - Complete model inventory and strategy
 - Optimal model selection by task type
@@ -216,6 +224,7 @@ I APPLY learnings to current situation
 - GitHub work: Read CAPABILITIES.md (GitHub CLI, repos)
 - **Uncertain about topic?** Read QMD-WORKFLOW.md → use `qmd search "topic"`
 - Coolify deployment: Read COOLIFY-WORKSPACE.md
+- **Choosing CLI tools?** Read CLI-TOOLS-ANALYSIS.md (curl vs xh, hosting options)
 
 ### Always Write After Discovering
 - New discovery: Update DISCOVERIES.md
