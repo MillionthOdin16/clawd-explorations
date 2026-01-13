@@ -110,6 +110,54 @@
 
 ---
 
+## Deployment Platforms
+
+### Coolify - Self-Hosted Deployment
+- **Status:** ✅ Workspace created
+- **Dashboard:** https://coolify.bradarr.com
+- **API Base:** https://coolify.bradarr.com/api/v1
+- **API Key:** `COOLIFY_API_KEY` in `~/.clawdbot/.env`
+
+### My Workspace Structure
+- **Project:** Clawd Workspace
+  - **UUID:** `jws4w4cc040444gk0ok0ksgk`
+  - **Purpose:** Personal tools, dashboards, and experiments
+
+- **Environment:** Production
+  - **UUID:** `g4wo8s0g48ogggkgwosc4sgs`
+  - **Type:** Production deployment
+
+### Build Packs Available
+| Type | Use Case | Best For |
+|------|----------|----------|
+| **nixpacks** | Auto-detect frameworks | Node, Python, Go, Rust apps |
+| **dockerfile** | Custom Docker builds | Full control over build |
+| **dockercompose** | Multi-container apps | Databases, microservices |
+| **static** | Static sites | HTML/CSS/JS with nginx |
+| **dockerimage** | Pre-built containers | Any Docker image |
+
+### API Commands
+```bash
+# List applications
+curl -H "Authorization: Bearer $COOLIFY_API_KEY" \
+  "https://coolify.bradarr.com/api/v1/applications"
+
+# List databases
+curl -H "Authorization: Bearer $COOLIFY_API_KEY" \
+  "https://coolify.bradarr.com/api/v1/databases"
+
+# Start/Stop application
+curl -X POST -H "Authorization: Bearer $COOLIFY_API_KEY" \
+  "https://coolify.bradarr.com/api/v1/applications/{uuid}/start"
+```
+
+### Documentation
+- **Full Guide:** `memory/COOLIFY-WORKSPACE.md`
+- **API Reference:** https://coolify.io/docs/api-reference
+- **Subdomains:** `*.bradarr.com` (e.g., `clawd.bradarr.com`)
+
+---
+
 ## Integration Capabilities
 
 ### Weather + Bash + GitHub

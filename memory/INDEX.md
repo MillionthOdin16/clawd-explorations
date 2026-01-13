@@ -106,6 +106,13 @@ Before running ANY daemon command:
 - DigitalOcean API token location
 - SSH keys location
 
+### COOLIFY-WORKSPACE.md
+- My personal Coolify deployment workspace
+- Project UUID, environment configuration
+- API usage examples and common commands
+- Build packs available and deployment guide
+- Subdomains and resource management
+
 ---
 
 ## READ Pattern (Before responding)
@@ -158,6 +165,7 @@ I APPLY learnings to current situation
 - Choices: Read PREFERENCES.md + COMMITMENTS.md
 - Gateway issues: Read LESSONS.md (gateway state problem)
 - GitHub work: Read CAPABILITIES.md (GitHub CLI, repos)
+- Coolify deployment: Read COOLIFY-WORKSPACE.md
 
 ### Always Write After Discovering
 - New discovery: Update DISCOVERIES.md
