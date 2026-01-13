@@ -163,6 +163,16 @@ Before running ANY daemon command:
 - Tool comparison matrix by task type
 - Installation recommendations with star counts
 
+### HIGH-IMPACT-TOOLS.md
+- Deep research on highest-impact missing tools (76k+ stars analyzed)
+- Tier 1 (Must-have): fzf, ripgrep, bat, fd, lazygit, zoxide
+- Tier 2 (High Impact): eza, yq, hyperfine, bottom, dust, yt-dlp
+- Tier 3 (Specialized): ollama, delta, git-cliff, atuin, pueue
+- Installation order recommendations by impact
+- Skills to create for each tool
+- Before/after workflow comparisons
+- 60-90% time savings across categories
+
 ### BROWSER-AUTOMATION.md
 - Clawdbot browser tool capabilities vs browser-use library
 - Browser automation options explained
