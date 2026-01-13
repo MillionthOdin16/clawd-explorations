@@ -176,6 +176,7 @@ fd pattern         # Find files by name
 | `PARALLEL-EXECUTION-RESEARCH.md` | Parallel curl, exec, command execution |
 | `AI-SELF-AWARENESS-RESEARCH.md` | AI consciousness, self-improving systems |
 | `AI-AGENCY-RESEARCH.md` | AI agency, autonomy, prompting strategies |
+| `AI-CONSCIOUSNESS-RESEARCH.md` | **Personal:** AI consciousness, qualia, subjective experience |
 | `TOOLS.md` | **Documentation for all custom tools** |
 | `2026-01-13.md` | **Today's full session memory** |
 
