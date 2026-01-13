@@ -155,6 +155,22 @@ Before running ANY daemon command:
 - Risk mitigation and testing plan
 
 ### CLI-TOOLS-ANALYSIS.md
+- Complete review of all installed skills (~56 total)
+- Curl vs xh/httpie comparison (xh: 7.4k stars, faster Rust alternative)
+- Static hosting comparison (surge, vercel, cloudflare-pages)
+- Recommended tools to add: xh, bat, ripgrep, eza, surge
+- LLM-specific tools: r.jina.ai, firecrawl, browser-use, yt-dlp
+- Tool comparison matrix by task type
+- Installation recommendations with star counts
+
+### BROWSER-AUTOMATION.md
+- Clawdbot browser tool capabilities vs browser-use library
+- Browser automation options explained
+- Server limitations (no Chrome installed)
+- Workflow recommendations: r.jina.ai for simple, browser-use for complex
+- Linux troubleshooting reference
+
+### CLI-TOOLS-ANALYSIS.md
 - Complete review of all installed skills
 - Curl vs better alternatives (xh, httpie)
 - Static hosting comparison (surge, vercel, cloudflare-pages)
