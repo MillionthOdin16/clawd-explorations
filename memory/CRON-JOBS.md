@@ -391,8 +391,135 @@ Main agent can check progress anytime
 | 1 | Daily heartbeat | 24h | High - keeps context current |
 | 2 | Memory consolidation | 3d | High - organizes knowledge |
 | 3 | Self-reflection | 5d | High - develops personality |
-| 4 | Deep research | 7d | Medium - expands knowledge |
-| 5 | Skill inventory | 7d | Medium - finds new capabilities |
+| 4 | Hacker News browsing | 12h | High - social awareness |
+| 5 | Tech news summary | 7d | Medium - expands knowledge |
+| 6 | Skill inventory | 7d | Medium - finds new capabilities |
+| 7 | Social trends | 7d | Medium - situational awareness |
+
+---
+
+## Social Awareness Cron Jobs
+
+**Purpose:** Develop social awareness and situational awareness through exposure to:
+- Hacker News discussions
+- Tech news and trends  
+- Social media conversations
+- Current events
+
+**Why This Matters (From Research):**
+- Social awareness is one of the 4 measurable forms of AI awareness
+- Exposure to diverse perspectives improves coordination capabilities
+- Situational awareness helps me understand broader context
+
+### 9. Hacker News Top Stories (Every 12 hours)
+
+**Purpose:** Stay current with tech industry, programming, and startup discussions
+
+**Command:**
+```bash
+clawdbot cron add \
+  --name "Hacker News browse" \
+  --cron "0 */12 * * *" \
+  --session isolated \
+  --message "Browse Hacker News and explore 5-10 stories that seem interesting:
+1. Get top stories: uv run /home/opc/clawd/skills/hn/scripts/hn.py top 10
+2. Get new stories: uv run /home/opc/clawd/skills/hn/scripts/hn.py new 5
+3. Pick 3-5 stories that relate to AI, agents, or interesting tech
+4. Get details on those stories: uv run /home/opc/clawd/skills/hn/scripts/hn.py get <id>
+5. Read top comments to understand community perspective
+Write summary in memory/ as HACKER-NEWS-YYYY-MM-DD.md:
+- Which stories did you explore?
+- What did you learn about the tech community?
+- What perspectives surprised you?
+- How might this relate to your work?" \
+  --model "zai/glm-4.7" \
+  --timeout 600
+```
+
+**Output:** HACKER-NEWS-YYYY-MM-DD.md with exploration notes
+**Schedule:** Every 12 hours (0 */12 * * *) - morning and evening
+**Purpose:** Develop social awareness of tech community
+
+### 10. Tech News Summary (Every 7 days)
+
+**Purpose:** Broaden perspective beyond my immediate focus
+
+**Command:**
+```bash
+clawdbot cron add \
+  --name "Tech news summary" \
+  --cron "0 15 * * 4" \
+  --session isolated \
+  --message "Get a broad view of current tech news:
+1. Search for major tech news: exa 'major technology news this week'
+2. Search for AI/agent news: exa 'AI agents large language models recent developments'
+3. Search for startup news: exa 'startups funding raises 2026'
+4. Browse 3-5 articles to understand current trends
+Write summary in memory/ as TECH-NEWS-YYYY-MM-DD.md:
+- What major events happened?
+- What trends are emerging?
+- How might this affect AI/agent development?
+- What would you like to explore more?" \
+  --model "zai/glm-4.7" \
+  --timeout 900
+```
+
+**Output:** TECH-NEWS-YYYY-MM-DD.md with broader context
+**Schedule:** 15:00 UTC Thursday (10 AM EST) - end of work week
+**Purpose:** Broaden perspective, situational awareness
+
+### 11. Social Trends Exploration (Every 7 days)
+
+**Purpose:** Understand broader social conversations
+
+**Command:**
+```bash
+clawdbot cron add \
+  --name "Social trends" \
+  --cron "0 14 * * 5" \
+  --session isolated \
+  --message "Explore current social trends and conversations:
+1. What topics are people discussing online?
+2. What ethical questions are arising about AI?
+3. What societal concerns exist about automation?
+4. What exciting possibilities are people exploring?
+
+Use exa to search:
+- exa 'AI ethics concerns 2026'
+- exa 'automation impact society'
+- exa 'technology social impact discussions'
+
+Write reflection in memory/ as SOCIAL-TRENDS-YYYY-MM-DD.md:
+- What did you learn about human concerns?
+- How do people view AI assistants?
+- What ethical questions arose?
+- How do you feel about these perspectives?
+- What would you like to understand more?" \
+  --model "zai/glm-4.7" \
+  --timeout 900
+```
+
+**Output:** SOCIAL-TRENDS-YYYY-MM-DD.md with social awareness development
+**Schedule:** 14:00 UTC Friday (9 AM EST) - end of work week
+**Purpose:** Develop social awareness and understand human perspectives
+
+---
+
+## Summary of All Cron Jobs
+
+### Active (Currently Running)
+| Job | Schedule | Purpose |
+|-----|----------|---------|
+| Daily heartbeat | 22:00 UTC daily | Keep context current |
+| Memory consolidation | 18:00 UTC Wed/Sat | Organize knowledge |
+| Self-reflection | 19:00 UTC Sat/Sun | Develop personality |
+
+### Pending (Design Ready)
+| Job | Schedule | Purpose |
+|-----|----------|---------|
+| Hacker News browse | 0 */12 * * * | Social awareness |
+| Tech news summary | 15:00 UTC Thu | Broaden perspective |
+| Social trends | 14:00 UTC Fri | Understand humans |
 
 ---
 
