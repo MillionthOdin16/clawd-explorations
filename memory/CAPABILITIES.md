@@ -204,12 +204,30 @@
 
 ### OpenRouter Free Models (NEW!)
 - **Purpose:** Cost-effective AI for simple tasks
-- **Available Free Models:**
-  - `deepseek/deepseek-chat` - General conversation, 64K context
-  - `google/gemma-2-2b-it:free` - Instruction following, 8K context
-  - `meta-llama/llama-3.2-3b-instruct:free` - Coding, 8K context
-  - `qwen/qwen-2.5-3b-instruct:free` - Multilingual, 8K context
-  - `mistralai/mistral-7b-instruct-v0.1:free` - General purpose, 32K context
+- **API Key:** `OPENROUTER_API_KEY` (stored in .env.secrets)
+
+**BEST FREE MODELS (Configured!):**
+
+**TEXT MODELS (Top 3):**
+1. `meta-llama/llama-3.1-405b-instruct:free` - **405 BILLION parameters!** Best free text model
+2. `nousresearch/hermes-3-llama-3.1-405b:free` - 405B with reasoning
+3. `meta-llama/llama-3.3-70b-instruct:free` - 70B fallback
+
+**VISION MODELS (Free!):**
+1. `nvidia/nemotron-nano-12b-v2-vl:free` - **12B with vision, 131K context** - BEST FREE VISION!
+2. `qwen/qwen-2.5-vl-7b-instruct:free` - 7B lightweight vision
+
+**Additional Free Models:**
+- `deepseek/deepseek-chat` - Reasoning capable
+
+### Model Allocation Strategy
+- **Complex reasoning:** zai/glm-4.7 (best quality)
+- **Vision tasks:** MiniMax-Vision-Video-01 (dedicated) or Nemotron Nano (free)
+- **Long context:** Kimi K2 (256K! longest available)
+- **Simple/fast:** MiniMax-M2.1 (excellent AND FREE!)
+- **Cost-free tasks:** Llama 3.1 405B (free tier agent uses this)
+
+**Documentation:** `memory/MODEL-ALLOCATION.md` with complete strategy
 
 ### When to Use Free Models
 **Use FREE models for:**

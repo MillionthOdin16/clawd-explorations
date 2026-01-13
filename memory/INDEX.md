@@ -154,6 +154,14 @@ Before running ANY daemon command:
 - Model selection guide (free vs. premium)
 - Risk mitigation and testing plan
 
+### MODEL-ALLOCATION.md
+- Complete model inventory and strategy
+- Optimal model selection by task type
+- Agent-specific model assignments
+- Decision flowchart for model selection
+- Cost optimization strategy (use FREE models!)
+- Best models: Llama 3.1 405B (free!), Kimi K2 (256K!), MiniMax (free!)
+
 ---
 
 ## READ Pattern (Before responding)
