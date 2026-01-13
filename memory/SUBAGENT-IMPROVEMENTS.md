@@ -239,29 +239,28 @@ read ~/.clawdbot/shared/checkpoints/qmd-embed.json
 
 ---
 
-## Quick Wins (Can Do Now)
+## Quick Wins (Implemented!)
 
-### 1. Shared Results Directory
+✅ **Shared directories created:**
 ```bash
-mkdir -p ~/.clawdbot/shared/results
+~/.clawdbot/shared/
+├── tasks/           # Task definitions
+├── results/         # Task results
+├── checkpoints/     # Progress checkpoints
+└── README.md        # Usage guide
 ```
 
-Use it for sub-agent results instead of relying on sessions_send.
-
-### 2. Checkpoint File for qmd
+✅ **Active checkpoint:**
 ```bash
-write ~/.clawdbot/shared/checkpoints/qmd-embed.json '{"status": "incomplete", "vectors": 32}'
+~/.clawdbot/shared/checkpoints/qmd-embed.json
 ```
 
-Update as embedding progresses.
-
-### 3. Task Log
+✅ **Active task:**
 ```bash
-mkdir -p ~/.clawdbot/shared/tasks
-echo '{"task": "qmd embedding", "agent": "subagent", "started": "'$(date -Iseconds)'"}' > ~/.clawdbot/shared/tasks/active.json
+~/.clawdbot/shared/tasks/qmd-embed-001.json
 ```
 
-Track what sub-agents are working on.
+**Status:** Infrastructure is in place and ready to use!
 
 ---
 
