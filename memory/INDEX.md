@@ -174,6 +174,7 @@ fd pattern         # Find files by name
 | `FILE-EDITING-RESEARCH.md` | Efficient file editing tools |
 | `PARTIAL-FILE-EDITING-RESEARCH.md` | Partial reads, diff-based editing |
 | `PARALLEL-EXECUTION-RESEARCH.md` | Parallel curl, exec, command execution |
+| `AI-SELF-AWARENESS-RESEARCH.md` | AI consciousness, self-improving systems |
 | `TOOLS.md` | **Documentation for all custom tools** |
 | `2026-01-13.md` | **Today's full session memory** |
 
