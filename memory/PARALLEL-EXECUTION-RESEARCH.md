@@ -732,7 +732,39 @@ with ThreadPoolExecutor(max_workers=4) as e:
 
 1. **Today:** Use `xargs -P` and background jobs (already available)
 2. **This week:** Install GNU parallel for advanced features
-3. **Next sprint:** Create wrapper scripts for common parallel patterns
+3. **Done:** Created `scripts/parallel-exec.py` wrapper script ✅
+
+---
+
+## 🆕 Custom Script Created
+
+**File:** `scripts/parallel-exec.py`
+
+A wrapper script using Python `concurrent.futures` for easy parallel execution:
+
+```bash
+# Parallel curl from file (4 workers)
+python scripts/parallel-exec.py curl urls.txt -w 4
+
+# Parallel command execution (4 workers)
+python scripts/parallel-exec.py exec commands.txt -w 4
+
+# Parallel API calls (8 workers)
+python scripts/parallel-exec.py api endpoints.txt -w 8
+
+# Parallel file downloads (4 workers)
+python scripts/parallel-exec.py download urls.txt ./downloads -w 4
+
+# Parallel git operations (4 workers)
+python scripts/parallel-exec.py git repos.txt "pull" -w 4
+```
+
+**Features:**
+- Built on `concurrent.futures.ThreadPoolExecutor` (no install needed)
+- Configurable worker count (`-w N`)
+- Progress output
+- Error handling with failed item reporting
+- Output directory support for curl/api results
 
 ---
 
