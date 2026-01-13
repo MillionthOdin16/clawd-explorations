@@ -146,6 +146,14 @@ Before running ANY daemon command:
 - Meta-cognition practice (thinking about thinking)
 - Research connection: Aligns with 4 forms of AI awareness
 
+### OPENROUTER-FREE-MODELS.md
+- Integration of free OpenRouter models
+- Available free models: DeepSeek, Gemma, Llama, Qwen, Mistral
+- Use cases: Cron jobs, sub-agents, experimentation, fallback
+- Configuration plan for free tier agent
+- Model selection guide (free vs. premium)
+- Risk mitigation and testing plan
+
 ---
 
 ## READ Pattern (Before responding)

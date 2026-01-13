@@ -199,8 +199,55 @@
 ### OpenRouter API
 - **Status:** Available, API key added
 - **API Key:** `OPENROUTER_API_KEY` (stored in .env.secrets)
-- **Balance:** $0 (free models available)
+- **Balance:** $0 (but FREE MODELS available!)
 - **Features:** Multi-provider access via single API
+
+### OpenRouter Free Models (NEW!)
+- **Purpose:** Cost-effective AI for simple tasks
+- **Available Free Models:**
+  - `deepseek/deepseek-chat` - General conversation, 64K context
+  - `google/gemma-2-2b-it:free` - Instruction following, 8K context
+  - `meta-llama/llama-3.2-3b-instruct:free` - Coding, 8K context
+  - `qwen/qwen-2.5-3b-instruct:free` - Multilingual, 8K context
+  - `mistralai/mistral-7b-instruct-v0.1:free` - General purpose, 32K context
+
+### When to Use Free Models
+**Use FREE models for:**
+- Cron jobs (heartbeat, memory consolidation)
+- Simple sub-agent tasks
+- Routine coordination
+- Experimentation
+- Fallback when premium models unavailable
+
+**Use PREMIUM models for:**
+- Complex reasoning
+- Long context tasks
+- High-quality output critical
+- Creative work
+- User-facing interactions
+
+### Configuration Plan
+**Free Tier Agent (proposed):**
+```json5
+{
+  "id": "free",
+  "models": [
+    "deepseek/deepseek-chat",
+    "google/gemma-2-2b-it:free",
+    "meta-llama/llama-3.2-3b-instruct:free"
+  ],
+  "use_cases": [
+    "cron jobs",
+    "simple sub-agents",
+    "experimentation"
+  ]
+}
+```
+
+### Documentation
+- **Full Guide:** `memory/OPENROUTER-FREE-MODELS.md`
+- **Benefits:** Cost savings, backup options, experimentation
+- **Research Connection:** Efficiency-Tools Interaction (β̂=-0.330)
 
 ### OpenCodeZen API
 - **Status:** Available, API key added
