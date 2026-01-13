@@ -485,6 +485,12 @@ python scripts/file-edit.py edit-range <path> N M "content" # Edit range N-M
 python scripts/file-edit.py verify <path1> <path2>          # Verify identical
 python scripts/file-edit.py hash <path>                     # File hash
 python scripts/file-edit.py diff-text "old" "new"           # Create diff
+
+# ⚡ PARALLEL EXECUTION
+cat urls.txt | xargs -P 4 curl -s                 # Parallel curl (4 at a time)
+cmd1 & pid1=$!; cmd2 & pid2=$!; wait $pid1 $pid2  # Background jobs with wait
+find . -name "*.txt" | xargs -P 4 grep "pattern"  # Parallel grep
+make -j4                                          # Parallel make
 ```
 
 ---
