@@ -40,7 +40,7 @@ uv run {baseDir}/scripts/coolify.py apps delete <uuid>     # Delete app
 
 ### Deploy New Application
 ```bash
-uv run {baseDir}/scripts/coolify.py deploy <name> <fqdn> <repo> [--branch main] [--build-pack nixpacks]
+uv run {baseDir}/scripts/coolify.py deploy <name> <fqdn> <repo> [--branch main] [--build-pack nixpacks] [--project <uuid>] [--environment <uuid>]
 ```
 
 **Example:**
@@ -50,7 +50,15 @@ uv run {baseDir}/scripts/coolify.py deploy "My Dashboard" dashboard.bradarr.com 
 
 # Deploy with Dockerfile
 uv run {baseDir}/scripts/coolify.py deploy "API" api.bradarr.com owner/api --build-pack dockerfile
+
+# Deploy with explicit project/environment
+uv run {baseDir}/scripts/coolify.py deploy "Demo" demo.bradarr.com owner/repo --project jws4w4cc040444gk0ok0ksgk --environment g4wo8s0g48ogggkgwosc4sgs
 ```
+
+**Important Notes:**
+- `fqdn` is NOT set during creation - Coolify auto-generates a subdomain
+- Custom domain is added via traefik `custom_labels` after deployment
+- Required fields: `project_uuid`, `environment_uuid` (or `environment_name`), `server_uuid`, `git_repository`, `git_branch`, `build_pack`, `ports_exposes`
 
 ### Databases
 ```bash

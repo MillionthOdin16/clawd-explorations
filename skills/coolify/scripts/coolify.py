@@ -307,29 +307,46 @@ def watch_app(uuid: str, interval: int = 5):
 # Deploy
 
 def deploy_from_github(name: str, fqdn: str, repo: str, branch: str = "main", 
-                       build_pack: str = "nixpacks", project_uuid: str = None):
-    """Create and deploy a new application from GitHub."""
+                       build_pack: str = "nixpacks", project_uuid: str = None,
+                       environment_uuid: str = None, server_uuid: str = "ykg8kc80k4wsock8so4swk04"):
+    """Create and deploy a new application from GitHub.
+    
+    Note: fqdn is not allowed in create request - auto-generated subdomain is created first.
+    Custom domain must be added via custom_labels traefik config after creation.
+    """
     rprint(f"[yellow]Creating application: {name}[/yellow]")
     rprint(f"  Repository: {repo}")
     rprint(f"  Branch: {branch}")
     rprint(f"  Build Pack: {build_pack}")
-    rprint(f"  URL: {fqdn}")
+    rprint(f"  Server: {server_uuid}")
     
+    # IMPORTANT: fqdn cannot be set during creation - it auto-generates a subdomain
+    # Custom domain must be added via custom_labels after deployment
     payload = {
         "name": name,
-        "fqdn": fqdn,
-        "git_repository": repo,
+        "git_repository": f"https://github.com/{repo}" if "/" in repo and not repo.startswith("http") else repo,
         "git_branch": branch,
-        "build_pack": build_pack
+        "build_pack": build_pack,
+        "project_uuid": project_uuid,
+        "environment_uuid": environment_uuid,
+        "server_uuid": server_uuid,
+        "ports_exposes": "80"  # Required field
     }
     
-    if project_uuid:
-        rprint(f"  Project: {project_uuid}")
+    # Use the public applications endpoint
+    result = make_request("POST", "applications/public", json=payload)
     
-    result = make_request("POST", "applications", json=payload)
+    app_uuid = result.get("uuid", "N/A")
     rprint(f"\n[green]Application created successfully![/green]")
-    rprint(f"UUID: {result.get('uuid', 'N/A')}")
-    rprint("\n[yellow]Now deploy from the dashboard or trigger a deployment[/yellow]")
+    rprint(f"UUID: {app_uuid}")
+    rprint(f"Auto-generated URL: {result.get('domains', result.get('fqdn', 'N/A'))}")
+    rprint(f"\n[yellow]To add custom domain {fqdn}:[/yellow]")
+    rprint(f"  1. Get current custom_labels from the app")
+    rprint(f"  2. Update traefik rules to include Host(`{fqdn}`)")
+    rprint(f"  3. PATCH update custom_labels")
+    rprint(f"  4. Restart the application")
+    
+    return app_uuid
 
 # Main CLI
 
