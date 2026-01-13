@@ -59,6 +59,27 @@
   - Better organization (categories: ask, show, jobs)
   - Actively maintained (ClawdHub skill)
 
+### Coolify Skill
+- **Status:** ✅ Created and working
+- **Features:**
+  - List/start/stop/restart/delete applications
+  - Get application details with resource info
+  - List databases and services
+  - List projects
+  - Rich table output for readability
+  - Raw JSON output with `--raw` flag
+
+- **Commands:**
+  ```bash
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps list
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps get <uuid>
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps start <uuid>
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py dbs list
+  uv run /home/opc/clawd/skills/coolify/scripts/coolify.py services list
+  ```
+
+- **Requires:** `COOLIFY_API_KEY` environment variable
+
 ### Exa API - Neural Web Search
 - **Status:** ✅ Working, API key secured
 - **API Key:** Stored in `.env.secrets`
@@ -113,10 +134,11 @@
 ## Deployment Platforms
 
 ### Coolify - Self-Hosted Deployment
-- **Status:** ✅ Workspace created
+- **Status:** ✅ Skill created and working
 - **Dashboard:** https://coolify.bradarr.com
 - **API Base:** https://coolify.bradarr.com/api/v1
 - **API Key:** `COOLIFY_API_KEY` in `~/.clawdbot/.env`
+- **Skill:** `coolify`
 
 ### My Workspace Structure
 - **Project:** Clawd Workspace
