@@ -159,14 +159,77 @@ uv run /home/opc/clawd/skills/ripgrep/scripts/ripgrep.py search "pattern"
 
 ```bash
 # List apps
-uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps list
+python scripts/coolify.py apps list
 
 # Get app details
-uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps logs <uuid>
+python scripts/coolify.py apps get <uuid>
 
-# Deploy new
+# Trigger deployment
+python scripts/coolify.py apps deploy <uuid>
+
+# Get logs
+python scripts/coolify.py apps logs <uuid>
+
+# Status overview
+python scripts/coolify.py status
+
+# Full Coolify CLI
+uv run /home/opc/clawd/skills/coolify/scripts/coolify.py apps list
 uv run /home/opc/clawd/skills/coolify/scripts/coolify.py deploy "name" "fqdn" "repo"
 ```
+
+### Files
+- CLI: `scripts/coolify.py` (873 lines - complete API)
+- Docs: `skills/coolify/SKILL.md`
+
+---
+
+## 🔧 Safety & Reliability Tools (NEW!)
+
+### Gateway State Checker
+```bash
+# Check gateway state before config changes
+python scripts/gateway-check.py           # Check state
+python scripts/gateway-check.py --fix    # Attempt fix
+python scripts/gateway-check.py --json   # JSON output
+```
+
+Prevents "unauthorized" errors by checking gateway state first.
+
+### Credential Safety
+```bash
+# Check for secrets before commit
+python scripts/git-safe-commit.py          # Check staging
+python scripts/git-safe-commit.py --check-files  # Check all files
+python scripts/git-safe-commit.py --gitignore  # Check .gitignore
+
+# Exit 1 if secrets found (use in CI/CD)
+python scripts/git-safe-commit.py --fix  # Fail on secrets
+```
+
+Prevents credential leaks by detecting secrets in staging.
+
+### Timeout-Aware Runner
+```bash
+# Run with timeout (5 min default)
+python scripts/run-safe.py "npm install" --timeout 60
+
+# Run in background (no timeout)
+python scripts/run-safe.py "long-script.sh" --background
+
+# Poll every 5 seconds
+python scripts/run-safe.py "build.sh" --background --poll 5
+
+# JSON output for scripts
+python scripts/run-safe.py "cmd" --json
+```
+
+Prevents hung processes with timeout awareness.
+
+### Files
+- `scripts/gateway-check.py` - Gateway state checker
+- `scripts/git-safe-commit.py` - Credential safety
+- `scripts/run-safe.py` - Timeout-aware runner
 
 ---
 
