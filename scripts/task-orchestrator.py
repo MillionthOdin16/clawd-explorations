@@ -2,552 +2,339 @@
 """
 Task Orchestrator for Clawdbot
 
-A comprehensive system for coordinating:
-1. Sub-agent sessions (track, monitor, manage)
-2. Persistent task queues (survive session ends)
-3. Async task progress (real-time status)
-4. Retry logic (automatic exponential backoff)
+Simple, reliable task management for sub-agents and task queues.
 
 Usage:
-    python task-orchestrator.py status                    # Show all active tasks
-    python task-orchestrator.py spawn "<task>"            # Spawn sub-agent
-    python task-orchestrator.py queue add "<task>"        # Add to queue
-    python task-orchestrator.py queue list                # Show queued tasks
-    python task-orchestrator.py queue run                 # Process queue
-    python task-orchestrator.py history <session>         # Get session history
-    python task-orchestrator.py kill <session>            # Kill sub-agent
-    python task-orchestrator.py cleanup                   # Clean up stale sessions
+    python task-orchestrator.py status              # Show all tasks
+    python task-orchestrator.py spawn <task>        # Spawn sub-agent
+    python task-orchestrator.py queue add <task>    # Add to queue
+    python task-orchestrator.py queue list          # Show queue
+    python task-orchestrator.py queue run           # Process queue
+    python task-orchestrator.py history <session>   # Get session history
+    python task-orchestrator.py cleanup             # Clean up stale
 
 Features:
-- Survives session ends (queue persisted to disk)
-- Automatic retry with exponential backoff
-- Progress tracking across all async tasks
-- Sub-agent monitoring and management
+- Simple JSON-based persistence
+- Sub-agent status tracking
+- Task queue with concurrency control
 """
 
 import argparse
 import json
 import os
-import subprocess
 import sys
 import time
-from dataclasses import dataclass, field
 from datetime import datetime
-from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
-# Import Clawdbot session tools (if available in context)
-try:
-    from sessions_list import sessions_list
-    from sessions_history import sessions_history
-    from sessions_spawn import sessions_spawn
-    SESSIONS_AVAILABLE = True
-except ImportError:
-    SESSIONS_AVAILABLE = False
+# Paths
+BASE_DIR = Path.home() / ".clawdbot" / "shared"
+TASKS_DIR = BASE_DIR / "tasks"
+RESULTS_DIR = BASE_DIR / "results"
+QUEUE_FILE = BASE_DIR / "queue.json"
 
-
-class TaskStatus(Enum):
-    PENDING = "pending"
-    RUNNING = "running"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    CANCELLED = "cancelled"
+# Ensure directories exist
+BASE_DIR.mkdir(parents=True, exist_ok=True)
+TASKS_DIR.mkdir(exist_ok=True)
+RESULTS_DIR.mkdir(exist_ok=True)
 
 
-class TaskType(Enum):
-    SUBAGENT = "subagent"
-    LOCAL = "local"
-    API = "api"
+def get_timestamp():
+    return datetime.utcnow().isoformat() + "Z"
 
 
-@dataclass
-class Task:
-    """A task in the orchestrator."""
-    id: str
-    description: str
-    task_type: TaskType
-    command: str = ""
-    priority: int = 0
-    max_retries: int = 3
-    retry_delay: float = 1.0
-    status: TaskStatus = TaskStatus.PENDING
-    session_key: Optional[str] = None
-    result: Optional[str] = None
-    error: Optional[str] = None
-    created_at: float = field(default_factory=time.time)
-    started_at: Optional[float] = None
-    completed_at: Optional[float] = None
-    retry_count: int = 0
-    metadata: Dict = field(default_factory=dict)
-
-    def to_dict(self) -> dict:
-        return {
-            "id": self.id,
-            "description": self.description,
-            "task_type": self.task_type.value,
-            "command": self.command,
-            "priority": self.priority,
-            "max_retries": self.max_retries,
-            "retry_delay": self.retry_delay,
-            "status": self.status.value,
-            "session_key": self.session_key,
-            "result": self.result[:500] if self.result else None,
-            "error": self.error[:500] if self.error else None,
-            "created_at": self.created_at,
-            "started_at": self.started_at,
-            "completed_at": self.completed_at,
-            "retry_count": self.retry_count,
-            "metadata": self.metadata
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict) -> 'Task':
-        task = cls(
-            id=data["id"],
-            description=data["description"],
-            task_type=TaskType(data["task_type"]),
-            command=data.get("command", ""),
-            priority=data.get("priority", 0),
-            max_retries=data.get("max_retries", 3),
-            retry_delay=data.get("retry_delay", 1.0),
-            status=TaskStatus(data["status"]),
-            session_key=data.get("session_key"),
-            result=data.get("result"),
-            error=data.get("error"),
-            created_at=data.get("created_at", time.time()),
-            started_at=data.get("started_at"),
-            completed_at=data.get("completed_at"),
-            retry_count=data.get("retry_count", 0),
-            metadata=data.get("metadata", {})
-        )
-        return task
-
-
-class TaskOrchestrator:
-    """
-    Comprehensive task orchestration system for Clawdbot.
+def status():
+    """Show dashboard of current tasks."""
+    print("📊 Task Dashboard")
+    print("=" * 50)
     
-    Features:
-    - Sub-agent tracking and monitoring
-    - Persistent queues that survive session ends
-    - Automatic retry with exponential backoff
-    - Progress tracking across all async tasks
-    """
+    # Check queue
+    queue = []
+    if QUEUE_FILE.exists():
+        with open(QUEUE_FILE) as f:
+            queue = json.load(f)
+    print(f"📥 Queue: {len(queue)} pending tasks")
+    
+    # Check running tasks (from results)
+    running = list(RESULTS_DIR.glob("running-*.json"))
+    print(f"⚡ Running: {len(running)} tasks")
+    
+    # Check completed
+    completed = list(RESULTS_DIR.glob("complete-*.json"))
+    print(f"✅ Completed: {len(completed)} tasks")
+    
+    # Show recent
+    print("\n🕐 Recent Results:")
+    for f in sorted(RESULTS_DIR.glob("*.json"), reverse=True)[:5]:
+        name = f.name
+        status_ico = "✅" if "complete" in name else "⚡" if "running" in name else "❌"
+        print(f"  {status_ico} {name}")
+    
+    return {"queue": len(queue), "running": len(running), "completed": len(completed)}
 
-    def __init__(self, queue_dir: str = "/home/opc/clawd/.task-orchestrator"):
-        self.queue_dir = Path(queue_dir)
-        self.queue_dir.mkdir(parents=True, exist_ok=True)
-        self.active_queue_file = self.queue_dir / "active-queue.json"
-        self.history_file = self.queue_dir / "history.json"
-        self.state_file = self.queue_dir / "state.json"
-        
-        # In-memory state
-        self.tasks: Dict[str, Task] = {}
-        self.subagent_sessions: Dict[str, dict] = {}
-        
-        # Load state
-        self._load_state()
+
+def spawn(task: str, label: str = None, agent: str = "worker"):
+    """Spawn a sub-agent for a task."""
+    task_id = label or f"task-{int(time.time())}"
+    timestamp = get_timestamp()
     
-    def _load_state(self):
-        """Load persisted state from disk."""
-        if self.active_queue_file.exists():
-            with open(self.active_queue_file, 'r') as f:
-                data = json.load(f)
-                self.tasks = {k: Task.from_dict(v) for k, v in data.get("tasks", {}).items()}
+    # Write task definition
+    task_file = TASKS_DIR / f"{task_id}.json"
+    task_data = {
+        "id": task_id,
+        "task": task,
+        "agent": agent,
+        "created": timestamp,
+        "status": "pending"
+    }
+    with open(task_file, 'w') as f:
+        json.dump(task_data, f, indent=2)
     
-    def _save_state(self):
-        """Persist state to disk."""
-        data = {
-            "tasks": {k: v.to_dict() for k, v in self.tasks.items()},
-            "saved_at": time.time()
-        }
-        with open(self.active_queue_file, 'w') as f:
-            json.dump(data, f, indent=2)
+    # Write running marker
+    running_file = RESULTS_DIR / f"running-{task_id}.json"
+    with open(running_file, 'w') as f:
+        json.dump({
+            "id": task_id,
+            "task": task,
+            "agent": agent,
+            "started": timestamp,
+            "status": "running"
+        }, f, indent=2)
     
-    def _load_subagent_sessions(self):
-        """Load active sub-agent sessions from Clawdbot."""
-        if not SESSIONS_AVAILABLE:
-            return
-        
-        try:
-            result = sessions_list(kinds=["sub-agent"])
-            self.subagent_sessions = result or {}
-        except Exception as e:
-            print(f"Warning: Could not load sub-agent sessions: {e}")
-            self.subagent_sessions = {}
+    print(f"📝 Task created: {task_id}")
+    print(f"   Agent: {agent}")
+    print(f"   Task: {task[:60]}...")
     
-    def add_task(
-        self,
-        description: str,
-        task_type: TaskType,
-        command: str = "",
-        priority: int = 0,
-        max_retries: int = 3,
-        retry_delay: float = 1.0,
-        metadata: Dict = None
-    ) -> str:
-        """Add a new task to the queue."""
-        task_id = f"task_{int(time.time() * 1000)}_{len(self.tasks)}"
-        
-        task = Task(
-            id=task_id,
-            description=description,
-            task_type=task_type,
-            command=command,
-            priority=priority,
-            max_retries=max_retries,
-            retry_delay=retry_delay,
-            metadata=metadata or {}
-        )
-        
-        self.tasks[task_id] = task
-        self._save_state()
-        
-        return task_id
+    return task_id
+
+
+def queue_add(task: str, priority: int = 0):
+    """Add task to persistent queue."""
+    queue = []
+    if QUEUE_FILE.exists():
+        with open(QUEUE_FILE) as f:
+            queue = json.load(f)
     
-    def spawn_subagent(self, task: str, label: str = None) -> Optional[str]:
-        """Spawn a sub-agent to execute a task."""
-        if not SESSIONS_AVAILABLE:
-            print("Error: Session tools not available")
-            return None
-        
-        try:
-            result = sessions_spawn(task=task, label=label)
-            # Extract session key from result
-            if isinstance(result, dict) and "sessionKey" in result:
-                session_key = result["sessionKey"]
-            elif isinstance(result, str):
-                session_key = result
-            else:
-                session_key = str(result)
+    entry = {
+        "id": f"q-{int(time.time())}",
+        "task": task,
+        "priority": priority,
+        "added": get_timestamp(),
+        "status": "pending"
+    }
+    queue.append(entry)
+    
+    with open(QUEUE_FILE, 'w') as f:
+        json.dump(queue, f, indent=2)
+    
+    print(f"📥 Added to queue: {entry['id']}")
+
+
+def queue_list():
+    """List pending queue tasks."""
+    if not QUEUE_FILE.exists():
+        print("📭 Queue is empty")
+        return
+    
+    with open(QUEUE_FILE) as f:
+        queue = json.load(f)
+    
+    pending = [q for q in queue if q["status"] == "pending"]
+    
+    print(f"📥 Queue ({len(pending)} pending)")
+    print("-" * 50)
+    
+    for q in sorted(pending, key=lambda x: -x.get("priority", 0)):
+        print(f"  [{q.get('priority', 0)}] {q['id']}: {q['task'][:50]}...")
+    
+    return pending
+
+
+def queue_run(max_concurrent: int = 3):
+    """Process queue with concurrency limit."""
+    if not QUEUE_FILE.exists():
+        print("📭 Queue is empty")
+        return
+    
+    with open(QUEUE_FILE) as f:
+        queue = json.load(f)
+    
+    pending = [q for q in queue if q["status"] == "pending"]
+    
+    if not pending:
+        print("✅ Queue is empty")
+        return
+    
+    print(f"🚀 Processing {len(pending)} tasks (max {max_concurrent} concurrent)")
+    
+    processed = 0
+    for q in pending:
+        if q["status"] == "pending":
+            print(f"\n📋 Processing: {q['id']}")
+            spawn(q["task"], label=q["id"], agent="worker")
+            q["status"] = "running"
+            processed += 1
             
-            # Create tracking task
-            task_id = self.add_task(
-                description=label or task[:50],
-                task_type=TaskType.SUBAGENT,
-                command=task,
-                priority=10,  # High priority for sub-agents
-                metadata={"session_key": session_key}
-            )
-            
-            self.tasks[task_id].status = TaskStatus.RUNNING
-            self.tasks[task_id].session_key = session_key
-            self._save_state()
-            
-            print(f"🚀 Spawned sub-agent: {session_key}")
-            return session_key
-            
-        except Exception as e:
-            print(f"Error spawning sub-agent: {e}")
-            return None
-    
-    def get_subagent_status(self, session_key: str) -> Optional[dict]:
-        """Get status of a sub-agent session."""
-        if not SESSIONS_AVAILABLE:
-            return None
-        
-        try:
-            result = sessions_history(sessionKey=session_key, include_tools=True)
-            return result
-        except Exception as e:
-            return None
-    
-    def refresh_subagent_statuses(self):
-        """Update statuses of all running sub-agents."""
-        self._load_subagent_sessions()
-        
-        for task_id, task in list(self.tasks.items()):
-            if task.task_type == TaskType.SUBAGENT and task.session_key:
-                # Check if session is still active
-                is_active = task.session_key in self.subagent_sessions
-                
-                if is_active:
-                    # Get latest status
-                    history = self.get_subagent_status(task.session_key)
-                    if history:
-                        # Check if completed
-                        if len(history) > 0:
-                            last_msg = history[-1] if isinstance(history, list) else {}
-                            # Mark complete if no more activity
-                            task.status = TaskStatus.RUNNING
-                else:
-                    # Session ended - check if successful
-                    if task.status == TaskStatus.RUNNING:
-                        task.status = TaskStatus.COMPLETED
-                        task.completed_at = time.time()
-                        self._save_state()
-    
-    def process_queue(self, max_concurrent: int = 4) -> Dict[str, Task]:
-        """Process all pending tasks in the queue."""
-        pending = [t for t in self.tasks.values() if t.status == TaskStatus.PENDING]
-        pending.sort(key=lambda t: t.priority, reverse=True)
-        
-        running = []
-        
-        for task in pending:
-            if len(running) >= max_concurrent:
+            if processed >= max_concurrent:
+                print(f"\n⚠️  Reached concurrency limit ({max_concurrent})")
                 break
-            
-            if task.task_type == TaskType.LOCAL:
-                task.status = TaskStatus.RUNNING
-                task.started_at = time.time()
-                self._save_state()
-                
-                success, result, error = self._run_local_task(task)
-                
-                task.status = TaskStatus.COMPLETED if success else TaskStatus.FAILED
-                task.completed_at = time.time()
-                task.result = result
-                task.error = error
-                
-                if not success and task.retry_count < task.max_retries:
-                    # Schedule retry
-                    task.retry_count += 1
-                    delay = task.retry_delay * (2 ** (task.retry_count - 1))
-                    task.status = TaskStatus.PENDING
-                    print(f"  🔄 Retrying {task.id} in {delay:.1f}s ({task.retry_count}/{task.max_retries})")
-                    time.sleep(min(delay, 2))  # Small delay for demo
-                else:
-                    running.append(task)
-            
-            self._save_state()
-        
-        return {t.id: t for t in running}
     
-    def _run_local_task(self, task: Task) -> Tuple[bool, str, str]:
-        """Execute a local task."""
-        try:
-            result = subprocess.run(
-                task.command, shell=True, capture_output=True, text=True, timeout=120
-            )
-            return (result.returncode == 0, result.stdout, result.stderr)
-        except Exception as e:
-            return (False, "", str(e))
+    # Update queue file
+    with open(QUEUE_FILE, 'w') as f:
+        json.dump(queue, f, indent=2)
     
-    def cancel_task(self, task_id: str) -> bool:
-        """Cancel a pending or running task."""
-        if task_id not in self.tasks:
-            return False
-        
-        task = self.tasks[task_id]
-        
-        if task.status == TaskStatus.RUNNING and task.session_key:
-            # Would need to implement session kill
-            print(f"Note: Cannot kill sub-agent {task.session_key} (not implemented)")
-        
-        task.status = TaskStatus.CANCELLED
-        task.completed_at = time.time()
-        self._save_state()
-        
-        return True
-    
-    def get_status(self) -> dict:
-        """Get comprehensive status of all tasks."""
-        self.refresh_subagent_statuses()
-        
-        stats = {
-            "total": len(self.tasks),
-            "pending": 0,
-            "running": 0,
-            "completed": 0,
-            "failed": 0,
-            "cancelled": 0
-        }
-        
-        for task in self.tasks.values():
-            stats[task.status.value] += 1
-        
-        return {
-            "stats": stats,
-            "active_sessions": len(self.subagent_sessions),
-            "tasks": {k: v.to_dict() for k, v in self.tasks.items()}
-        }
-    
-    def show_dashboard(self):
-        """Display a comprehensive dashboard."""
-        status = self.get_status()
-        stats = status["stats"]
-        
-        print("\n" + "=" * 60)
-        print("🦞 TASK ORCHESTRATOR DASHBOARD")
-        print("=" * 60)
-        print(f"\n📊 Statistics:")
-        print(f"   Total Tasks:  {stats['total']}")
-        print(f"   ✅ Completed: {stats['completed']}")
-        print(f"   🔄 Running:   {stats['running']}")
-        print(f"   ⏳ Pending:   {stats['pending']}")
-        print(f"   ❌ Failed:    {stats['failed']}")
-        print(f"   🚫 Cancelled: {stats['cancelled']}")
-        print(f"   👥 Sub-agents: {status['active_sessions']}")
-        
-        # Show active tasks
-        active = [(k, v) for k, v in status["tasks"].items() 
-                  if v["status"] in ["running", "pending"]]
-        
-        if active:
-            print(f"\n📋 Active Tasks:")
-            for task_id, task in sorted(active, key=lambda x: -x[1]["priority"]):
-                status_icon = {"pending": "⏳", "running": "🔄", "completed": "✅", "failed": "❌", "cancelled": "🚫"}
-                print(f"   {status_icon.get(task['status'], '?')} [{task['task_type']}] {task['description'][:40]}")
-                if task.get('session_key'):
-                    print(f"      Session: {task['session_key'][:20]}...")
-        
-        print()
-    
-    def cleanup_stale_sessions(self) -> int:
-        """Clean up stale/timeout sub-agent sessions."""
-        cleaned = 0
-        for task_id, task in self.tasks.items():
-            if task.task_type == TaskType.SUBAGENT:
-                if task.status == TaskStatus.RUNNING:
-                    # Check if session still exists
-                    self._load_subagent_sessions()
-                    if task.session_key not in self.subagent_sessions:
-                        task.status = TaskStatus.FAILED
-                        task.error = "Session ended unexpectedly"
-                        task.completed_at = time.time()
-                        cleaned += 1
-        
-        if cleaned > 0:
-            print(f"🧹 Cleaned {cleaned} stale sessions")
-            self._save_state()
-        
-        return cleaned
+    print(f"\n✅ Started {processed} tasks")
+    print("   Use 'status' to monitor progress")
 
 
-def run_command(cmd: str) -> tuple:
-    """Run a shell command."""
-    try:
-        result = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=120)
-        return (result.returncode == 0, result.stdout, result.stderr)
-    except Exception as e:
-        return (False, "", str(e))
+def complete(task_id: str, result: str = None, error: str = None):
+    """Mark task as complete."""
+    running_file = RESULTS_DIR / f"running-{task_id}.json"
+    
+    if not running_file.exists():
+        print(f"❌ Task not found: {task_id}")
+        return False
+    
+    # Read running data
+    with open(running_file) as f:
+        data = json.load(f)
+    
+    # Move to complete or error
+    status_ = "complete" if not error else "error"
+    data["status"] = status_
+    data["finished"] = get_timestamp()
+    if result:
+        data["result"] = result
+    if error:
+        data["error"] = error
+    
+    complete_file = RESULTS_DIR / f"{status_}-{task_id}.json"
+    with open(complete_file, 'w') as f:
+        json.dump(data, f, indent=2)
+    
+    # Remove running marker
+    running_file.unlink()
+    
+    print(f"{'✅' if status_ == 'complete' else '❌'} Task {task_id}: {status_}")
+    return True
+
+
+def history(session_key: str):
+    """Get session history (placeholder for sessions_history)."""
+    print(f"📜 History for: {session_key}")
+    print("   Use sessions_history tool for full transcript")
+    print("   This is a simplified placeholder")
+    return {"session": session_key, "note": "Use sessions_history tool"}
+
+
+def cleanup():
+    """Clean up stale tasks (>1 hour old)."""
+    stale = []
+    cutoff = time.time() - 3600
+    
+    for f in RESULTS_DIR.glob("running-*.json"):
+        if f.stat().st_mtime < cutoff:
+            stale.append(f)
+    
+    for f in stale:
+        name = f.name
+        f.rename(RESULTS_DIR / f"stale-{name}")
+        print(f"🧹 Marked stale: {name}")
+    
+    if not stale:
+        print("🧹 No stale tasks found")
+    
+    return len(stale)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Task Orchestrator for Clawdbot',
+        description="Task orchestrator for Clawdbot sub-agents",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Show dashboard
-  task-orchestrator.py status
-  
-  # Add task to queue
-  task-orchestrator.py queue add "echo hello" --type local
-  
-  # Process queue
-  task-orchestrator.py queue run --max-concurrent 4
-  
-  # Spawn sub-agent
-  task-orchestrator.py spawn "Research AI consciousness" --label "consciousness-research"
-  
-  # Get sub-agent history
-  task-orchestrator.py history <session-key>
-  
-  # Cancel task
-  task-orchestrator.py cancel <task-id>
-  
-  # Cleanup stale sessions
-  task-orchestrator.py cleanup
+  task-orchestrator.py status                    # Show dashboard
+  task-orchestrator.py spawn "Research topic"    # Create task
+  task-orchestrator.py queue add "Task name"     # Add to queue
+  task-orchestrator.py queue list                # Show queue
+  task-orchestrator.py queue run                 # Process queue
+  task-orchestrator.py cleanup                   # Clean stale
         """
     )
     
     subparsers = parser.add_subparsers(dest='command', help='Commands')
     
-    # Status/Dashboard
-    status_parser = subparsers.add_parser('status', help='Show task dashboard')
-    status_parser.add_argument('--json', action='store_true', help='Output as JSON')
+    # Status
+    subparsers.add_parser('status', help='Show task dashboard')
     
-    # Queue management
-    queue_parser = subparsers.add_parser('queue', help='Queue management')
-    queue_sub = queue_parser.add_subparsers(dest='queue_cmd')
+    # Spawn
+    spawn_parser = subparsers.add_parser('spawn', help='Spawn sub-agent task')
+    spawn_parser.add_argument('task', help='Task description')
+    spawn_parser.add_argument('--label', help='Task label/ID')
+    spawn_parser.add_argument('--agent', default='worker', help='Agent type')
     
-    queue_add = queue_sub.add_parser('add', help='Add task to queue')
-    queue_add.add_argument('command', help='Task command')
-    queue_add.add_argument('--type', choices=['local', 'api'], default='local', help='Task type')
-    queue_add.add_argument('--priority', type=int, default=0, help='Priority (higher = first)')
-    queue_add.add_argument('--retry', type=int, default=3, help='Max retries')
-    queue_add.add_argument('--description', help='Task description')
+    # Queue
+    queue_parser = subparsers.add_parser('queue', help='Task queue operations')
+    queue_sub = queue_parser.add_subparsers(dest='queue_cmd', help='Queue commands')
     
-    queue_list = queue_sub.add_parser('list', help='List queued tasks')
-    queue_list.add_argument('--all', action='store_true', help='Include completed tasks')
+    queue_add_parser = queue_sub.add_parser('add', help='Add to queue')
+    queue_add_parser.add_argument('task', help='Task description')
+    queue_add_parser.add_argument('--priority', type=int, default=0, help='Priority')
     
-    queue_run = queue_sub.add_parser('run', help='Process queue')
-    queue_run.add_argument('--max-concurrent', type=int, default=4, help='Max concurrent tasks')
+    queue_sub.add_parser('list', help='List pending tasks')
+    queue_sub.add_parser('run', help='Process queue')
+    queue_run_parser = queue_sub.add_parser('run', help='Process queue')
+    queue_run_parser.add_argument('--max', type=int, default=3, help='Max concurrent')
     
-    # Sub-agent management
-    spawn_parser = subparsers.add_parser('spawn', help='Spawn a sub-agent')
-    spawn_parser.add_argument('task', help='Task for sub-agent')
-    spawn_parser.add_argument('--label', help='Task label')
-    
-    history_parser = subparsers.add_parser('history', help='Get sub-agent history')
+    # History
+    history_parser = subparsers.add_parser('history', help='Get session history')
     history_parser.add_argument('session', help='Session key')
     
-    cancel_parser = subparsers.add_parser('cancel', help='Cancel a task')
-    cancel_parser.add_argument('task_id', help='Task ID')
+    # Complete
+    complete_parser = subparsers.add_parser('complete', help='Mark task complete')
+    complete_parser.add_argument('task_id', help='Task ID')
+    complete_parser.add_argument('--result', help='Result')
+    complete_parser.add_argument('--error', help='Error message')
     
     # Cleanup
-    cleanup_parser = subparsers.add_parser('cleanup', help='Clean up stale sessions')
+    subparsers.add_parser('cleanup', help='Clean up stale tasks')
     
     args = parser.parse_args()
     
-    orchestrator = TaskOrchestrator()
-    
-    if args.command == 'status':
-        if args.json:
-            print(json.dumps(orchestrator.get_status(), indent=2))
-        else:
-            orchestrator.show_dashboard()
-    
-    elif args.command == 'queue':
-        if args.queue_cmd == 'add':
-            task_id = orchestrator.add_task(
-                description=args.description or args.command,
-                task_type=TaskType.LOCAL if args.type == 'local' else TaskType.API,
-                command=args.command,
-                priority=args.priority,
-                max_retries=args.retry
-            )
-            print(f"✅ Added task: {task_id}")
+    try:
+        if args.command == 'status':
+            status()
         
-        elif args.queue_cmd == 'list':
-            status = orchestrator.get_status()
-            tasks = status["tasks"]
-            for task_id, task in tasks.items():
-                if args.all or task["status"] in ["pending", "running"]:
-                    print(f"[{task['status'][:3]}] {task_id}: {task['description'][:50]}")
+        elif args.command == 'spawn':
+            spawn(args.task, label=args.label, agent=args.agent)
         
-        elif args.queue_cmd == 'run':
-            print("🚀 Processing queue...")
-            results = orchestrator.process_queue(max_concurrent=args.max_concurrent)
-            print(f"✅ Processed {len(results)} tasks")
-    
-    elif args.command == 'spawn':
-        session_key = orchestrator.spawn_subagent(args.task, args.label)
-        if session_key:
-            print(f"✅ Spawned: {session_key}")
-    
-    elif args.command == 'history':
-        history = orchestrator.get_subagent_status(args.session)
-        if history:
-            print(json.dumps(history, indent=2))
+        elif args.command == 'queue':
+            if args.queue_cmd == 'add':
+                queue_add(args.task, args.priority)
+            elif args.queue_cmd == 'list':
+                queue_list()
+            elif args.queue_cmd == 'run':
+                queue_run(args.max if hasattr(args, 'max') else 3)
+            else:
+                queue_parser.print_help()
+        
+        elif args.command == 'history':
+            history(args.session)
+        
+        elif args.command == 'complete':
+            complete(args.task_id, args.result, args.error)
+        
+        elif args.command == 'cleanup':
+            cleaned = cleanup()
+            print(f"🧹 Cleaned {cleaned} stale tasks")
+        
         else:
-            print("Could not get history")
+            parser.print_help()
     
-    elif args.command == 'cancel':
-        if orchestrator.cancel_task(args.task_id):
-            print(f"✅ Cancelled: {args.task_id}")
-        else:
-            print(f"❌ Task not found: {args.task_id}")
-    
-    elif args.command == 'cleanup':
-        cleaned = orchestrator.cleanup_stale_sessions()
-        print(f"🧹 Cleaned {cleaned} stale sessions")
-    
-    else:
-        parser.print_help()
+    except Exception as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == '__main__':

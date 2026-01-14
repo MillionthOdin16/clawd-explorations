@@ -2,13 +2,14 @@
 """
 File Editing Utilities for Clawdbot
 
-Provides partial reads, line-based editing, and verification.
+Provides partial reads, line-based editing, text-based editing, and verification.
 Uses built-in tools (sed, diff, hashlib) where possible.
 
 Usage:
     python file-edit.py read <path> [--start N] [--end N]
     python file-edit.py edit-line <path> <line> <content>
     python file-edit.py edit-range <path> <start> <end> <new_content>
+    python file-edit.py edit-text <path> <old_text> <new_text> [--fuzzy]
     python file-edit.py verify <path1> <path2>
     python file-edit.py hash <path>
     python file-edit.py diff-text <old> <new>
@@ -22,6 +23,7 @@ Requirements:
 import argparse
 import hashlib
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -39,17 +41,7 @@ def run_command(cmd, check=True):
 
 
 def read_partial(path, start=None, end=None):
-    """
-    Read specific lines from a file using sed.
-    
-    Args:
-        path: File path
-        start: Start line (1-indexed, optional)
-        end: End line (1-indexed, optional)
-    
-    Returns:
-        str: Requested lines as string
-    """
+    """Read specific lines from a file using sed."""
     if start and end:
         cmd = f"sed -n '{start},{end}p' '{path}'"
     elif start:
@@ -64,95 +56,88 @@ def read_partial(path, start=None, end=None):
 
 
 def edit_line(path, line_num, new_content):
-    """
-    Edit a specific line in a file using sed.
-    
-    Args:
-        path: File path
-        line_num: Line number to edit (1-indexed)
-        new_content: New content for that line
-    
-    Returns:
-        bool: Success status
-    """
-    # Backup original
+    """Edit a specific line in a file using sed."""
     backup_path = f"{path}.backup.{os.getpid()}"
     run_command(f"cp '{path}' '{backup_path}'")
     
     try:
-        # Edit the line using sed
-        # Escape new_content for shell
         escaped_content = new_content.replace("'", "'\\''")
         cmd = f"sed -i '{line_num}s/.*/{escaped_content}/' '{path}'"
         run_command(cmd)
         
-        # Verify by checking line was changed
         result = run_command(f"sed -n '{line_num}p' '{path}'")
         if new_content.strip() in result.stdout.strip():
             return True
         else:
-            # Restore backup
             run_command(f"mv '{backup_path}' '{path}'")
             return False
     except Exception:
         run_command(f"mv '{backup_path}' '{path}'")
         raise
     finally:
-        # Clean up backup if it still exists
         if os.path.exists(backup_path):
             os.remove(backup_path)
 
 
 def edit_range(path, start_line, end_line, new_content):
-    """
-    Replace a range of lines with new content.
-    
-    Args:
-        path: File path
-        start_line: Start line (1-indexed)
-        end_line: End line (1-indexed)
-        new_content: New content to replace the range
-    
-    Returns:
-        bool: Success status
-    """
-    # Backup original
+    """Replace a range of lines with new content."""
     backup_path = f"{path}.backup.{os.getpid()}"
     run_command(f"cp '{path}' '{backup_path}'")
     
     try:
-        # Delete the range and insert new content
-        # sed doesn't have a direct replace-range, so we use a workaround
-        
-        # First, delete lines start to end
         run_command(f"sed -i '{start_line},{end_line}d' '{path}'")
-        
-        # Then insert at start_line
         escaped_content = new_content.replace("'", "'\\''")
         run_command(f"sed -i '{start_line}i\\{escaped_content}' '{path}'")
-        
         return True
-    
     except Exception as e:
         run_command(f"mv '{backup_path}' '{path}'")
         raise
-    
     finally:
         if os.path.exists(backup_path):
             os.remove(backup_path)
 
 
-def create_diff(old_text, new_text):
+def edit_text(path, old_text, new_text, fuzzy=False):
     """
-    Create a unified diff between two text strings.
+    Edit text content (not line-based) with optional fuzzy matching.
     
     Args:
-        old_text: Original text
-        new_text: New text
+        path: File path
+        old_text: Text to find
+        new_text: Text to replace with
+        fuzzy: Use fuzzy matching for whitespace variations
     
     Returns:
-        str: Unified diff (empty if identical)
+        tuple: (success: bool, message: str)
     """
+    content = Path(path).read_text()
+    
+    if old_text in content:
+        new_content = content.replace(old_text, new_text)
+        Path(path).write_text(new_content)
+        return True, "Exact match edit successful"
+    
+    if fuzzy:
+        # Try fuzzy matching - strip and normalize
+        old_lines = [l.strip() for l in old_text.strip().split('\n') if l.strip()]
+        content_lines = content.split('\n')
+        
+        for i, line in enumerate(content_lines):
+            if all(ol in line for ol in old_lines if len(ol) > 5):
+                for j in range(len(content_lines)):
+                    test_match = '\n'.join(content_lines[j:j+len(old_lines)])
+                    if old_text.strip() in test_match or test_match.strip() in old_text.strip():
+                        new_content = content.replace(test_match, new_text)
+                        Path(path).write_text(new_content)
+                        return True, f"Fuzzy match edit successful at line {j+1}"
+        
+        return False, "No fuzzy match found"
+    
+    return False, "Text not found (try --fuzzy)"
+
+
+def create_diff(old_text, new_text):
+    """Create a unified diff between two text strings."""
     with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
         f.write(old_text)
         old_path = f.name
@@ -163,7 +148,6 @@ def create_diff(old_text, new_text):
             new_path = f.name
         
         try:
-            # diff returns non-zero when files differ, which is expected
             result = subprocess.run(
                 f"diff -u '{old_path}' '{new_path}'",
                 shell=True, capture_output=True, text=True
@@ -176,37 +160,18 @@ def create_diff(old_text, new_text):
 
 
 def verify_files(path1, path2):
-    """
-    Verify two files are identical.
-    
-    Args:
-        path1: First file path
-        path2: Second file path
-    
-    Returns:
-        tuple: (identical: bool, message: str)
-    """
+    """Verify two files are identical."""
     result = run_command(f"diff -q '{path1}' '{path2}'", check=False)
     
     if result.returncode == 0:
         return True, "Files are identical"
     else:
-        # Show the diff
         diff_result = run_command(f"diff -u '{path1}' '{path2}'")
         return False, f"Files differ:\n{diff_result.stdout}"
 
 
 def file_hash(path, algorithm='sha256'):
-    """
-    Compute cryptographic hash of a file.
-    
-    Args:
-        path: File path
-        algorithm: Hash algorithm (sha256, sha1, md5)
-    
-    Returns:
-        str: Hash value
-    """
+    """Compute cryptographic hash of a file."""
     hash_obj = hashlib.new(algorithm)
     with open(path, 'rb') as f:
         for chunk in iter(lambda: f.read(4096), b''):
@@ -223,17 +188,20 @@ Examples:
   # Read lines 10-20 from a file
   file-edit.py read /path/to/file.txt --start 10 --end 20
   
-  # Edit line 15
+  # Edit line 15 (PREFERRED when you know the line)
   file-edit.py edit-line /path/to/file.txt 15 "new content"
+  
+  # Edit text content (when you know the text, not the line)
+  file-edit.py edit-text /path/to/file.txt "old text" "new text"
+  
+  # Fuzzy edit (handles whitespace variations)
+  file-edit.py edit-text /path/to/file.txt "old text" "new text" --fuzzy
   
   # Verify files are identical
   file-edit.py verify /path/to/file1.txt /path/to/file2.txt
   
   # Compute file hash
   file-edit.py hash /path/to/file.txt
-  
-  # Create diff between two texts
-  file-edit.py diff-text "old text" "new text"
         """
     )
     subparsers = parser.add_subparsers(dest='command', help='Commands')
@@ -249,6 +217,13 @@ Examples:
     edit_parser.add_argument('path', help='File path')
     edit_parser.add_argument('line', type=int, help='Line number (1-indexed)')
     edit_parser.add_argument('content', help='New content for the line')
+    
+    # Edit-text command (NEW - replaces safe-edit.py)
+    text_parser = subparsers.add_parser('edit-text', help='Edit text content with optional fuzzy matching')
+    text_parser.add_argument('path', help='File path')
+    text_parser.add_argument('old', help='Text to find')
+    text_parser.add_argument('new', help='Text to replace with')
+    text_parser.add_argument('--fuzzy', action='store_true', help='Use fuzzy matching')
     
     # Edit-range command
     range_parser = subparsers.add_parser('edit-range', help='Replace a range of lines')
@@ -285,6 +260,12 @@ Examples:
                 print(f"Line {args.line} updated successfully")
             else:
                 print(f"Failed to update line {args.line}")
+                sys.exit(1)
+        
+        elif args.command == 'edit-text':
+            success, message = edit_text(args.path, args.old, args.new, getattr(args, 'fuzzy', False))
+            print(message)
+            if not success:
                 sys.exit(1)
         
         elif args.command == 'edit-range':

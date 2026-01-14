@@ -339,6 +339,124 @@ uv run /home/opc/clawd/skills/playwright-automation/scripts/playwright.py click 
 
 ---
 
+## File Editing Tools (Unified)
+
+### Use the Right Tool for the Job
+
+| Situation | Command | Example |
+|-----------|---------|---------|
+| Know line number | `edit-line` | `edit-line /path.txt 15 "content"` |
+| Know text, not line | `edit-text --fuzzy` | `edit-text /path.txt "old" "new" --fuzzy` |
+| Know line range | `edit-range` | `edit-range /path.txt 5 10 "new"` |
+| Partial file read | `read` | `read /path.txt --start 10 --end 20` |
+| Verify changes | `verify` | `verify /path1.txt /path2.txt` |
+
+**Key insight from session analysis:** 36+ edit failures due to exact text matching. Use `file-edit.py` commands instead of the native `edit` tool.
+
+### `scripts/file-edit.py` (ENHANCED - 2026-01-14)
+
+All file editing in ONE tool with improved commands:
+
+```bash
+# Edit line 15 (PREFERRED - no text matching needed)
+python scripts/file-edit.py edit-line /path.txt 15 "new content"
+
+# Edit text content with exact match
+python scripts/file-edit.py edit-text /path.txt "exact old text" "new text"
+
+# Edit text with fuzzy matching (handles whitespace!)
+python scripts/file-edit.py edit-text /path.txt "partial old text" "new text" --fuzzy
+
+# Read lines 10-20
+python scripts/file-edit.py read /path.txt --start 10 --end 20
+
+# Verify files are identical
+python scripts/file-edit.py verify /path1.txt /path2.txt
+
+# Compute SHA256 hash
+python scripts/file-edit.py hash /path.txt
+
+# Create diff between two texts
+python scripts/file-edit.py diff-text "old" "new"
+```
+
+**New in v2.0:** Added `edit-text` command with `--fuzzy` flag to replace the standalone `safe-edit.py`.
+
+---
+
+## Service Waiting Tools (ENHANCED - 2026-01-14)
+
+### `scripts/utils/wait-for.sh`
+Intelligent waiting for services/ports with content checking and JSON output.
+
+```bash
+# Wait for URL (basic)
+./wait-for.sh http://localhost:3000 --timeout 30
+
+# Wait for port
+./wait-for.sh port:3000 --timeout 30
+
+# Wait for Docker container
+./wait-for.sh docker:jj-app --timeout 60
+
+# Wait for specific content in response
+./wait-for.sh http://localhost:3000/api/health --contains "ok" --timeout 30
+
+# JSON output for programmatic use
+./wait-for.sh http://localhost:3000 --json
+# Output: {"success": true, "url": "...", "reason": "available", "elapsed": 5}
+```
+
+**From session analysis:** 284+ sleep commands found. Replace with this utility.
+
+**New in v2.0:** Added `--contains` for content checking and `--json` for programmatic use.
+
+---
+
+## API Call Tools
+
+### Use the Right Tool for the Job
+
+| Situation | Tool | Why |
+|-----------|------|-----|
+| Single API call | `api-call.sh` | Simple, standardized |
+| Multiple API calls | `parallel-exec.py api` | Batch processing |
+| One-off curl | Direct curl | Quick ad-hoc |
+
+### `scripts/utils/api-call.sh` (ENHANCED - 2026-01-14)
+Standardized single API calls with error handling and JSON output.
+
+```bash
+# GET request
+./api-call.sh GET http://localhost:3000/api/data
+
+# POST with data
+./api-call.sh POST http://localhost:3000/api/chat --data '{"msg":"hello"}'
+
+# With headers
+./api-call.sh GET https://api.example.com --headers "Auth:Bearer token"
+
+# JSON output for programmatic use
+./api-call.sh GET http://localhost:3000/api/data --json
+# Output: {"success": true, "data": {...}}
+
+# Failed call (JSON mode)
+./api-call.sh GET http://localhost:3000/missing --json
+# Output: {"success": false, "error": "...", "url": "...", "method": "GET"}
+```
+
+**New in v2.0:** Added `--json` for programmatic output with proper error handling.
+
+### `scripts/parallel-exec.py` (EXISTING)
+Parallel execution for batch processing.
+
+```bash
+# Parallel API calls (8 workers)
+python scripts/parallel-exec.py api endpoints.txt -w 8
+```
+
+---
+
 ## Quick Reference
 
 ### File Editing

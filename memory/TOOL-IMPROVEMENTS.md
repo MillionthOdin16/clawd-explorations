@@ -1,336 +1,160 @@
-# 🦞 Tool Usage Analysis & Improvements
+# Tool Usage Improvements - Lessons from Session Analysis
 
-**Analyzed:** 2026-01-14  
-**Purpose:** Identify common pain points and improve tools/skills for future efficiency
-
----
-
-## Pain Points Identified
-
-### 1. Inconsistent Argument Parsing (15+ scripts)
-
-**Issue:** Many scripts lack proper argument parsing with argparse.
-
-**Affected Scripts:**
-- `explore.py` - No argparse
-- `hn-daily-summary.py` - No argparse
-- `hn-explorer.py` - No argparse
-- `internal-state.py` - No argparse
-- `littleclawd-*.py` - No argparse
-- `parse-hn.py` - No argparse
-- `replace_line.py` - No argparse
-- `search-mcp-servers.py` - No argparse
-- `setup-littleclawd.py` - No argparse
-
-**Impact:** 
-- Inconsistent CLI interface
-- No `--help` support
-- No `--json` output
-- No `--quiet` mode
-
-### 2. Inconsistent Skill Invocation (All skills)
-
-**Issue:** Different skills use different invocation patterns.
-
-| Skill | Invocation Pattern |
-|-------|------------------|
-| Coolify | `uv run scripts/coolify.py <cmd>` |
-| Context7 | `uv run scripts/context7.py <cmd>` |
-| Ripgrep | `uv run scripts/ripgrep.py <cmd>` |
-| Exa | `bash scripts/search.sh "query"` |
-| Web | `python scripts/web-explorer.py <cmd>` |
-| Playwright | `python scripts/cli.py <cmd>` |
-| HN | `python scripts/hn-daily-summary.py` |
-
-**Impact:** Hard to remember different patterns
-
-### 3. Missing `--json` Output (Most scripts)
-
-**Issue:** Only a few scripts support JSON output for automation.
-
-**Scripts with JSON support:**
-- ✅ `parallel-exec-enhanced.py`
-- ✅ `tool-tester.py`
-- ✅ `system-status.py`
-- ✅ `memory-health.py`
-- ❌ Most other scripts
-
-**Impact:** Can't use scripts in automated pipelines
-
-### 4. No Standard Error Handling
-
-**Issue:** Scripts fail with different error messages.
-
-**Examples:**
-- Some print to stdout
-- Some print to stderr
-- Some exit with code 0 on error
-- Some exit with code 1 on success
-
-**Impact:** Hard to script around failures
-
-### 5. No Consistent `--quiet` Mode
-
-**Issue:** Can't suppress output for scripting.
-
-**Only some scripts support:**
-- `--quiet`
-- `-q`
-- `--silent`
-
-**Impact:** Can't use in automated workflows cleanly
+**Created:** 2026-01-14  
+**Purpose:** Document pain points and improvements based on actual session analysis
 
 ---
 
-## Improvements Made
+## Session Analysis Summary
 
-### 1. Created Unified Skill Runner
+Analyzed 27 session files with 5,000+ tool calls to identify patterns and issues.
 
-**File:** `scripts/skill.py`
-
-**Provides:**
-```bash
-# Single entry point
-python scripts/skill.py <skill> <command> [options]
-
-# Examples
-python scripts/skill.py coolify apps list
-python scripts/skill.py context7 query "How does memory work?"
-python scripts/skill.py exa search "AI consciousness"
-```
-
-### 2. Created Complete Coolify Integration
-
-**File:** `scripts/coolify.py` (873 lines)
-
-**Provides:**
-- All API endpoints with consistent interface
-- `--json` output support
-- `--quiet` mode
-- `--help` for all commands
-- Status dashboard
-- Resource management
-
-### 3. Created Standard Tool Template
-
-**Template for new tools:**
-
-```python
-#!/usr/bin/env python3
-"""
-Tool description.
-
-Usage:
-    python scripts/tool.py --help
-"""
-
-import argparse
-import json
-import sys
-
-def main():
-    parser = argparse.ArgumentParser(
-        description='Tool description',
-        formatter_class=argparse.RawDescriptionHelpFormatter
-    )
-    
-    # Arguments
-    parser.add_argument('--json', action='store_true', help='JSON output')
-    parser.add_argument('--quiet', action='store_true', help='Quiet mode')
-    parser.add_argument('--verbose', action='store_true', help='Verbose output')
-    
-    # Command subparsers for multi-command tools
-    subparsers = parser.add_subparsers(dest='command', help='Commands')
-    
-    # Add command parsers...
-    
-    args = parser.parse_args()
-    
-    # Main logic...
-    
-    if args.json:
-        print(json.dumps(result))
-    elif not args.quiet:
-        print(result)
-
-if __name__ == '__main__':
-    main()
-```
-
-### 4. Added --json Support to Key Tools
-
-Updated tools with JSON output:
-- ✅ `parallel-exec-enhanced.py` 
-- ✅ `tool-tester.py`
-- ✅ `system-status.py`
-- ✅ `memory-health.py`
-- ✅ `startup.py`
-- ✅ `coolify.py` (new)
+### Top Tool Usage (Aggregated)
+| Tool | Calls | Notes |
+|------|-------|-------|
+| `exec` | 2,895 | Dominant tool - needs optimization |
+| `read` | 661 | Second most used |
+| `edit` | 430 | Pain point: exact match failures |
+| `write` | 325 | Reliable |
+| `process` | 128 | Background job management |
+| `browser` | 37 | Browser automation |
+| `message` | 45 | Provider messaging |
+| `gateway` | 24 | Gateway operations |
+| `qmd` | 4 | Underutilized - should be primary search |
 
 ---
 
-## Remaining Scripts to Improve
+## Identified Pain Points
 
-### Priority 1: Add Standard Argument Parsing (DONE)
-
-| Script | Action | Status |
-|--------|--------|--------|
-| `search-mcp-servers.py` | Add argparse + JSON | ✅ Done |
-| `hn-explorer.py` | Add argparse + JSON | ✅ Done |
-| `internal-state.py` | Add argparse | Single command |
-| `littleclawd-*.py` | Add argparse or remove | Scripts |
-| `parse-hn.py` | Add argparse | Single command |
-| `replace_line.py` | Add argparse | Single command |
-| `search-mcp-servers.py` | Add argparse | Single command |
-
-### Priority 2: Add --json Output
-
-| Script | Add JSON Support |
-|--------|-----------------|
-| `context7.py` | ✅ Already has |
-| `ripgrep.py` | ✅ Already has |
-| `hn-explorer.py` | Add |
-| `web-explorer.py` | Add |
-| `playwright/cli.py` | Add |
-| `coolify.py` | ✅ Has |
-
-### Priority 3: Standardize Skill Scripts
-
-Create wrapper scripts for each skill that:
-1. Handle `uv run` prefix
-2. Pass through all arguments
-3. Support `--help` without running
-
-**Example wrapper:**
-```python
-#!/usr/bin/env python3
-"""Wrapper for context7 skill."""
-
-import subprocess
-import sys
-
-if __name__ == "__main__":
-    import os
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    cmd = ["uv", "run", f"{base_dir}/skills/context7/scripts/context7.py"] + sys.argv[1:]
-    sys.exit(subprocess.run(cmd).returncode)
+### 1. Edit Tool Exact Match Failures (36+ occurrences)
+**Errors:**
 ```
+Could not find the exact text in /home/opc/clawd/memory/INDEX.md
+Could not find the exact text in /home/opc/clawd/HEARTBEAT.md
+Could not find the exact text in /home/opc/clawd/CAPABILITIES.md
+```
+
+**Root Cause:** 
+- Whitespace differences between intended and actual text
+- File changes between read and edit
+- Unicode/encoding differences
+
+**Solution:**
+- Use `safe-edit.py --fuzzy` for fuzzy matching
+- Read file immediately before editing
+- Consider using write for small files instead of edit
+
+### 2. Excessive Sleep/Wait Commands (284+ occurrences)
+**Evidence:**
+```
+sleep 10 (80 calls)
+sleep 30 (72 calls)
+sleep 45 (51 calls)
+sleep 20 (36 calls)
+sleep 25 (33 calls)
+sleep 60 (6 calls)
+```
+
+**Root Cause:**
+- No intelligent wait-for mechanism
+- Polling instead of event-driven approaches
+- Uncertainty about service availability
+
+**Solution:**
+- Use `wait-for.sh` utility for intelligent waiting
+- Check service health before proceeding
+- Use process polling instead of fixed sleeps
+
+### 3. Gateway Connection Issues (24 occurrences)
+**Error:**
+```
+gateway closed (1008): unauthorized
+```
+
+**Root Cause:**
+- Gateway authentication/authorization issues
+- Connection timeouts
+- Config changes during operation
+
+**Solution:**
+- Add connection health checks
+- Use session_status before gateway operations
+- Implement retry logic with backoff
+
+### 4. Docker Permission Issues (6 occurrences)
+**Error:**
+```
+Permission denied: /var/lib/docker/volumes/kc4.../_data/
+```
+
+**Root Cause:**
+- Docker volume permission issues
+- Running commands without proper permissions
+
+**Solution:**
+- Use `sudo docker` prefix when needed
+- Check permissions before volume operations
+- Use elevated flag when appropriate
+
+### 5. QMD Underutilization (only 4 calls)
+**Issue:**
+- qmd exists but rarely used
+- Defaulting to ripgrep for simple searches
+
+**Solution:**
+- Make qmd the DEFAULT search tool (per AGENTS.md)
+- Use qmd for all workspace searches
+- Reserve ripgrep for existence checks only
+
+### 6. Inline Comments as Tool Names
+**Pattern:**
+```
+"# Copy" (18 calls)
+"# First," (17 calls)
+"# Check", "# Let", "# Try"
+```
+
+**Issue:**
+- Using comments as tool identifiers is confusing
+- Makes session logs harder to parse
+
+**Solution:**
+- Use descriptive tool names that reflect intent
+- Avoid inline comments in tool calls
 
 ---
 
-## Tool Categories & Standard Patterns
+## Utility Scripts (v2.0 - Enhanced & Unified)
 
-### Category 1: Single-Command Scripts
-```bash
-python scripts/tool.py [--json] [--quiet]
-# Example: hn-daily-summary.py
-```
+All documented in `TOOLS.md`. Quick reference:
 
-### Category 2: Multi-Command Scripts
-```bash
-python scripts/tool.py <command> [--json] [--quiet]
-# Example: coolify.py apps list
-```
+| Script | Purpose | v2.0 Improvements |
+|--------|---------|-------------------|
+| `scripts/file-edit.py` | File editing | Added `edit-text --fuzzy` command |
+| `scripts/utils/wait-for.sh` | Intelligent waiting | Added `--contains`, `--json` |
+| `scripts/utils/api-call.sh` | API calls | Added `--json` for programmatic use |
 
-### Category 3: Skill Wrappers
-```bash
-python scripts/skill.py <skill> <command> [--json] [--quiet]
-# Example: skill.py context7 query "question"
-```
-
-### Category 4: Exploration Scripts
-```bash
-python scripts/explore.py <url> [--json] [--quiet]
-# Example: web-explorer.py
-```
+**Key change:** Merged `safe-edit.py` into `file-edit.py`
 
 ---
 
-## Error Handling Standard
+## Improved Patterns (Summary)
 
-### Standard Error Format
-```json
-{
-  "success": false,
-  "error": "Human-readable error message",
-  "code": "ERROR_CODE",
-  "details": {}
-}
-```
-
-### Exit Codes
-| Code | Meaning |
-|------|---------|
-| 0 | Success |
-| 1 | General error |
-| 2 | Invalid arguments |
-| 3 | Not found |
-| 4 | Permission denied |
+| Instead of | Use |
+|------------|-----|
+| `sleep 10` + retries | `wait-for.sh` with `--contains` |
+| `edit` exact match fails | `file-edit.py edit-text --fuzzy` |
+| `ripgrep` for search | `qmd search` |
+| Hardcoded curl | `api-call.sh --json` |
 
 ---
 
-## Quick Reference: New Patterns
+## Metrics to Target
 
-### New Tool Pattern
-```bash
-# Create with argparse
-python scripts/tool.py --help
-python scripts/tool.py --json
-python scripts/tool.py command --arg value
-```
-
-### Skill Runner Pattern
-```bash
-# List all skills
-python scripts/skill.py help
-
-# Get skill help
-python scripts/skill.py <skill> help
-
-# Use skill
-python scripts/skill.py <skill> <command> [--json]
-```
-
-### Standard Tool Integration
-```bash
-# In scripts
-result = subprocess.run(
-    ["python", "scripts/tool.py", "command", "--json"],
-    capture_output=True,
-    text=True
-)
-data = json.loads(result.stdout)
-```
+1. Edit success rate: >99%
+2. Sleep commands: <20/session
+3. QMD usage: >50/session
 
 ---
 
-## Files to Update
-
-| File | Change | Priority |
-|------|--------|----------|
-| `scripts/explore.py` | Add argparse | High |
-| `scripts/hn-explorer.py` | Add argparse + JSON | High |
-| `scripts/search-mcp-servers.py` | Add argparse + JSON | Medium |
-| `skills/*/scripts/*.py` | Add wrapper scripts | Medium |
-| `TOOLS.md` | Update with new patterns | High |
-| `QUICK-REF.md` | Update with new patterns | High |
-
----
-
-## Verification Checklist
-
-After improvements, verify:
-
-- [ ] All scripts have `--help`
-- [ ] All scripts have `--json`
-- [ ] All scripts have `--quiet`
-- [ ] All scripts use consistent exit codes
-- [ ] Skill runner works for all skills
-- [ ] Can use all tools in automated pipelines
-- [ ] Error messages are helpful
-
----
-
-*This document is indexed by qmd for semantic search.*
-
-🦞
+**Full docs:** `TOOLS.md` | **Quick ref:** `QUICK-REF.md`

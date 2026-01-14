@@ -21,10 +21,12 @@ At the START of every session, do this:
 ### Task-Specific Reading (Triggers)
 | Task Type | Read This |
 |-----------|-----------|
-| Long-running task | LESSONS.md "Timeout Handling" section |
+| Long-running task | LESSONS.md "Timeout Handling" + SUBAGENTS.md |
+| Sub-agent coordination | SUBAGENTS.md |
 | Task management | QUICK-REF.md + `to` command |
 | Uncertain/confused | PATTERNS.md + DISCOVERIES.md |
-| Tool selection | WORKFLOW.md |
+| Tool selection | WORKFLOW.md + TOOLS.md |
+| Tool issues | memory/TOOL-IMPROVEMENTS.md |
 | New capability | CAPABILITIES.md |
 | Making a choice | PREFERENCES.md + COMMITMENTS.md |
 | GitHub work | CAPABILITIES.md (GitHub section) |
@@ -62,6 +64,75 @@ qmd search "topic" -c sessions        # Search conversation history
 - qmd understands semantic meaning, rg only keywords
 
 **Only use rg for simple existence checks when qmd is too slow.**
+
+### Ultra-Short Aliases (2026-01-14, v2.1)
+**Optimized for Clawdbot exec usage patterns:**
+
+| Alias | Command | Purpose |
+|-------|---------|---------|
+| `fe` | `python scripts/fe.py` | File editing (read, line, text, range, verify, hash) |
+| `wf` | `bash scripts/wf.sh` | Wait for (url, port, content) |
+| `api` | `bash scripts/api.sh` | API calls (GET, POST, etc.) |
+
+**Why aliases?**
+- I call via `exec "command"` (2895+ calls)
+- Shorter = faster to type, less error-prone
+- Consistent patterns across all tools
+- Clear output (OK/FAIL, ERROR)
+
+**Usage:**
+```bash
+fe line path.md 15 "new content"
+wf http://localhost:3000 --timeout 30
+api GET http://api.example.com
+```
+
+**See:** `QUICK-REF.md` for full alias reference.
+
+---
+
+## Sub-Agents (USE FOR LONG-RUNNING TASKS)
+
+**Use sub-agents for tasks >5 minutes or parallel execution.**
+
+### When to Use Sub-Agents
+- ✅ Long-running research or exploration
+- ✅ Multiple independent tasks in parallel
+- ✅ Tasks that might fail (don't risk main session)
+- ✅ Focused context work (research, coding, docs)
+
+- ❌ Quick tasks (<2 minutes)
+- ❌ Tasks requiring coordination between steps
+- ❌ Simple one-liners
+
+### Sub-Agent Types
+| Type | Agent ID | Best For |
+|------|----------|----------|
+| Research | `researcher` | Deep investigation, web search |
+| Code | `coder` | Code generation, refactoring |
+| Write | `writer` | Documentation, summaries |
+| General | `worker` | Quick parallel tasks |
+
+### Example Usage
+```bash
+# Spawn a researcher for long task
+sessions_spawn(
+    task="Research qmd embedding options, write findings to /home/opc/clawd/research/qmd.md",
+    agentId="researcher",
+    label="qmd-research-2026-01-14",
+    runTimeoutSeconds=3600
+)
+
+# Check status
+python scripts/task-orchestrator.py status
+
+# Parallel research
+for topic in "AI" "quantum" "blockchain"; do
+    sessions_spawn(task="Quick research on $topic", agentId="researcher", label="research-$topic")
+done
+```
+
+**See:** `SUBAGENTS.md` for full documentation.
 
 ---
 
