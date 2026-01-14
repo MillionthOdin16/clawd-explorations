@@ -9,7 +9,6 @@
 
 **Stored securely in:** `~/.ssh/config` (alias: `littleclawd`)  
 **SSH Command:** `ssh littleclawd`  
-**IP:** 129.153.132.33  
 **User:** opc  
 **Key:** `~/.ssh/baby_clawdbot_key`
 
@@ -99,9 +98,6 @@ MemoryHigh=350M
 ```bash
 # Quick connect (uses stored config)
 ssh littleclawd
-
-# Direct connect
-ssh -i ~/.ssh/baby_clawdbot_key opc@129.153.132.33
 
 # Run diagnostic
 ssh littleclawd 'bash -s' < /home/opc/diagnose.sh
