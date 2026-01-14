@@ -22,6 +22,7 @@ At the START of every session, do this:
 | Task Type | Read This |
 |-----------|-----------|
 | Long-running task | LESSONS.md "Timeout Handling" section |
+| Task management | QUICK-REF.md + `to` command |
 | Uncertain/confused | PATTERNS.md + DISCOVERIES.md |
 | Tool selection | WORKFLOW.md |
 | New capability | CAPABILITIES.md |

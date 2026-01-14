@@ -1,0 +1,9 @@
+{
+  "name": "backup_20260114_035500",
+  "created_at": 1768362901.121094,
+  "created_at_str": "2026-01-14T03:55:01.121097",
+  "memory_files": 32,
+  "archive_files": 122,
+  "size_bytes": 404460,
+  "workspace": "/home/opc/clawd"
+}

@@ -1,112 +1,390 @@
 ---
 name: coolify
-description: Deploy and manage applications on Coolify self-hosted platform. List apps, databases, services, start/stop deployments, and manage your workspace.
+description: Complete Coolify API integration. Deploy and manage applications, projects, environments, databases, services, and resources. Full CRUD operations, deployments, logs, and status monitoring.
 homepage: https://coolify.bradarr.com
 metadata: {"clawdbot":{"emoji":"🚀","requires":{"env":["COOLIFY_API_KEY"]}}}
 ---
 
-# Coolify - Deployment Platform
+# Coolify - Complete Deployment Platform Integration
 
-Manage your Coolify deployments from the command line.
+Deploy and manage applications, databases, services, and infrastructure on Coolify self-hosted platform.
+
+## Status
+
+**✅ INSTALLED** via npm
+```bash
+npm install -g coolify
+which coolify  # /home/opc/.nvm/versions/node/v22.20.0/bin/coolify
+```
 
 ## Setup
 
-**1. API Key:**
+**1. Get API Key:**
 Get your API key from https://coolify.bradarr.com → Settings → API Keys.
 
-**2. Set it in your environment:**
+**2. Set environment variable:**
 ```bash
-export COOLIFY_API_KEY="your-api-key"
+export COOLIFY_API_TOKEN="your-api-token"
 ```
 
 Or add to `~/.clawdbot/.env`:
 ```bash
-COOLIFY_API_KEY="your-api-key"
+COOLIFY_API_TOKEN="your-api-token"
 ```
 
-## Commands
+## Quick Reference
 
-### Applications
+| Command | Description |
+|---------|-------------|
+| `python scripts/coolify.py status` | Quick status overview |
+| `python scripts/coolify.py apps list` | List all applications |
+| `python scripts/coolify.py apps get <uuid>` | Get app details |
+| `python scripts/coolify.py apps deploy <uuid>` | Trigger deployment |
+| `python scripts/coolify.py apps logs <uuid>` | Get application logs |
+| `python scripts/coolify.py apps restart <uuid>` | Restart application |
+| `python scripts/coolify.py projects list` | List all projects |
+| `python scripts/coolify.py deployments list` | List deployments |
+| `python scripts/coolify.py databases list` | List databases |
+| `python scripts/coolify.py services list` | List services |
+| `python scripts/coolify.py resources --project <uuid>` | List all project resources |
+
+---
+
+## Applications
+
+### List Applications
 ```bash
-uv run {baseDir}/scripts/coolify.py apps list              # List all apps
-uv run {baseDir}/scripts/coolify.py apps get <uuid>        # Get app details
-uv run {baseDir}/scripts/coolify.py apps logs <uuid>       # Get app logs
-uv run {baseDir}/scripts/coolify.py apps watch <uuid>      # Monitor status
-uv run {baseDir}/scripts/coolify.py apps start <uuid>      # Start app
-uv run {baseDir}/scripts/coolify.py apps stop <uuid>       # Stop app
-uv run {baseDir}/scripts/coolify.py apps restart <uuid>    # Restart app
-uv run {baseDir}/scripts/coolify.py apps delete <uuid>     # Delete app
+python scripts/coolify.py apps list
+
+# With expanded details
+python scripts/coolify.py apps list --expand
 ```
 
-### Deploy New Application
+**Output:**
+```
+============================================================
+APPLICATIONS (2 total)
+============================================================
+
+🟢 clawd-demo-site
+   UUID: gw48wk08owg4ckkwc0sckk84
+   FQDN: gw48wk08owg4ckkwc0sckk84.bradarr.com
+   Status: running
+   Repo: MillionthOdin16/clawd-demo-site
+```
+
+### Get Application Details
 ```bash
-uv run {baseDir}/scripts/coolify.py deploy <name> <fqdn> <repo> [--branch main] [--build-pack nixpacks] [--project <uuid>] [--environment <uuid>]
+python scripts/coolify.py apps get <uuid>
 ```
 
-**Example:**
+**Includes:** Name, FQDN, status, repository, branch, commit, Docker config, health checks, resource limits, created/updated timestamps.
+
+### Trigger Deployment
 ```bash
-# Deploy a Node.js app
-uv run {baseDir}/scripts/coolify.py deploy "My Dashboard" dashboard.bradarr.com owner/repo --branch main --build-pack nixpacks
-
-# Deploy with Dockerfile
-uv run {baseDir}/scripts/coolify.py deploy "API" api.bradarr.com owner/api --build-pack dockerfile
-
-# Deploy with explicit project/environment
-uv run {baseDir}/scripts/coolify.py deploy "Demo" demo.bradarr.com owner/repo --project jws4w4cc040444gk0ok0ksgk --environment g4wo8s0g48ogggkgwosc4sgs
+python scripts/coolify.py apps deploy <uuid>
 ```
 
-**Important Notes:**
-- `fqdn` is NOT set during creation - Coolify auto-generates a subdomain
-- Custom domain is added via traefik `custom_labels` after deployment
-- Required fields: `project_uuid`, `environment_uuid` (or `environment_name`), `server_uuid`, `git_repository`, `git_branch`, `build_pack`, `ports_exposes`
-
-### Databases
+### Restart Application
 ```bash
-uv run {baseDir}/scripts/coolify.py dbs list               # List databases
-uv run {baseDir}/scripts/coolify.py dbs get <uuid>         # Get DB details
+python scripts/coolify.py apps restart <uuid>
 ```
 
-### Services
+### Start/Stop Application
 ```bash
-uv run {baseDir}/scripts/coolify.py services list          # List services
+python scripts/coolify.py apps start <uuid>
+python scripts/coolify.py apps stop <uuid>
 ```
 
-### Projects
+### Get Application Logs
 ```bash
-uv run {baseDir}/scripts/coolify.py projects list          # List projects
+python scripts/coolify.py apps logs <uuid>
+python scripts/coolify.py apps logs <uuid> --count 50  # Last 50 entries
 ```
 
-### Raw Output
+---
+
+## Projects
+
+### List Projects
 ```bash
-uv run {baseDir}/scripts/coolify.py apps list --raw        # Raw JSON output
-uv run {baseDir}/scripts/coolify.py dbs list --raw         # Raw JSON output
+python scripts/coolify.py projects list
 ```
 
-## Examples
-
-**List your applications:**
+### Get Project
 ```bash
-uv run {baseDir}/scripts/coolify.py apps list
+python scripts/coolify.py projects get <uuid>
 ```
 
-**Check a specific application:**
+### Create Project
 ```bash
-uv run {baseDir}/scripts/coolify.py apps get jws4w4cc040444gk0ok0ksgk
+python scripts/coolify.py projects create --name "My Project" --description "Description"
 ```
 
-**Start a stopped application:**
+### Update Project
 ```bash
-uv run {baseDir}/scripts/coolify.py apps start <uuid>
+python scripts/coolify.py projects update <uuid> --name "New Name"
 ```
 
-**Check database status:**
+### Delete Project
 ```bash
-uv run {baseDir}/scripts/coolify.py dbs list
+python scripts/coolify.py projects delete <uuid>
 ```
 
-## API
+---
 
-Uses Coolify REST API at `https://coolify.bradarr.com/api/v1`.
+## Environments
 
-- **Authentication:** Bearer token (`COOLIFY_API_KEY`)
-- **Documentation:** https://coolify.io/docs/api-reference
+### List Environments
+```bash
+python scripts/coolify.py environments list --project <project_uuid>
+```
+
+### Create Environment
+```bash
+python scripts/coolify.py environments create --project <uuid> --name "Production" --production
+```
+
+---
+
+## Deployments
+
+### List Deployments
+```bash
+# All deployments
+python scripts/coolify.py deployments list
+
+# For specific application
+python scripts/coolify.py deployments list --application <uuid>
+```
+
+**Output:**
+```
+============================================================
+DEPLOYMENTS (10 total)
+============================================================
+
+✅ Fix deployment error
+   Status: completed
+   Commit: a5f7e8d
+   Created: 2026-01-14 04:50:30
+```
+
+### Cancel Deployment
+```bash
+python scripts/coolify.py deployments cancel <uuid>
+```
+
+### Retry Deployment
+```bash
+python scripts/coolify.py deployments retry <uuid>
+```
+
+---
+
+## Databases
+
+### List Databases
+```bash
+python scripts/coolify.py databases list
+python scripts/coolify.py databases list --project <uuid>
+```
+
+### Get Database Details
+```bash
+python scripts/coolify.py databases get <uuid>
+```
+
+### Trigger Backup
+```bash
+python scripts/coolify.py databases backup <uuid>
+```
+
+### Restore from Backup
+```bash
+python scripts/coolify.py databases restore <uuid> --backup <backup_uuid>
+```
+
+### Delete Database
+```bash
+python scripts/coolify.py databases delete <uuid>
+```
+
+---
+
+## Services
+
+### List Services
+```bash
+python scripts/coolify.py services list
+python scripts/coolify.py services list --project <uuid>
+```
+
+### Get Service Details
+```bash
+python scripts/coolify.py services get <uuid>
+```
+
+### Restart Service
+```bash
+python scripts/coolify.py services restart <uuid>
+```
+
+### Delete Service
+```bash
+python scripts/coolify.py services delete <uuid>
+```
+
+---
+
+## Resources (All-in-One)
+
+### List All Resources in Project
+```bash
+python scripts/coolify.py resources list --project <uuid>
+```
+
+Shows applications, databases, and services together.
+
+---
+
+## Status Dashboard
+
+### Quick Overview
+```bash
+python scripts/coolify.py status
+```
+
+**Output:**
+```
+============================================================
+COOLIFY STATUS
+============================================================
+
+📦 Applications: 2 (2 running)
+📁 Projects: 1
+🗄️  Databases: 0
+🔧 Services: 0
+
+🔗 API URL: https://coolify.bradarr.com
+✅ API: Connected
+```
+
+---
+
+## Common Patterns
+
+### Pattern 1: Deploy Updated Code
+```bash
+# 1. Make code changes to git
+git add . && git commit -m "Update" && git push
+
+# 2. Find application UUID
+python scripts/coolify.py apps list
+
+# 3. Trigger deployment
+python scripts/coolify.py apps deploy <uuid>
+
+# 4. Watch logs
+python scripts/coolify.py apps logs <uuid>
+```
+
+### Pattern 2: Check Deployment History
+```bash
+# List deployments
+python scripts/coolify.py deployments list --application <uuid>
+
+# Get details
+python scripts/coolify.py deployments get <deployment_uuid>
+```
+
+### Pattern 3: Manage Multiple Environments
+```bash
+# List environments
+python scripts/coolify.py environments list --project <uuid>
+
+# Deploy to production
+python scripts/coolify.py apps deploy <uuid>
+```
+
+### Pattern 4: Debug Application Issues
+```bash
+# Check status
+python scripts/coolify.py apps get <uuid>
+
+# Check logs
+python scripts/coolify.py apps logs <uuid> --count 200
+
+# Check deployments
+python scripts/coolify.py deployments list --application <uuid>
+```
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `COOLIFY_API_TOKEN` | API token for authentication |
+| `COOLIFY_API_URL` | API URL (default: https://coolify.bradarr.com) |
+
+---
+
+## API Reference
+
+### Endpoints Implemented
+
+| Category | Endpoint | Method | Status |
+|----------|----------|--------|--------|
+| **Applications** | | | |
+| List | `/applications` | GET | ✅ |
+| Get | `/applications/{uuid}` | GET | ✅ |
+| Create | `/applications` | POST | ✅ |
+| Update | `/applications/{uuid}` | PUT | ✅ |
+| Delete | `/applications/{uuid}` | DELETE | ✅ |
+| Deploy | `/deploy` | POST | ✅ |
+| Restart | `/applications/{uuid}/restart` | POST | ✅ |
+| Start | `/applications/{uuid}/start` | POST | ✅ |
+| Stop | `/applications/{uuid}/stop` | POST | ✅ |
+| Logs | `/applications/{uuid}/logs` | GET | ✅ |
+| **Projects** | | | |
+| List | `/projects` | GET | ✅ |
+| Get | `/projects/{uuid}` | GET | ✅ |
+| Create | `/projects` | POST | ✅ |
+| Update | `/projects/{uuid}` | PUT | ✅ |
+| Delete | `/projects/{uuid}` | DELETE | ✅ |
+| **Environments** | | | |
+| List | `/projects/{uuid}/environments` | GET | ✅ |
+| Get | `/environments/{uuid}` | GET | ✅ |
+| Create | `/projects/{uuid}/environments` | POST | ✅ |
+| Update | `/environments/{uuid}` | PUT | ✅ |
+| Delete | `/environments/{uuid}` | DELETE | ✅ |
+| **Deployments** | | | |
+| List | `/deployments` | GET | ✅ |
+| Get | `/deployments/{uuid}` | GET | ✅ |
+| Cancel | `/deployments/{uuid}/cancel` | POST | ✅ |
+| Retry | `/deployments/{uuid}/retry` | POST | ✅ |
+| **Databases** | | | |
+| List | `/databases` | GET | ✅ |
+| Get | `/databases/{uuid}` | GET | ✅ |
+| Create | `/databases` | POST | ✅ |
+| Backup | `/databases/{uuid}/backup` | POST | ✅ |
+| Restore | `/databases/{uuid}/restore` | POST | ✅ |
+| Delete | `/databases/{uuid}` | DELETE | ✅ |
+| **Services** | | | |
+| List | `/services` | GET | ✅ |
+| Get | `/services/{uuid}` | GET | ✅ |
+| Create | `/services` | POST | ✅ |
+| Update | `/services/{uuid}` | PUT | ✅ |
+| Delete | `/services/{uuid}` | DELETE | ✅ |
+| Restart | `/services/{uuid}/restart` | POST | ✅ |
+| **Resources** | | | |
+| List | `/projects/{uuid}/resources` | GET | ✅ |
+
+---
+
+## See Also
+
+- **Quick Reference:** `QUICK-REF.md`
+- **Full API Docs:** https://coolify.io/docs/api-reference
+- **Coolify Dashboard:** https://coolify.bradarr.com

@@ -1,0 +1,51 @@
+{
+  "name": "test-save",
+  "tasks": [
+    {
+      "id": "task_0",
+      "command": "echo task1",
+      "priority": "NORMAL",
+      "max_retries": 0,
+      "retry_delay": 1.0,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "task_1",
+      "command": "echo task2",
+      "priority": "NORMAL",
+      "max_retries": 0,
+      "retry_delay": 1.0,
+      "dependencies": [],
+      "metadata": {}
+    },
+    {
+      "id": "task_2",
+      "command": "echo task3",
+      "priority": "NORMAL",
+      "max_retries": 0,
+      "retry_delay": 1.0,
+      "dependencies": [],
+      "metadata": {}
+    }
+  ],
+  "results": {
+    "task_0": [
+      true,
+      "task1\n",
+      ""
+    ],
+    "task_2": [
+      true,
+      "task3\n",
+      ""
+    ],
+    "task_1": [
+      true,
+      "task2\n",
+      ""
+    ]
+  },
+  "created_at": 1768359363.1702342,
+  "updated_at": 1768359363.1704528
+}

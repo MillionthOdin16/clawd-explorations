@@ -387,6 +387,88 @@ uv run /home/opc/clawd/skills/context7/scripts/context7.py query "question"
 uv run /home/opc/clawd/skills/ripgrep/scripts/ripgrep.py search "pattern"
 ```
 
+### Task Orchestration
+
+```bash
+# Show dashboard
+python scripts/to.py status              # Task dashboard
+
+# Add task with priority and retry
+python scripts/to.py add "echo task" --priority 10 --retry 3 --desc "Task name"
+
+# Process queue
+python scripts/to.py run                 # Process queue
+
+# Spawn sub-agent
+python scripts/to.py spawn "Research AI" --label "research"
+
+# Monitor sub-agent
+python scripts/to.py history <session-key>
+
+# Cleanup stale sessions
+python scripts/to.py cleanup
+```
+
+### System Management
+
+```bash
+# System status (quick)
+python scripts/system-status.py --brief
+
+# System status (full dashboard)
+python scripts/system-status.py
+
+# System status (JSON)
+python scripts/system-status.py --json
+
+# Startup routine
+python scripts/startup.py                # Full startup
+python scripts/startup.py --quick        # Quick summary
+
+# Tool tester (run all tests)
+python scripts/tool-tester.py
+
+# Tool tester (auto-fix issues)
+python scripts/tool-tester.py --fix
+
+# Memory backup (create)
+python scripts/backup.py
+
+# Memory backup (auto with retention)
+python scripts/backup.py --auto
+
+# Memory backup (list)
+python scripts/backup.py --list
+
+# Memory backup (restore)
+python scripts/backup.py --restore
+
+# Memory health check
+python scripts/memory-health.py
+
+# Memory health check (score only)
+python scripts/memory-health.py --score
+```
+
+### Parallel Execution Enhanced
+
+```bash
+# Auto-scaling workers
+python scripts/parallel-exec-enhanced.py exec commands.txt -w 0
+
+# With retry logic
+python scripts/parallel-exec-enhanced.py exec commands.txt --retry 3 --retry-delay 1
+
+# Rate-limited API calls
+python scripts/parallel-exec-enhanced.py api endpoints.txt --rate-limit 10
+
+# Save queue for later
+python scripts/parallel-exec-enhanced.py exec tasks.txt --save my-queue
+
+# List saved queues
+python scripts/parallel-exec-enhanced.py queue list
+```
+
 ---
 
 ## Best Practices

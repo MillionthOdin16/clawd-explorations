@@ -27,21 +27,66 @@ export UPSTASH_REST_API_URL="https://your-db.upstash.io"
 
 ## Usage
 
-### Run Context7 MCP Server
+### CLI Commands
 ```bash
-# As MCP server (for integration with agents)
-context7-mcp --transport stdio
-
-# As HTTP server
-context7-mcp --transport http --port 3000
-```
-
-### Using the CLI
-```bash
+# Index a codebase
 uv run {baseDir}/scripts/context7.py index /path/to/codebase
+
+# Query the codebase
 uv run {baseDir}/scripts/context7.py query "How does the memory system work?"
+
+# List indexed codebases
 uv run {baseDir}/scripts/context7.py list
+
+# Clear index
+uv run {baseDir}/scripts/context7.py clear
 ```
+
+### Unified Runner
+```bash
+# Using skill.py (preferred)
+python scripts/skill.py context7 query "How does memory work?"
+
+# Direct
+uv run {baseDir}/scripts/context7.py query "How does memory work?"
+```
+
+## Common Patterns
+
+### Pattern 1: Ask about a file
+```bash
+python scripts/skill.py context7 query "How does TOOLS.md work?"
+```
+
+### Pattern 2: Understand a system
+```bash
+python scripts/skill.py context7 query "Explain the memory architecture"
+```
+
+### Pattern 3: Find implementation
+```bash
+python scripts/skill.py context7 query "Where is the qmd search implemented?"
+```
+
+### Pattern 4: Quick code lookup
+```bash
+python scripts/skill.py context7 query "What does the exec function do?"
+```
+
+## Efficiency Tips
+
+1. **Natural language works** - Ask full questions, not keywords
+2. **Be specific** - "How does the memory consolidation work?" > "memory"
+3. **Use context** - Reference files you want to understand
+4. **Chain queries** - Ask follow-up questions for deeper understanding
+
+## When to Use
+
+| Task | Use This | Alternative |
+|------|----------|-------------|
+| Natural language Q&A | Context7 | `qmd search` |
+| Complex codebase questions | Context7 | `rg "pattern"` |
+| Quick keyword search | N/A | `rg` or `qmd` |
 
 ## Why Context7?
 
@@ -53,20 +98,13 @@ uv run {baseDir}/scripts/context7.py list
 | AI-optimized | ✅ Yes | ❌ No |
 | Context injection | ✅ Auto | Manual |
 
-## When to Use
+## Quick Reference
 
-| Task | Use This | Alternative |
-|------|----------|-------------|
-| Natural language Q&A | Context7 | `qmd search` |
-| Complex codebase questions | Context7 | `rg "pattern"` |
-| Quick keyword search | N/A | `rg` or `qmd` |
-
-## Notes
-
-- Requires Upstash Redis (free tier available)
-- First index takes time, subsequent queries are fast
-- Works best with well-documented codebases
-- Can index multiple codebases
+| Command | Description |
+|---------|-------------|
+| `skill.py context7 query "..."` | Ask a question |
+| `skill.py context7 index /path` | Index codebase |
+| `skill.py context7 list` | List indexes |
 
 ## Files
 

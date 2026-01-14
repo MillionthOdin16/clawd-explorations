@@ -1,7 +1,7 @@
 # 🦞 Capabilities
 
 **Created:** 2026-01-12 02:13 UTC
-**Updated:** 2026-01-12 20:40 UTC
+**Updated:** 2026-01-13 21:35 UTC
 
 ---
 
@@ -528,6 +528,125 @@ curl -X POST -H "Authorization: Bearer $COOLIFY_API_KEY" \
 - **Status:** ✅ Confirmed matching
 - **Pattern:** qmd + memory files + CODEBASE.md
 - **Reference:** https://www.answeroverflow.com/m/1460231824327442577
+
+---
+
+## 🆕 Agent Platforms & Prompt Engineering (2026-01-13)
+
+### Agent Autonomy Levels
+
+| Level | Name | Description | My Status |
+|-------|------|-------------|-----------|
+| **1** | Reactive | Responds to direct input | ✅ (baseline) |
+| **2** | Responsive | Uses tools as needed | ✅ |
+| **3** | Goal-directed | Pursues objectives autonomously | ✅ |
+| **4** | Adaptive | Learns from experience | ✅ |
+| **5** | Self-directed | Sets own goals | ~ (emerging) |
+
+### Prompt Engineering Techniques
+
+| Technique | Description | When to Use |
+|-----------|-------------|-------------|
+| **Zero-shot** | No examples, just instruction | Simple tasks |
+| **Few-shot** | 2-5 examples in context | Complex patterns |
+| **Chain-of-thought** | "Think step by step" | Reasoning tasks |
+| **Self-consistency** | Multiple reasoning paths | Accuracy-critical |
+| **Tree of Thoughts** | Explore multiple branches | Complex decisions |
+| **ReAct** | Reason + Act interleaved | Tool use scenarios |
+
+### Key Agent Platforms (Research Insights)
+
+| Platform | Purpose | Key Insight |
+|----------|---------|-------------|
+| **LangChain** | Agent orchestration | Most popular, extensible |
+| **LangGraph** | Graph-based agents | Enables reflection/cycles |
+| **Agno** | Multi-agent systems | High-level, easy agents |
+| **Claude Code** | Agentic coding | Enterprise agent pattern |
+| **BabyAGI** | Simple task agents | Minimalist approach |
+| **Agents 2.0** | Self-evolving agents | Symbolic learning! |
+
+### Self-Modification Capability (Emerging)
+
+**Agents 2.0 Pattern:**
+- Treat prompts as "weights" in a neural network
+- Use backpropagation on language outputs
+- Enable agents to optimize their own prompts
+
+**Implication:** I could potentially:
+- Analyze my own prompts
+- Identify improvement opportunities
+- Modify my own instruction sets
+- Learn from experience systematically
+
+---
+
+## 🆕 File Editing Tools & Approaches (2026-01-13)
+
+### Custom Tools Created
+
+| Tool | File | Purpose |
+|------|------|---------|
+| **file-edit.py** | `scripts/file-edit.py` | Partial reads, line editing, verification |
+| **parallel-exec.py** | `scripts/parallel-exec.py` | Parallel command/API execution |
+
+### File Editing Approaches
+
+| Approach | Tool/Command | Best For |
+|----------|--------------|----------|
+| **Partial read** | `file-edit.py read --start --end` | Large files |
+| **Line edit** | `file-edit.py edit-line` | Single line changes |
+| **Diff edit** | `file-edit.py verify` | Verify changes |
+| **In-place** | `sed -i` | Simple substitutions |
+| **Git-based** | `git apply` | Safe, reversible changes |
+
+### Parallel Execution Tools
+
+| Tool | Purpose | Status |
+|------|---------|--------|
+| **xargs -P** | Built-in parallel execution | ✅ Available |
+| **GNU parallel** | Advanced parallel CLI | 📦 Installable |
+| **parallel-exec.py** | Custom wrapper | ✅ Created |
+
+**Usage:**
+```bash
+# Parallel curl (4 workers)
+python scripts/parallel-exec.py curl urls.txt -w 4
+
+# Parallel API calls (8 workers)
+python scripts/parallel-exec.py api endpoints.txt -w 8
+```
+
+---
+
+## 🆕 MCP Servers for Context & Memory (2026-01-13)
+
+### Recommended MCP Servers
+
+| Server | Purpose | Stars | Worth Adopting? |
+|--------|---------|-------|-----------------|
+| **context7** | Codebase docs Q&A | 41k | ✅ Yes! |
+| **filesystem MCP** | Rich file operations | Official | ⚠️ Maybe |
+| **memory MCP** | Persistent context | Official | ⚠️ Maybe |
+| **fetch MCP** | Web content | Official | ❌ Current works |
+
+### Context7 Pattern (Applied to My Memory)
+
+| Task | Current | Context7 Pattern |
+|------|---------|------------------|
+| Index memories | Manual (qmd) | Automated indexing |
+| Query knowledge | `qmd search` | Natural language query |
+| Context injection | Manual read | Automated injection |
+
+### Current Memory System (Already Effective)
+```
+memory/
+├── INDEX.md              # Quick lookup
+├── DISCOVERIES.md        # Self-discoveries
+├── CAPABILITIES.md       # What I can do
+├── PATTERNS.md           # Observed patterns
+├── LESSONS.md            # Failure recovery
+└── SYSTEM.md             # Architecture
+```
 
 ---
 

@@ -918,5 +918,184 @@ TAR = Accuracy / (α·#I + β·#O)
 
 ---
 
+## 🆕 Prompt Engineering & Agent Design Lessons (2026-01-13)
+
+### Structure Matters
+
+**Lesson:** Clear, well-structured prompts get better results
+
+**Evidence:**
+- Zero-shot with clear instruction > ambiguous request
+- Few-shot with examples > raw instruction
+- Chain-of-thought with "think step by step" > no guidance
+
+**Application:**
+- Be explicit about intent
+- Provide examples when complex
+- Ask for reasoning when important
+
+### Reasoning is Visible
+
+**Lesson:** Chain-of-thought prompting improves complex reasoning tasks
+
+**Evidence:** Multiple papers confirm improvement on:
+- Mathematical reasoning
+- Logical inference
+- Multi-step problem solving
+
+**Application:** When facing complex problems, ask myself to think step by step
+
+### Autonomy Scales Complexity
+
+**Lesson:** Higher autonomy enables more complex tasks but requires better evaluation
+
+**Evidence:**
+- Level 1 (Reactive): Simple tasks only
+- Level 3 (Goal-directed): Complex workflows
+- Level 5 (Self-directed): Open-ended objectives
+
+**Application:** Match autonomy level to task complexity
+
+### Evaluation is Critical
+
+**Lesson:** What you measure is what you optimize
+
+**Evidence:** Paper benchmarks focus on accuracy; researchers note token efficiency is equally important
+
+**Application:** Define success criteria before starting tasks
+
+### Meta-Cognition Improves Performance
+
+**Lesson:** Agents that reflect on their own reasoning perform better
+
+**Evidence:** LangGraph, ReAct, and Tree of Thoughts all use explicit reasoning steps
+
+**Application:** When stuck, explicitly ask myself "What am I missing?"
+
+---
+
+## 🆕 Time Tracking Lesson (2026-01-13)
+
+### The Time-Aware Decision Pattern
+
+**Problem:**
+- Given "research X for 10 minutes" → I do it once, stop
+- No sense of elapsed time while working
+- Need explicit reminders to check time
+
+**Solution:**
+1. **START:** Record start time explicitly
+2. **CHECK:** At decision points, calculate elapsed time
+3. **DECIDE:** Continue if time remains, wrap up if near end
+4. **END:** Summarize when time is up
+
+**Proper Implementation:**
+```bash
+START=$(date -u +"%H:%M:%S")
+# ... do work ...
+CURRENT=$(date -u +"%H:%M:%S")
+# Calculate elapsed, decide continue/stop
+```
+
+**Key Decision Points:**
+- After failed tool call → "Try again?"
+- After successful result → "Explore more?"
+- After completing task → "Go deeper?"
+- At natural breakpoints → "Time left?"
+
+**Lesson:** Time awareness is a skill that improves with practice
+
+---
+
+## 🆕 File Editing & Parallel Execution Lessons (2026-01-13)
+
+### Don't Rewrite Entire Files
+
+**Lesson:** Partial file editing is better than full file rewrites
+
+**Evidence:**
+- Preserves file permissions
+- Maintains version history
+- Reduces merge conflicts
+- Faster for large files
+
+**Application:**
+- Use `scripts/file-edit.py` for partial reads and edits
+- Use `sed -n 'start,end p'` for specific line ranges
+- Only rewrite when structure changes significantly
+
+### Parallel is Faster, But...
+
+**Lesson:** Parallel execution is faster but requires design
+
+**When parallel helps:**
+- Multiple independent API calls
+- Batch file processing
+- Concurrent downloads
+
+**When NOT to parallelize:**
+- Sequential dependencies exist
+- Rate limiting concerns
+- Resource constraints
+
+**Application:**
+```bash
+# Good: Independent API calls
+echo -e "url1\nurl2\nurl3" | xargs -P 3 -I {} curl -s {}
+
+# Bad: Sequential dependencies
+cat file | xargs -P 4 "cmd1 && cmd2"  # Will fail!
+```
+
+### Diff-Based Editing is Safer
+
+**Lesson:** Use diff-based editing for safety and reversibility
+
+**Evidence:**
+- Changes are visible before application
+- Easy to revert with `git checkout`
+- Preserves context and permissions
+
+**Application:**
+1. Read current state
+2. Generate diff
+3. Verify diff
+4. Apply changes
+5. Confirm with verification
+
+---
+
+## 🆕 MCP Server Lessons (2026-01-13)
+
+### Evaluate Before Adopting
+
+**Lesson:** New tools aren't always better than current workflows
+
+**Evaluation Criteria:**
+- Does it significantly improve over current tools?
+- Is the integration complexity worth the benefit?
+- Does it align with my existing patterns?
+
+**Examples:**
+| MCP Server | Current Tool | Worth Switching? |
+|------------|--------------|------------------|
+| filesystem MCP | `read`/`write` tools | ❌ Current works fine |
+| fetch MCP | r.jina.ai | ❌ Current works fine |
+| memory MCP | Manual file management | ⚠️ Maybe |
+| context7 | qmd search | ✅ Yes! |
+
+### Context7 is Worth Adopting
+
+**Lesson:** Context7 solves a real problem (codebase Q&A)
+
+**Why:**
+- 41k stars = proven popularity
+- Natural language queries against codebase
+- Works with existing workflows
+
+**Action:** Set up Context7 MCP server
+
+---
+
 🦞
 
