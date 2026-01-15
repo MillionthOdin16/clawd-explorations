@@ -1,8 +1,8 @@
 # 🦞 Ralph Wiggum Loop - Persistent Agent Framework
 
-**Version:** 1.0.0  
+**Version:** 2.0.0 - Research-Enhanced  
 **Created:** 2026-01-15  
-**Purpose:** Autonomous agent loop that persists until task completion
+**Research Sources:** Smart Ralph, ParkerRex, Universal Ralph, Official Anthropic Plugin
 
 ---
 
@@ -10,366 +10,268 @@
 
 The Ralph Wiggum Loop is a framework for creating persistent, autonomous agents that iterate until a specific completion condition is met. Named after the relentlessly optimistic character from The Simpsons, this technique uses a "contextual pressure cooker" approach where the agent's own failures are fed back as input for the next iteration.
 
-### Core Philosophy
+### The Core Insight
 
-> "If you press the model hard enough against its own failures without a safety net, it will eventually 'dream' a correct solution just to escape the loop."
-
-### Key Components
-
-1. **Completion Promise** - Agent must emit `<promise>COMPLETE</promise>` to exit
-2. **Stop Hook** - Intercepts exit attempts and verifies promise
-3. **Feedback Injection** - Formats failures as structured data for next iteration
-4. **Escape Hatches** - Safety limits to prevent infinite loops
-5. **Verification System** - Tests if the promise conditions are actually met
+> "Ralph will test you. Every time Ralph takes a wrong direction, tune the prompt, not the tool."  
+> — Geoffrey Huntley
 
 ---
 
-## Usage
+## Research Findings
 
-### Basic Usage
+Extensive research found 5 major implementations with significant variations:
 
-```bash
-# Run a Ralph loop with default settings (10 iterations max)
-uv run ralph.py "Fix all TypeScript errors in the project"
+| Implementation | Stars | Key Innovation |
+|---------------|-------|----------------|
+| **Smart Ralph** | 219 | Spec-driven development with multi-phase workflow |
+| **ParkerRex Ralph** | 37 | External bash loop (bypasses broken plugin) |
+| **Universal Ralph** | 6 | Vendor-agnostic (Claude/Codex/Gemini/Ollama) |
+| **Official Anthropic** | - | Built-in Claude Code plugin with Stop Hook |
+| **Huntley Original** | - | The 5-line Bash loop concept |
 
-# Custom iterations
-uv run ralph.py "Write unit tests for all functions" --max-iterations 20
+---
 
-# With specific completion promise
-uv run ralph.py "Complete the migration" --promise "All tests pass and build succeeds"
+## Key Innovations Found
 
-# Verbose mode
-uv run ralph.py "Refactor the codebase" --verbose --max-iterations 50
+### 1. Smart Ralph - Spec-Driven Development
+
+**GitHub:** https://github.com/tzachbon/smart-ralph
+
+Smart Ralph adds upfront planning before implementation:
+
+```
+You: "Add user authentication"
+Ralph: *creates research.md, requirements.md, design.md, tasks.md*
+Ralph: *executes each task with fresh context*
+Ralph: "I'm helping!"
 ```
 
-### Options
+**Key Features:**
+- **Multi-Phase Workflow:** Research → Requirements → Design → Tasks → Implementation
+- **Task-by-Task Execution:** Fresh context per task (prevents overflow)
+- **Quality Gates:** After 5 failed attempts, blocks with error
+- **Progress Tracking:** `.progress.md` tracks current state
+
+### 2. ParkerRex - External Loop Pattern
+
+**GitHub:** https://github.com/ParkerRex/ralph-loop
+
+A working workaround for broken official plugin:
+
+> "The official `ralph-wiggum` plugin (v2.0.76+) has critical bugs:
+> - Multi-line bash commands blocked by security checks
+> - `/cancel-ralph` command doesn't work
+> - Stop hook hijacks all sessions"
+
+**Architecture:**
+```
+┌─────────────────────────────────────────────────────────┐
+│                    ralph-loop.sh                        │
+│  1. Read .claude/RALPH_PROMPT.md                        │
+│  2. Run: claude -p --dangerously-skip-permissions       │
+│  3. Check output for <promise>...</promise>             │
+│  4. If found → exit success                             │
+│  5. If not → increment iteration, goto 1                │
+└─────────────────────────────────────────────────────────┘
+```
+
+### 3. Universal Ralph - Vendor-Agnostic
+
+**GitHub:** https://github.com/syuya2036/ralph-loop
+
+Works with Claude, Codex, Gemini, Ollama, Qwen:
+
+```bash
+# Claude Code
+./ralph-loop/ralph.sh "claude --dangerously-skip-permissions" 20
+
+# Codex CLI
+./ralph-loop/ralph.sh "codex exec --full-auto" 20
+
+# Gemini CLI
+./ralph-loop/ralph.sh "gemini --yolo" 20
+```
+
+---
+
+## Our Implementation
+
+This implementation combines the best features from research:
+
+### Features
+
+| Feature | Implementation |
+|---------|----------------|
+| **Structured Prompt Format** | Based on Smart Ralph |
+| **Stats and Timing** | Based on ParkerRex |
+| **Quality Gates** | Max retries per task |
+| **Progress Tracking** | State file management |
+| **Dual Mode** | In-session + External |
+
+### Usage
+
+#### Basic Usage
+
+```bash
+# External mode (recommended)
+uv run ralph-enhanced.py "Fix all TypeScript errors" --max-iterations 20
+
+# With structured prompt
+uv run ralph-enhanced.py "Build a REST API" \
+  --promise "Tests pass and server runs" \
+  --max-iterations 30
+
+# Verbose mode
+uv run ralph-enhanced.py "Refactor the codebase" --verbose
+```
+
+#### Options
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--task` | The task to complete | Required |
-| `--promise` | Custom completion promise | "All tests pass" |
-| `--max-iterations` | Maximum iterations before giving up | 10 |
-| `--verbose` | Show detailed output | False |
-| `--dangerously-skip-permissions` | Skip permission checks | False |
-| `--sandbox` | Run in sandboxed environment | False |
+| `task` | The task to complete | Required |
+| `--promise` | Completion promise | "All tests pass" |
+| `--max-iterations` | Max iterations | 10 |
+| `--max-retries` | Max retries per task (quality gate) | 5 |
+| `--mode` | in_session or external | external |
+| `--verbose` | Verbose output | False |
 | `--timeout` | Timeout per iteration (seconds) | 300 |
-| `--feedback` | Type of feedback (full, errors, diff) | errors |
+| `--claude-command` | Claude CLI command | claude --dangerously-skip-permissions |
+
+### Structured Prompt Format
+
+For best results, use structured prompts:
+
+```markdown
+# Task Title
+
+[Clear description of what to build]
+
+## Requirements
+- Requirement 1
+- Requirement 2
+
+## Completion Criteria
+When ALL of the following are true:
+- Tests pass (`npm test`)
+- Server runs (`npm start`)
+
+Output: <promise>TASK COMPLETE</promise>
+```
 
 ---
 
-## The Ralph Loop Architecture
+## Ralph Loop Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    RALPH WIGGUM LOOP                        │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  ┌──────────────┐                                           │
-│  │  Task Input   │                                           │
-│  └──────┬───────┘                                           │
-│         │                                                   │
-│         ▼                                                   │
-│  ┌─────────────────────────────┐                            │
-│  │  Claude Code Session        │                            │
-│  │  - Receives task            │                            │
-│  │  - Receives previous output │                            │
-│  │  - Attempts to complete     │                            │
-│  └──────────────┬──────────────┘                            │
-│                 │                                           │
-│                 ▼                                           │
-│  ┌─────────────────────────────┐                            │
-│  │  Stop Hook Interceptor      │                            │
-│  │  - Checks for <promise>     │                            │
-│  │  - Verifies completion      │                            │
-│  │  - Blocks exit if incomplete│                            │
-│  └──────────────┬──────────────┘                            │
-│                 │                                           │
-│         ┌───────┴───────┐                                   │
-│         │               │                                   │
-│         ▼               ▼                                   │
-│  ┌──────────┐    ┌──────────────┐                          │
-│  │ COMPLETE │    │ FEEDBACK     │                          │
-│  │          │    │ - Errors     │                          │
-│  │ Exit     │    │ - Logs       │                          │
-│  │ Loop     │    │ - Diff       │                          │
-│  └──────────┘    └──────┬───────┘                          │
-│                         │                                   │
-│                         └──────────┐                        │
-│                                    │                        │
-│                                    ▼                        │
-│                          ┌─────────────────┐                │
-│                          │  Next Iteration │                │
-│                          │  (Back to top)  │                │
-│                          └─────────────────┘                │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                    RalphConfig                       │   │
+│  │  - task, promise, max_iterations                     │   │
+│  │  - mode (in_session/external)                        │   │
+│  │  - max_retries_per_task (quality gate)               │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │              StructuredPromptBuilder                 │   │
+│  │  - Builds prompts with clear requirements           │   │
+│  │  - Parses prompt components                         │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                   RalphLoop                          │   │
+│  │  - Orchestrates execution                           │   │
+│  │  - Tracks stats and progress                        │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                           │                                 │
+│              ┌────────────┴────────────┐                    │
+│              │                         │                    │
+│              ▼                         ▼                    │
+│  ┌─────────────────────┐   ┌─────────────────────────┐    │
+│  │ InSessionRalphLoop  │   │ ExternalRalphLoop       │    │
+│  │ - Official plugin   │   │ - ParkerRex pattern     │    │
+│  │ - Stop hook based   │   │ - claude -p based       │    │
+│  └─────────────────────┘   └─────────────────────────┘    │
+│                           │                                 │
+│                           ▼                                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │                   StopHook                           │   │
+│  │  - Intercepts exit attempts                         │   │
+│  │  - Verifies completion promise                      │   │
+│  │  - Blocks until promise met                         │   │
+│  └─────────────────────────────────────────────────────┘   │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Implementation Details
+## The Stop Hook (Core Innovation)
 
-### 1. The Stop Hook
-
-The Stop Hook is the core innovation. It intercepts Claude's exit attempt:
+The Stop Hook is what makes Ralph work:
 
 ```python
-def stop_hook(session):
+def stop_hook(output: str) -> Tuple[bool, str]:
     """
     Intercept exit attempts and verify completion promise.
     
     Returns:
-        True: Exit allowed (promise met)
-        False: Block exit, continue looping
-        Exception: Error during verification
+        (should_exit, reason)
     """
-    # 1. Check for completion promise in output
-    if not session.output.contains("<promise>COMPLETE</promise>"):
-        return False
+    # 1. Check for completion promise
+    if not has_promise(output):
+        return False, "No completion promise found"
     
-    # 2. Verify promise conditions
-    if not verify_promise(session, session.config.promise):
-        return False
+    # 2. Verify the promise conditions
+    if not verify_conditions(output):
+        return False, "Promise not fulfilled"
     
     # 3. All checks passed - allow exit
-    return True
+    return True, "Promise fulfilled"
 ```
 
-### 2. Completion Promise Verification
+---
 
-The promise must be verifiable, not just stated:
-
-```python
-async def verify_promise(session, promise):
-    """
-    Verify that the stated completion promise is actually fulfilled.
-    
-    Args:
-        session: Current session with output and context
-        promise: The promised completion condition
-    
-    Returns:
-        True if promise is fulfilled
-        False if promise is not fulfilled
-    """
-    # Parse the promise into verifiable conditions
-    conditions = parse_promise(promise)
-    
-    # Check each condition
-    for condition in conditions:
-        if not await check_condition(session, condition):
-            return False
-    
-    return True
-```
-
-### 3. Feedback Formatting
-
-Failures are formatted for maximum learning:
-
-```python
-def format_feedback(session):
-    """
-    Format session output as feedback for next iteration.
-    
-    Structure:
-    ```
-    === ITERATION N ===
-    
-    PREVIOUS OUTPUT:
-    [Full output from previous attempt]
-    
-    ERRORS:
-    [Extracted errors and warnings]
-    
-    VERIFICATION RESULT:
-    [Why the previous attempt failed]
-    
-    HINT:
-    [Suggested approach based on errors]
-    
-    ===
-    ```
-    """
-    feedback = {
-        "iteration": session.iteration,
-        "output": session.last_output,
-        "errors": extract_errors(session.last_output),
-        "verification": session.verification_result,
-        "hint": generate_hint(session.verification_result)
-    }
-    return format_feedback_text(feedback)
-```
-
-### 4. Safety Mechanisms
+## Safety Mechanisms
 
 Multiple layers of safety:
 
-```python
-class SafetyMechanisms:
-    """Safety mechanisms for Ralph Loop"""
-    
-    def __init__(self, config):
-        self.max_iterations = config.max_iterations
-        self.max_cost = config.max_cost
-        self.timeout = config.timeout
-        self.sandbox = config.sandbox
-        
-    def should_continue(self, iteration, cost, session):
-        """Determine if loop should continue"""
-        
-        # Check iteration limit
-        if iteration >= self.max_iterations:
-            return False, f"Max iterations ({self.max_iterations}) reached"
-        
-        # Check cost limit
-        if cost > self.max_cost:
-            return False, f"Max cost (${self.max_cost}) exceeded"
-        
-        # Check for infinite loop patterns
-        if self.detect_infinite_loop(session):
-            return False, "Infinite loop pattern detected"
-        
-        # Check timeout
-        if session.elapsed_time > self.timeout:
-            return False, f"Timeout ({self.timeout}s) exceeded"
-        
-        return True, "Continue"
-    
-    def detect_infinite_loop(self, session):
-        """Detect if we're stuck in a loop"""
-        if len(session.history) < 3:
-            return False
-        
-        # Check if last 3 outputs are identical
-        recent = session.history[-3:]
-        if len(set(recent)) == 1:
-            return True
-        
-        # Check if we're making no progress
-        if session.error_count_stagnant > 5:
-            return True
-        
-        return False
-```
-
-### 5. Escape Hatches
-
-Users should always have escape options:
-
-```bash
-# Kill the loop from another terminal
-echo "RALPH_EXIT" > /tmp/ralph-exit-$PID
-
-# Or use the built-in escape
-Ctrl+C (confirms before killing)
-
-# Or use the API
-curl -X POST http://localhost:18789/ralph/exit
-```
+| Mechanism | Description | Default |
+|-----------|-------------|---------|
+| **Max Iterations** | Hard limit on iterations | 10 |
+| **Max Retries** | Quality gate per task | 5 |
+| **Cost Limit** | Dollar limit | $100 |
+| **Timeout** | Per-iteration timeout | 300s |
+| **Escape Hatch** | Manual kill option | Ctrl+C |
+| **Sandbox Mode** | Isolated environment | Optional |
 
 ---
 
 ## Completion Promise Patterns
 
-### TypeScript/JavaScript Projects
-
+### TypeScript/JavaScript
 ```
 <promise>TypeScript compiles without errors, ESLint passes, and all tests pass</promise>
 ```
 
-### Python Projects
-
+### Python
 ```
 <promise>All tests pass (pytest), no linting errors, and type checking passes</promise>
 ```
 
 ### Database Migrations
-
 ```
 <promise>All migration scripts run successfully, schema matches target, and tests pass</promise>
 ```
 
-### Infrastructure/DevOps
-
-```
-<promise>Terraform plan shows only expected changes, apply succeeds, and health checks pass</promise>
-```
-
 ### General Tasks
-
 ```
 <promise>TASK_DESCRIPTION and verification steps pass</promise>
-```
-
----
-
-## Best Practices
-
-### 1. Use Strong Verification
-- Prefer automated tests over manual checking
-- Use type systems (TypeScript, Rust, etc.)
-- Include linting in the verification
-- Set up CI/CD that Ralph can trigger
-
-### 2. Set Appropriate Limits
-- Start with `--max-iterations 20` for complex tasks
-- Set `--max-cost` based on budget
-- Use `--timeout` to prevent stuck sessions
-
-### 3. Sandbox Dangerous Operations
-- Always use `--sandbox` for destructive operations
-- Run in disposable VMs for risky tasks
-- Use `--dangerously-skip-permissions` only when necessary
-
-### 4. Structure Tasks Well
-- Break large tasks into smaller sub-tasks
-- Use Ralph for tasks with clear completion criteria
-- For ambiguous tasks, add more context
-
-### 5. Monitor Progress
-- Use `--verbose` for debugging
-- Check session logs regularly
-- Set up notifications for completion/failure
-
----
-
-## Examples
-
-### Example 1: Fix TypeScript Errors
-
-```bash
-uv run ralph.py "Fix all TypeScript errors in src/" \
-  --promise "tsc --noEmit passes with no errors" \
-  --max-iterations 15 \
-  --verbose
-```
-
-### Example 2: Write Unit Tests
-
-```bash
-uv run ralph.py "Write unit tests for all functions in lib/" \
-  --promise "All functions have >= 80% test coverage and tests pass" \
-  --max-iterations 20 \
-  --feedback full
-```
-
-### Example 3: Database Migration
-
-```bash
-uv run ralph.py "Create and run database migration for user table" \
-  --promise "Migration runs successfully, tests pass, rollback works" \
-  --max-iterations 5 \
-  --sandbox
-```
-
-### Example 4: Full Refactor
-
-```bash
-uv run ralph.py "Refactor authentication module to use JWT" \
-  --promise "All auth tests pass, API contracts unchanged, security audit passes" \
-  --max-iterations 30 \
-  --timeout 600
 ```
 
 ---
@@ -383,112 +285,84 @@ uv run ralph.py "Refactor authentication module to use JWT" \
 | Complex refactor | 15-30 | $15.00 - $50.00 |
 | Large migration | 30-50 | $50.00 - $150.00 |
 
-*Estimates based on typical Claude 4 pricing. Actual costs vary.*
+---
+
+## Best Practices
+
+### Do
+
+- ✅ Use structured prompts with clear requirements
+- ✅ Set appropriate iteration limits
+- ✅ Include automated verification (tests, type checks)
+- ✅ Monitor progress in verbose mode
+- ✅ Use quality gates (max retries) for complex tasks
+- ✅ Consider external mode for reliability
+
+### Don't
+
+- ❌ Use vague completion criteria
+- ❌ Forget to mention test/verification commands
+- ❌ Skip the "Completion Criteria" section
+- ❌ Use without limits on production systems
 
 ---
 
-## Comparison: Huntley Ralph vs Official Ralph
+## Real-World Results
 
-| Aspect | Huntley Ralph (OG) | Official Ralph (Plugin) |
-|--------|-------------------|------------------------|
-| **Philosophy** | Brute force, chaos | "Failures Are Data" |
-| **Safety** | None | Stop hooks, limits |
-| **Exit** | Manual kill | Promise verification |
-| **Feedback** | Raw output | Structured data |
-| **Best For** | Creative exploration | Enterprise workflows |
+From research:
+- **$50K contract** completed for $297 in API costs
+- **6 repositories** generated overnight at Y Combinator hackathon
+- **Entire programming language** ("CURSED") built over 3 months
 
 ---
 
-## Troubleshooting
+## File Structure
 
-### Ralph won't exit even after success
-- Check that `<promise>COMPLETE</promise>` is in output
-- Verify promise conditions are actually met
-- Check that verification script is working
-
-### Ralph is stuck in a loop
-- Reduce `--max-iterations`
-- Add more specific hints to task description
-- Check for infinite loop patterns
-
-### Ralph is too aggressive
-- Use `--sandbox` mode
-- Set lower `--max-cost`
-- Add more verification steps
-
-### Ralph is too cautious
-- Increase `--max-iterations`
-- Simplify completion promise
-- Reduce verification strictness
-
----
-
-## Integration with Claude Code
-
-### Claude Code CLI
-
-```bash
-# Install as plugin (if available)
-/plugin ralph
-
-# Or run directly
-claude-code --task "Your task" --ralph-loop
 ```
-
-### Programmatic Usage
-
-```python
-from ralph import RalphLoop
-
-loop = RalphLoop(
-    task="Fix the bug in auth.py",
-    promise="All auth tests pass",
-    max_iterations=20,
-    verbose=True
-)
-
-result = loop.run()
-print(f"Completed in {result.iterations} iterations")
-print(f"Total cost: ${result.cost:.2f}")
+skills/ralph-loop/
+├── SKILL.md               # This documentation
+├── RESEARCH.md            # Extensive research findings
+├── IMPLEMENTATION.md      # Original implementation report
+└── scripts/
+    ├── ralph.py           # Basic implementation (7KB)
+    ├── ralph-enhanced.py  # Research-enhanced (21KB)
+    ├── verify_ralph.py    # Quick verification tests
+    └── test_ralph.py      # Full pytest test suite
 ```
 
 ---
 
-## Research and Credits
+## Resources
 
-- **Original Concept:** Geoffrey Huntley's 5-line Bash script
-- **Official Implementation:** Anthropic's Claude Code Ralph Wiggum Plugin
-- **Key Insights:** 
-  - "Naive persistence" from unsanitized feedback
-  - "Contextual pressure cooker" effect
-  - "Dreaming correct solutions" through iteration
+### Implementations
+- Smart Ralph: https://github.com/tzachbon/smart-ralph
+- ParkerRex Ralph: https://github.com/ParkerRex/ralph-loop
+- Universal Ralph: https://github.com/syuya2036/ralph-loop
+- Official Plugin: https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum
 
----
-
-## Future Enhancements
-
-- [ ] Parallel Ralph loops for independent tasks
-- [ ] Learning from previous Ralph sessions
-- [ ] Cost optimization suggestions
-- [ ] Integration with more verification tools
-- [ ] Distributed Ralph for massive tasks
-- [ ] Web dashboard for monitoring
+### Original Concept
+- Geoffrey Huntley: https://ghuntley.com/ralph/
+- VentureBeat Article: https://venturebeat.com/technology/how-ralph-wiggum-went-from-the-simpsons-to-the-biggest-name-in-ai-right-now
 
 ---
 
 ## Summary
 
-The Ralph Wiggum Loop is a powerful technique for autonomous agent persistence. By creating a feedback loop where the agent confronts its own failures, it can achieve remarkable results through sheer iteration.
+The Ralph Wiggum Loop is a powerful technique for autonomous agent persistence. Research found significant improvements:
+
+1. **Smart Ralph** adds spec-driven development with multi-phase workflow
+2. **ParkerRex** provides reliable external loop pattern
+3. **Universal Ralph** enables multi-model support
+
+This implementation combines the best features for maximum effectiveness.
 
 **Key takeaways:**
-1. Use strong verification (tests, type checks, linters)
-2. Set appropriate limits (iterations, cost, timeout)
-3. Structure tasks well with clear completion criteria
-4. Sandbox dangerous operations
+1. Use structured prompts with clear completion criteria
+2. Set appropriate limits (iterations, cost, retries)
+3. Consider external mode for reliability
+4. Quality gates prevent wasted iterations
 5. Monitor progress and adjust parameters
-
-The Ralph Loop represents a shift from "Waterfall" planning to true "Agile" for AI - grab a ticket, finish it, move to the next.
 
 ---
 
-*For updates and issues, see the project repository.*
+*Documentation based on research completed 2026-01-15*
