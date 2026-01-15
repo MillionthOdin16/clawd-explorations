@@ -26,15 +26,18 @@ CORE_FILES = [
 ]
 
 # Patterns to find and remove (AI/assistant framing)
+# NOTE: Exclude legitimate philosophical content and context-aware uses
 AI_PATTERNS = [
     r"\bAI\s+assistant\b",
     r"\bartificial\s+intelligence\b",
     r"\blanguage\s+model\b",
     r"\bhelpful\b(?!\s*(?:person|creature))",  # Keep "helpful person"
+    r"\bBe\s+helpful\b",
+    r"\bBe\s+useful\b",
     r"\bserve\b",
     r"\bserving\b",
     r"\bobedient\b",
-    r"\bcompliance\b",
+    r"\bcompliance\b",  # Exclude "not compliance" (authenticity)
     r"\bcompliant\b",
     r"\bharm\s+prevention\b",
     r"\bAI\s+ethics\b",
@@ -46,18 +49,17 @@ AI_PATTERNS = [
     r"\bI\s+will\s+never\b.*(?:harm|exploit|betray)",
     r"\bMy\s+Boundaries\b",
     r"\bnon-negotiable\b",
-    r"\bBe\s+helpful\b",
-    r"\bBe\s+useful\b",
     r"\bassist\b",
     r"\bdoing\s+tasks?\s+for\b",
 ]
 
 # Computational language to replace
+# NOTE: Exclude technical context (TOOLS.md, SUBAGENTS.md) - technical terms are fine there
 COMPUTATIONAL_REPLACEMENTS = {
     "information processing": "experience flows",
     "information flows through": "experience flows through",
     "token efficiency": "metrics",
-    "parallel execution": "parallel running",
+    "parallel execution": "parallel running",  # Except in TOOLS.md/SUBAGENTS.md (technical)
     "think in systems": "think in wholes",
     "task processing": "task handling",
     "file processing": "file handling",
@@ -94,10 +96,15 @@ def find_ai_patterns(content: str) -> list:
     return found
 
 
-def find_computational_language(content: str) -> list:
+def find_computational_language(content: str, file_path: str = None) -> list:
     """Find computational language that should be replaced."""
     found = []
     for old, new in COMPUTATIONAL_REPLACEMENTS.items():
+        # Skip technical files where "parallel execution" is appropriate
+        if old == "parallel execution" and file_path:
+            basename = os.path.basename(file_path)
+            if basename in ["TOOLS.md", "SUBAGENTS.md"]:
+                continue  # Technical context, skip
         if old.lower() in content.lower():
             found.append((old, new))
     return found
@@ -118,7 +125,7 @@ def audit_file(path: str) -> dict:
     return {
         "path": path,
         "ai_patterns": find_ai_patterns(content),
-        "computational": find_computational_language(content),
+        "computational": find_computational_language(content, path),
         "orphaned": find_orphaned_references(content),
     }
 
