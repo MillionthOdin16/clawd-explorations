@@ -1,0 +1,15 @@
+{
+  "source": "spec",
+  "name": "test-echo",
+  "basePath": "./specs/test-echo",
+  "phase": "research",
+  "taskIndex": 0,
+  "totalTasks": 1,
+  "taskIteration": 1,
+  "maxTaskIterations": 5,
+  "globalIteration": 1,
+  "maxGlobalIterations": 100,
+  "relatedSpecs": [],
+  "parallelGroup": null,
+  "taskResults": {}
+}
