@@ -1,0 +1,15 @@
+{
+  "source": "spec",
+  "name": "demo-greet",
+  "basePath": "./specs/demo-greet",
+  "phase": "research",
+  "taskIndex": 0,
+  "totalTasks": 1,
+  "taskIteration": 1,
+  "maxTaskIterations": 5,
+  "globalIteration": 1,
+  "maxGlobalIterations": 100,
+  "relatedSpecs": [],
+  "parallelGroup": null,
+  "taskResults": {}
+}
