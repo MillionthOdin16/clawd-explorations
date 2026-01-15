@@ -45,6 +45,7 @@
 |------|---------|
 | **memory/FILE-MANAGEMENT.md** | Bloat prevention, size limits, anti-bloat rules |
 | **memory/TRIM-LOG.md** | Log of all file trims |
+| **specs/4CHAN-EXPLORATION.md** | Multi-source strategy for fringe community exploration |
 | **scripts/file-trim.py** | Automated file trimming utility |
 | **scripts/time-track.py** | Time measurement utility |
 | **scripts/core-files-review.py** | AI framing and drift cleanup |
