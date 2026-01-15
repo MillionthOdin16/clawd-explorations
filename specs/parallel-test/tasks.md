@@ -9,7 +9,7 @@ created: 2026-01-15T19:10:00Z
 
 ## Phase 1
 
-- [ ] 1.1 Create adder.py with add(a, b) function
+- [x] 1.1 Create adder.py with add(a, b) function
   **Do**: Create adder.py with add(a, b) function
   **Files**: adder.py
   **Verify**: python -c "from adder import add; assert add(2, 3) == 5" && echo "PASS"
