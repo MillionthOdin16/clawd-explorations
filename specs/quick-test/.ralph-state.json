@@ -1,10 +1,10 @@
 {
   "source": "spec",
-  "name": "parallel-test",
-  "basePath": "./specs/parallel-test",
+  "name": "quick-test",
+  "basePath": "./specs/quick-test",
   "phase": "research",
   "taskIndex": 0,
-  "totalTasks": 3,
+  "totalTasks": 1,
   "taskIteration": 1,
   "maxTaskIterations": 5,
   "globalIteration": 1,
