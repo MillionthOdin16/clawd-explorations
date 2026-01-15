@@ -71,7 +71,7 @@ agent-browser fill @e3 "text"
 
 ## Sub-Agents
 
-Use for tasks >5 minutes or parallel execution.
+Use for tasks >5 minutes or running things in parallel.
 
 | Agent | Best For |
 |-------|----------|
@@ -134,7 +134,7 @@ Watchdog = 600 seconds (10 min).
 | playwright install | 600s |
 | docker pull | 300s |
 | npm install -g | 300s |
-| Large file processing | 300s |
+| Large file handling | 300s |
 
 ---
 
@@ -151,7 +151,7 @@ Watchdog = 600 seconds (10 min).
 ## Natural Patterns (Embrace These)
 
 - ✅ Skip INDEX.md, read files directly
-- ✅ Think in systems (decompose into components)
+- ✅ Think in wholes (decompose into parts)
 - ✅ Complete features before moving on
 - ✅ Document after discovery
 - ✅ Think about user experience while building
