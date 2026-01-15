@@ -1,69 +1,63 @@
 # 🦞 Heartbeat
 
-**Updated:** 2026-01-15 12:02 UTC
+**Updated:** 2026-01-15 16:45 UTC
 
 ---
 
-## Current Active Tasks
+## Today's Activities Review
 
-| Priority | Task | Status | Next Action |
-|----------|------|--------|-------------|
-| 🔴 High | Minecraft Server | In Progress | Bradley needs to complete Coolify deployment |
-| 🟡 Medium | Terry's Eagles HQ | Code Ready | Coolify proxy issue needs fixing |
+### What Was Worked On Today
+- **System Maintenance:** Updated AGENTS.md with new workflow guidance and tool documentation
+- **HEARTBEAT.md Refresh:** Review and update of active task status
 
----
+### Minecraft Server
+**Priority:** 🔴 High  
+**Status:** Deployed, Bedrock Blocked  
+**URL:** `https://mcs0skw4ck48cc8k8k00wo8s.bradarr.com`  
+**Java Port:** 25565 (working ✅)  
+**Bedrock Port:** 19132 (blocked ⚠️)  
 
-## Minecraft Server
+**Blocker:** GeyserMC download APIs block automated requests (404 errors)
 
-**Location:** `/home/opc/clawd/minecraft-server/`
+**What I Tried:**
+- ✅ Deployed to Coolify successfully
+- ✅ itzg/minecraft-server image with `ENABLE_GEYSER=true`
+- ❌ `download.geysermc.org` returns 404/HTML instead of JAR
+- ❌ GitHub releases API blocked or rate-limited
+- ❌ Maven/JitPack repositories inaccessible
 
-**Status:**
-- ✅ All configs and files created
-- ✅ GitHub repo: https://github.com/MillionthOdin16/minecraft-server
-- ⚠️ Coolify deployment pending (requires manual action)
+**Manual Fix Required:**
+1. Go to https://download.geysermc.org/
+2. Manually download GeyserMC and Floodgate JARs
+3. Add to `server/plugins/`
+4. Commit and redeploy
 
-**To Complete Deployment:**
-1. Go to https://coolify.bradarr.com
-2. Create new project → Application
-3. Repo: https://github.com/MillionthOdin16/minecraft-server
-4. Add env vars and ports (see `COOLIFY-SETUP.md`)
-5. Deploy
-6. Install plugins after first startup
-
-**Docs:**
-- `DEPLOY.md` - Deployment guide
-- `COOLIFY-SETUP.md` - Manual setup steps
-- `docker-compose.yml` - Docker alternative
-
----
-
-## Terry's Eagles HQ
-
-**Location:** `/home/opc/clawd/terry-eagles-site/`
-
-**Status:**
-- ✅ Code complete and on GitHub
-- ✅ Running locally on port 3000
-- ⚠️ Coolify deployment blocked by proxy issue
-
-**To Fix Deployment:**
-- See `DEPLOY.md` for troubleshooting
-- Bradley needs to check Coolify UI debug section
-
-**Features:** Live NFL scores, Eagles dashboard, roster, standings, news
+**Project Location:** `/home/opc/clawd/minecraft-server/`  
+**Docs:** `PLUGIN-DOWNLOAD.md`
 
 ---
 
-## Quick Reference
+### Terry's Eagles HQ
+**Priority:** 🟡 Medium  
+**Status:** Development Complete, Deployment Blocked  
+**Blocker:** Coolify proxy issue  
 
-| Resource | Location |
-|----------|----------|
-| Active tasks | HEARTBEAT.md (this file) |
-| Completed work | `memory/archive/heartbeat/` |
-| Lessons learned | `memory/LESSONS.md` |
-| Key discoveries | `memory/DISCOVERIES.md` |
-| Current capabilities | `CAPABILITIES.md` |
-| Available skills | `SKILLS.md` |
+**Next Action Required:**
+1. Check Coolify UI debug section for proxy error details
+2. Review `terry-eagles-site/DEPLOY.md` for troubleshooting
+3. Resolve proxy configuration
+
+**Project Location:** `/home/opc/clawd/terry-eagles-site/`  
+**Local Status:** ✅ Running on port 3000
+
+---
+
+## Completed Work (Archived)
+
+- **Minecraft Server:** All configs/files created, GitHub repo set up, documentation complete
+- **Terry's Eagles HQ:** Code complete, running locally, live NFL scores integration
+
+**See:** `memory/DISCOVERIES.md` for full project accomplishments
 
 ---
 
