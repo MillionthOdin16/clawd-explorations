@@ -9,7 +9,7 @@ created: 2026-01-15T18:40:00Z
 
 ## Phase 1: Make It Work
 
-- [ ] 1.1 Create calculator.py with add(a, b) function
+- [x] 1.1 Create calculator.py with add(a, b) function
   **Do**: Create calculator.py with add(a, b) function
   **Files**: calculator.py
   **Verify**: python -c "from calculator import add; assert add(2, 3) == 5" && echo "PASS"
