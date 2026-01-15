@@ -1,10 +1,10 @@
 {
   "source": "spec",
-  "name": "test-echo",
-  "basePath": "./specs/test-echo",
+  "name": "multi-test",
+  "basePath": "./specs/multi-test",
   "phase": "research",
   "taskIndex": 0,
-  "totalTasks": 1,
+  "totalTasks": 3,
   "taskIteration": 1,
   "maxTaskIterations": 5,
   "globalIteration": 1,
