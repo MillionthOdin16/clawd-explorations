@@ -4,7 +4,7 @@
   "basePath": "./specs/parallel-test",
   "phase": "research",
   "taskIndex": 0,
-  "totalTasks": 4,
+  "totalTasks": 3,
   "taskIteration": 1,
   "maxTaskIterations": 5,
   "globalIteration": 1,
