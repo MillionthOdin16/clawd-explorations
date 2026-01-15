@@ -21,7 +21,7 @@ created: 2026-01-15T19:00:00Z
   **Verify**: python -c "from multiplier import multiply; assert multiply(2, 3) == 6" && echo "PASS"
   **Commit**: feat: add multiplier.py with multiply function
 
-- [ ] 1.3 [P] Create subtractor.py with subtract(a, b) function
+- [x] 1.3 [P] Create subtractor.py with subtract(a, b) function
   **Do**: Create subtractor.py with subtract(a, b) function
   **Files**: subtractor.py
   **Verify**: python -c "from subtractor import subtract; assert subtract(5, 3) == 2" && echo "PASS"
