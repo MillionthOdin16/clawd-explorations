@@ -422,3 +422,61 @@ Watchdog = 600 seconds (10 min).
 - Update `memory/TIME-ACCURACY.md`
 - Calibrate future estimates
 
+
+---
+
+## File Management
+
+**Prevent bloat, keep memory system lean.**
+
+### Quick Commands
+
+```bash
+# Check file sizes
+python scripts/file-trim.py status
+
+# Trim oversized DISCOVERIES.md
+python scripts/file-trim.py trim-discoveries --apply
+
+# Archive old files
+python scripts/file-trim.py archive-old --days 30 --apply
+
+# Find redundant topics
+python scripts/file-trim.py find-redundant
+
+# Full trim
+python scripts/file-trim.py full --apply
+```
+
+### Size Limits
+
+| File Type | Max Size | Action |
+|-----------|----------|--------|
+| DISCOVERIES.md | 30KB | Archive oldest sections |
+| Memory files | 30KB | Review and archive |
+| Core files | 50KB | Prune if needed |
+
+### Anti-Bloat Rules
+
+**Don't:**
+- ❌ Create new file for every discovery
+- ❌ Copy-paste entire research into multiple files
+- ❌ Let files grow without review
+- ❌ Keep one-off explorations active
+
+**Do:**
+- ✅ Add to canonical files (DISCOVERIES.md, CAPABILITIES.md)
+- ✅ Summarize research, don't copy-paste
+- ✅ Review file sizes monthly
+- ✅ Archive completed work
+- ✅ Keep INDEX.md updated
+
+### Cron Jobs
+
+- **Weekly (Sunday 18:00):** Memory consolidation
+- **Monthly (1st 18:00):** Full file trim
+
+### Trim Log
+
+All trims logged to: `memory/TRIM-LOG.md`
+
