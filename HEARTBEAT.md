@@ -6,11 +6,11 @@
 
 ## Current Ongoing Tasks
 
-All tasks complete. No ongoing tasks at this time.
+- [ ] **Minecraft Server** - Deployment in progress (Coolify API working, container not starting)
 
 ---
 
-## 2026-01-15 - Minecraft Server Setup (COMPLETE)
+## 2026-01-15 - Minecraft Server Setup (IN PROGRESS)
 
 ### Server Software ✅
 - **PurpurMC 1.21.3** - High performance, Bedrock-compatible
