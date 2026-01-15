@@ -1,10 +1,10 @@
 {
   "source": "spec",
-  "name": "improve-test",
-  "basePath": "./specs/improve-test",
+  "name": "parallel-test",
+  "basePath": "./specs/parallel-test",
   "phase": "research",
   "taskIndex": 0,
-  "totalTasks": 2,
+  "totalTasks": 4,
   "taskIteration": 1,
   "maxTaskIterations": 5,
   "globalIteration": 1,
