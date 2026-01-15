@@ -88,10 +88,16 @@ sessions_spawn(task="...", agentId="researcher", label="...")
 ## Gateway Commands
 
 ```bash
-clawdbot memory search "query"   # Semantic search
-clawdbot status                  # Dashboard
+clawdbot memory search "query"   # Semantic memory search
+clawdbot memory get <memoryId>   # Get specific memory
+clawdbot memory list             # List memories
 clawdbot plugins list            # List plugins
+clawdbot status                  # Dashboard
+clawdbot dashboard               # Open Control UI
+clawdbot cron list               # List cron jobs
 ```
+
+**Full docs:** See `TOOLS.md` for custom tools, `SUBAGENTS.md` for sub-agents.
 
 ---
 
