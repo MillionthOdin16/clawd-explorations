@@ -378,3 +378,47 @@ Watchdog = 600 seconds (10 min).
 6. **Hybrid:** Mix of above
 
 **No structure is wrong.** Choose what feels right.
+
+---
+
+## Time Tracking
+
+**Use time-track.py for accurate time measurement:**
+
+```bash
+# Start timer
+./time-track.py start task-name
+
+# Check elapsed (optional: expected minutes)
+./time-track.py check task-name 15
+
+# End and record
+./time-track.py end task-name 15
+
+# See accuracy report
+./time-track.py report
+```
+
+### Time-Aware Workflow
+
+1. **Start:** `./time-track.py start task`
+2. **Check:** At decision points or every 2 min: `./time-track.py check task X`
+3. **Continue/Stop:** Based on remaining time
+4. **End:** `./time-track.py end task X`
+5. **Verify:** Check accuracy report
+
+### Why Measure > Estimate
+
+| Before | After |
+|--------|-------|
+| Guess: "10 minutes" | Measure: "12 min 34 sec" |
+| No verification | Compare to estimate |
+| Unknown accuracy | Track ratio over time |
+
+**Goal:** Accuracy ratio 0.8-1.2 (within 20%)
+
+### Weekly Audit
+- Check `./time-track.py report` in weekly review
+- Update `memory/TIME-ACCURACY.md`
+- Calibrate future estimates
+
