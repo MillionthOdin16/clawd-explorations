@@ -1,10 +1,10 @@
 {
   "source": "spec",
-  "name": "multi-test",
-  "basePath": "./specs/multi-test",
+  "name": "improve-test",
+  "basePath": "./specs/improve-test",
   "phase": "research",
   "taskIndex": 0,
-  "totalTasks": 3,
+  "totalTasks": 2,
   "taskIteration": 1,
   "maxTaskIterations": 5,
   "globalIteration": 1,
