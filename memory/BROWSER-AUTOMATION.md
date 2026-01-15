@@ -144,8 +144,8 @@ python browser_script.py
 
 ## Documentation References
 
-- [Clawdbot Browser Docs](/home/opc/.nvm/versions/node/v22.20.0/lib/node_modules/clawdbot/docs/tools/browser.md)
-- [Browser Linux Troubleshooting](/home/opc/.nvm/versions/node/v22.20.0/lib/node_modules/clawdbot/docs/tools/browser-linux-troubleshooting.md)
+- [Clawdbot Browser Docs](/home/opc/clawdbot/docs/tools/browser.md)
+- [Browser Linux Troubleshooting](/home/opc/clawdbot/docs/tools/browser-linux-troubleshooting.md)
 - [browser-use GitHub](https://github.com/browser-use/browser-use)
 
 ---

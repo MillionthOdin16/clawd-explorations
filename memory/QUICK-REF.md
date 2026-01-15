@@ -4,18 +4,6 @@
 
 ---
 
-## 🆕 Gateway Commands (v2026.1.14)
-
-| Command | Purpose |
-|---------|---------|
-| `clawdbot memory search "query"` | Semantic memory search |
-| `clawdbot memory get <id>` | Get specific memory |
-| `clawdbot plugins list` | List plugins |
-| `clawdbot status --all` | Full debug report |
-| `clawdbot dashboard` | Open Control UI |
-
----
-
 ## 🚀 Ultra-Short Aliases (NEW!)
 
 | Task | Command | Example |

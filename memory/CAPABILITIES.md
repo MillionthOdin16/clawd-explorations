@@ -87,7 +87,7 @@
 ### qmd - Local Search
 - **Status:** ✅ Tested and working
 - **Purpose:** Local search/indexing with BM25 + vectors + rerank
-- **Location:** `/home/opc/.nvm/versions/node/v22.20.0/lib/node_modules/clawdbot/skills/qmd/`
+- **Location:** `/home/opc/clawdbot/skills/qmd/`
 
 - **Commands:**
   ```bash
@@ -647,6 +647,50 @@ memory/
 ├── LESSONS.md            # Failure recovery
 └── SYSTEM.md             # Architecture
 ```
+
+---
+
+## 🆕 v2026.1.14 Features (2026-01-14)
+
+### New Gateway Commands
+
+| Command | Purpose |
+|---------|---------|
+| `clawdbot memory search "query"` | Semantic memory search across all memories |
+| `clawdbot memory get <id>` | Get specific memory by ID |
+| `clawdbot plugins list` | List installed plugins |
+| `clawdbot plugins install <pkg>` | Install plugin (e.g., voice-call) |
+| `clawdbot status --all` | Full debug report with logs and Tailscale |
+| `clawdbot dashboard` | Auto-open Control UI |
+
+### New Capabilities
+
+#### Vector Memory Search
+- **Before:** Keyword search with qmd
+- **After:** Semantic search with `clawdbot memory search`
+- **Config:** `agents.defaults.memory.vectorSearch: true`
+
+#### Plugin System
+- Voice Call plugin (Twilio/Telnyx integration)
+- Custom extensions via `plugins.load.paths`
+- `clawdbot plugins list` to see available
+
+#### New Models
+- **Moonshot Kimi K2** - Fast coding model
+- **Synthetic** - Additional provider option
+
+#### Configuration Changes
+- Use `channels.*` instead of `providers.*` (auto-migrates)
+- Per-account `timeoutSeconds` for Telegram
+- Better Discord/Slack channel management
+
+### Updated Workflow
+1. Use `clawdbot memory search` for semantic queries about past decisions
+2. Use `channels.*` in new config examples
+3. Check `clawdbot plugins list` for extensions
+4. Use `clawdbot status --all` for debugging
+
+**See:** `/home/opc/clawd/migration/WORKFLOW-ADAPTATION-GUIDE.md`
 
 ---
 

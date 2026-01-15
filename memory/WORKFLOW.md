@@ -139,6 +139,39 @@ rg "pattern" --type md
 
 ---
 
+## MEMORY SEARCH WORKFLOW (v2026.1.14+)
+
+When user asks about past decisions, research, or conversations:
+
+### Before (2026.1.11)
+1. Read memory files manually
+2. Use qmd for keyword search
+3. Piece together context
+
+### After (2026.1.14)
+1. `clawdbot memory search "query"` for semantic search
+2. Returns matches with snippets + line numbers
+3. Read full context from specific lines
+
+### Example
+```
+User: "What did we decide about the research framework?"
+Me: → clawdbot memory search "research framework decision"
+    → Results with snippets
+    → Read relevant files with line context
+    → Provide answer with citations
+```
+
+### Configuration (Optional)
+```yaml
+agents:
+  defaults:
+    memory:
+      vectorSearch: true  # Enable semantic search
+```
+
+---
+
 ## BEST PRACTICES
 
 ✅ DO:

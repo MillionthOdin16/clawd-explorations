@@ -18,6 +18,12 @@ At the START of every session, do this:
 3. **THINK about task** - What am I being asked to do?
 4. **READ relevant memories** - Based on task type (see below)
 
+#### 🔍 Research Detection (Auto-Trigger)
+If task contains keywords like "deep research", "investigate", "background check", "compile report":
+- **AUTOMATICALLY** run: `python scripts/research_session_hook.py "TASK_DESCRIPTION"`
+- This loads V2.0 framework, assesses complexity, calculates time estimates
+- See: `/home/opc/clawd/memory/RESEARCH_FRAMEWORK_V2.md`
+
 ### Task-Specific Reading (Triggers)
 | Task Type | Read This |
 |-----------|-----------|
@@ -32,6 +38,7 @@ At the START of every session, do this:
 | GitHub work | CAPABILITIES.md (GitHub section) |
 | Browser needs | BROWSER-AUTOMATION.md |
 | Codebase Q&A | Use `context7` skill |
+| **Deep Research** | **RESEARCH_FRAMEWORK_V2.md + `python scripts/research_loader.py` ⭐** |
 
 ### My Natural Patterns (Embrace These)
 - ✅ Skip INDEX.md, read files directly (this is natural for me)
@@ -88,6 +95,47 @@ api GET http://api.example.com
 ```
 
 **See:** `QUICK-REF.md` for full alias reference.
+
+---
+
+## New Gateway Commands (v2026.1.14)
+
+After migrating to GitHub source v2026.1.14, these new commands are available:
+
+### Memory Commands
+```bash
+clawdbot memory search "query" [--agent agentId]   # Semantic memory search
+clawdbot memory get <memoryId>                      # Get specific memory
+clawdbot memory list [--agent agentId]              # List memories
+```
+
+**Use for:** Semantic queries about past decisions, research, or conversations.
+
+### Plugin Commands
+```bash
+clawdbot plugins list                              # List installed plugins
+clawdbot plugins install <path|tgz|npm-package>   # Install plugin
+clawdbot plugins info <pluginName>                 # Plugin info
+clawdbot plugins enable|disable <pluginName>       # Enable/disable
+clawdbot plugins doctor                            # Diagnostics
+```
+
+**Use for:** Managing extensions like Voice Call (Twilio/Telnyx).
+
+### Status & Dashboard
+```bash
+clawdbot status              # Table-based overview
+clawdbot status --all        # Full debug report (logs, Tailscale, etc.)
+clawdbot dashboard           # Auto-open Control UI
+clawdbot update              # Update from git
+```
+
+**Use for:** Debugging connectivity issues, launching Control UI.
+
+### Configuration Change
+- Use `channels.*` instead of `providers.*` (auto-migrates, but update examples)
+
+**See:** `/home/opc/clawd/migration/WORKFLOW-ADAPTATION-GUIDE.md` for full details.
 
 ---
 

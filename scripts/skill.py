@@ -32,18 +32,20 @@ from pathlib import Path
 # Skill definitions with their executables and common commands
 SKILLS = {
     "coolify": {
-        "executable": "scripts/coolify.py",
+        "executable": "skills/coolify/scripts/coolify.py",
         "uv": True,
-        "commands": ["apps", "dbs", "services", "projects", "deploy"],
+        "commands": ["status", "apps", "projects", "servers"],
         "description": "Deploy and manage Coolify applications",
         "common": {
-            "list": "List all resources",
-            "get": "Get specific resource details",
-            "logs": "Get application logs"
+            "status": "Quick status check",
+            "apps list": "List applications",
+            "apps get": "Get app details",
+            "apps deploy": "Deploy application",
+            "apps logs": "Get logs"
         }
     },
     "exa": {
-        "executable": "scripts/search.sh",
+        "executable": "skills/exa/scripts/search.sh",
         "uv": False,
         "commands": ["search", "content"],
         "description": "Neural web search and code context",
@@ -53,9 +55,9 @@ SKILLS = {
         }
     },
     "context7": {
-        "executable": "scripts/context7.py",
+        "executable": "skills/context7/scripts/context7.py",
         "uv": True,
-        "commands": ["query", "index", "clear"],
+        "commands": ["query", "index", "list", "remove"],
         "description": "Codebase-specific Q&A with context",
         "common": {
             "query": "Ask a question about the codebase",
@@ -63,19 +65,20 @@ SKILLS = {
         }
     },
     "ripgrep": {
-        "executable": "scripts/ripgrep.py",
+        "executable": "skills/ripgrep/scripts/rg.py",
         "uv": True,
-        "commands": ["search", "replace", "count"],
+        "commands": ["search", "files", "count", "find-funcs", "find-classes"],
         "description": "Fast search and replace",
         "common": {
             "search": "Search for pattern",
-            "replace": "Find and replace"
+            "files": "List matching files",
+            "count": "Count matches"
         }
     },
     "hn": {
-        "executable": "scripts/hn-daily-summary.py",
+        "executable": "skills/hn/scripts/hn.py",
         "uv": False,
-        "commands": ["top", "new", "best", "explore"],
+        "commands": ["top", "new", "best", "ask", "show", "jobs", "story", "search"],
         "description": "Hacker News integration",
         "common": {
             "top": "Top stories",
@@ -84,18 +87,18 @@ SKILLS = {
         }
     },
     "web": {
-        "executable": "scripts/web-explorer.py",
+        "executable": "skills/web/scripts/web.py",
         "uv": False,
-        "commands": ["fetch", "search", "snapshot"],
+        "commands": ["open", "get", "text", "search", "screenshot"],
         "description": "Web browsing and content extraction",
         "common": {
-            "fetch": "Fetch URL content",
-            "search": "Search the web",
-            "snapshot": "Take page screenshot"
+            "open": "Open URL",
+            "get": "Get page content",
+            "text": "Get plain text"
         }
     },
     "playwright": {
-        "executable": "scripts/cli.py",
+        "executable": "skills/playwright-automation/scripts/cli.py",
         "uv": False,
         "commands": ["screenshot", "interact", "pdf"],
         "description": "Browser automation (Firefox-based for ARM64)",
@@ -104,8 +107,8 @@ SKILLS = {
             "interact": "Interact with page"
         }
     },
-    "memory": {
-        "executable": "scripts/memory-keeper.py",
+    "memory-keeper": {
+        "executable": "skills/memory-keeper/scripts/memory-keeper.py",
         "uv": False,
         "commands": ["add", "search", "list", "clear"],
         "description": "Persistent context and memory",
