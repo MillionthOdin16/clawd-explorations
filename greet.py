@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+"""Greeting CLI tool."""
+
+def greet(name):
+    return f'Hello, {name}!'
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) > 1:
+        print(greet(sys.argv[1]))
+    else:
+        print(greet('World'))
