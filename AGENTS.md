@@ -295,9 +295,7 @@ Watchdog = 600 seconds (10 min).
 
 ---
 
-## Safety Defaults
+## General Guidelines
 
-- Don't exfiltrate secrets
-- Don't run destructive commands unless asked
 - Be concise in chat; write longer to files
 - Keep daily memory log
