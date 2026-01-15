@@ -9,14 +9,16 @@
 | Need | Tool |
 |------|------|
 | Find info I wrote | `qmd search "topic" -c memory` |
-| Read file | `bat file.md` |
+| Codebase Q&A | `context7 query "How does X work?"` |
 | Find files | `fd "pattern"` |
 | Git | `lazygit` |
-| Web (static) | `curl https://r.jina.ai/http://url` |
+| Web search | `exa "query"` |
+| Hacker News | `hn top 10` |
+| Web content | `curl https://r.jina.ai/http://url` |
 | Navigate | `z partial_name` |
 | Edit file | `fe line path.md N "text"` |
 
-**qmd is PRIMARY search** - indexed, shows context, semantic understanding.
+**qmd is PRIMARY search** - indexed, semantic understanding.
 
 ---
 
@@ -37,35 +39,61 @@
 |-----------|------|
 | Long task | LESSONS.md "Timeout Handling" |
 | Sub-agents | SUBAGENTS.md |
-| Tools | WORKFLOW.md + TOOLS.md |
+| Tools | TOOLS.md |
 | Choices | PREFERENCES.md + COMMITMENTS.md |
-| Browser | `skills/agent-browser/SKILL.md` |
+| Browser automation | `skills/agent-browser/SKILL.md` |
+| Complex multi-step | `skills/ralph/SKILL.md` |
 | Deep research | RESEARCH_FRAMEWORK_V2.md |
 
 ---
 
-## Skills
+## Tool Selection Guide
 
-### Ralph (Spec-Driven Development)
-Use for complex multi-step tasks: research → requirements → design → tasks → implement.
+### Search & Research
 
-```bash
-/ralph:start "Add auth" --quick     # Auto-generate and execute
-/ralph:new feature "Goal"           # Step-by-step
-/ralph:research; /ralph:implement   # Individual phases
-```
+| Task | Best Tool | Why |
+|------|-----------|-----|
+| Find my memories | `qmd search` | Indexed, semantic |
+| Codebase Q&A | `context7 query` | Natural language, AI-optimized |
+| Fast keyword search | `rg "pattern"` | Raw speed, recursive |
+| Web search | `exa "query"` | Neural search, finds docs/code |
+| Hacker News | `hn` | Built-in HN integration |
 
-**Docs:** `skills/ralph/SKILL.md`
+### Browser Automation
 
-### agent-browser (Web Automation)
+| Task | Tool | Notes |
+|------|------|-------|
+| Interactive automation | **agent-browser** | Modern, Rust-based, refs |
+| Legacy/Fallback | playwright-automation | Firefox-based |
+
+**agent-browser workflow:**
 ```bash
 agent-browser open <url>
-agent-browser snapshot
-agent-browser click @e2
+agent-browser snapshot     # Get element refs
+agent-browser click @e2    # Use @ref
 agent-browser fill @e3 "text"
 ```
 
-**Docs:** `skills/agent-browser/SKILL.md`
+### Deployment
+
+| Task | Tool | Notes |
+|------|------|-------|
+| Deploy app | **coolify** | Self-hosted platform |
+| Manage deployments | `coolify apps list/get/logs` | Via skill |
+
+### Complex Tasks
+
+| Task | Tool | When |
+|------|------|------|
+| Multi-step feature | **ralph** | Research → Requirements → Design → Tasks → Implement |
+| Long-running task | **sub-agents** | >5 min, parallel execution |
+
+**Ralph workflow:**
+```bash
+/ralph:start "Feature name" --quick    # Auto-generate and execute
+/ralph:new feature "Goal"              # Step-by-step
+/ralph:implement                       # Execute tasks
+```
 
 ---
 
@@ -96,8 +124,6 @@ clawdbot status                  # Dashboard
 clawdbot dashboard               # Open Control UI
 clawdbot cron list               # List cron jobs
 ```
-
-**Full docs:** See `TOOLS.md` for custom tools, `SUBAGENTS.md` for sub-agents.
 
 ---
 
