@@ -32,6 +32,7 @@
 | **memory/GROWTH-FRAMEWORK.md** | Complete growth cycle (EXPLORE → REFLECT → INTEGRATE → TEST) |
 | **memory/WEEKLY-REVIEW.md** | Structured weekly reflection template |
 | **memory/INTEGRATION-LOG.md** | Track discoveries becoming identity |
+| **memory/SELF-IMPROVEMENT.md** | Performance analysis and improvement planning |
 | **memory/TIME-AWARENESS.md** | Time tracking patterns and usage |
 | **memory/TIME-ACCURACY.md** | Estimated vs actual time tracking |
 | **memory/THOUGHTS.md** | Organic exploration journal |
@@ -77,6 +78,7 @@
 | Schedule | Task |
 |----------|------|
 | Daily 03:00 | Backup and push to GitHub |
+| Sunday 10:00 | Self-improvement reflection |
 | Sunday 14:00 | Weekly core files review |
 | Sunday 18:00 | Weekly growth review + Memory consolidation |
 | Sunday 19:00 | Self-reflection exploration |
