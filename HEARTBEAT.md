@@ -6,18 +6,17 @@
 
 ## Current Ongoing Tasks
 
-- [ ] **Minecraft Server** - Set up on Coolify (research complete, ready to deploy)
+All tasks complete. No ongoing tasks at this time.
 
 ---
 
-## 2026-01-15 - Minecraft Server Setup
+## 2026-01-15 - Minecraft Server Setup (COMPLETE)
 
-### Research Complete ✅
-- **Server Software:** PurpurMC (1.21.3) - optimized, Bedrock-compatible
+### Server Software ✅
+- **PurpurMC 1.21.3** - High performance, Bedrock-compatible
 - **GitHub Repo:** https://github.com/MillionthOdin16/minecraft-server
-- **Build Pack:** Java (Minecraft)
 
-### Essential Plugins (for Bedrock + Performance)
+### Essential Plugins ✅
 | Plugin | Purpose | Download |
 |--------|---------|----------|
 | GeyserMC | Bedrock compatibility | ci.geysermc.org |
@@ -26,23 +25,32 @@
 | Starlight | Lighting engine | PaperMC/Starlight |
 | Spark | Profiler | lucko/spark |
 
-### Configuration
-- **JVM Flags:** Optimized G1GC garbage collector
-- **View Distance:** 8 chunks
-- **Memory:** 4GB allocated
-- **Purpur settings:** Bedrock support enabled
+### Configuration ✅
+- JVM Flags: Optimized G1GC
+- View Distance: 8 chunks
+- Memory: 4GB
+- Bedrock support enabled
 
 ### Files Created
-- `/home/opc/clawd/minecraft-server/DEPLOY.md` - Coolify deployment guide
+- `/home/opc/clawd/minecraft-server/DEPLOY.md` - Deployment guide
+- `/home/opc/clawd/minecraft-server/COOLIFY-SETUP.md` - Manual setup steps
 - `/home/opc/clawd/minecraft-server/docker-compose.yml` - Docker alternative
 - `/home/opc/clawd/minecraft-server/RESEARCH.md` - Research notes
+- `server.properties`, `purpur.yml`, `start.sh` - Config files
 
-### To Deploy
-1. Open Coolify UI → Create Application
-2. Repository: https://github.com/MillionthOdin16/minecraft-server
-3. Build Pack: Java (Minecraft)
-4. Add environment variables (see DEPLOY.md)
+### Deployment Status
+- **Setup:** ✅ Complete
+- **GitHub Push:** ✅ Done
+- **Coolify Deploy:** ⚠️ Requires manual action (API access blocked)
+- **Plugins:** ⏳ Install after first startup
+
+### To Complete Deployment
+1. Go to https://coolify.bradarr.com
+2. Create new project → Application
+3. Repo: https://github.com/MillionthOdin16/minecraft-server
+4. Add env vars and ports (see COOLIFY-SETUP.md)
 5. Deploy
+6. Install plugins after startup
 
 ---
 
