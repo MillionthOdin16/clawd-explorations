@@ -36,7 +36,7 @@ If task contains keywords like "deep research", "investigate", "background check
 | New capability | CAPABILITIES.md |
 | Making a choice | PREFERENCES.md + COMMITMENTS.md |
 | GitHub work | CAPABILITIES.md (GitHub section) |
-| Browser needs | BROWSER-AUTOMATION.md |
+| Browser needs | `agent-browser` skill (`skills/agent-browser/SKILL.md`) |
 | Codebase Q&A | Use `context7` skill |
 | **Deep Research** | **RESEARCH_FRAMEWORK_V2.md + `python scripts/research_loader.py` ⭐** |
 
@@ -95,6 +95,87 @@ api GET http://api.example.com
 ```
 
 **See:** `QUICK-REF.md` for full alias reference.
+
+---
+
+## Ralph Skill (Spec-Driven Development)
+
+**Use Ralph for complex multi-step tasks that need structured planning.**
+
+Ralph transforms feature ideas into structured specs (research → requirements → design → tasks) then executes them autonomously with fresh context per task.
+
+### When to Use Ralph
+- Building features systematically with research-first approach
+- Complex multi-step implementations requiring coordination
+- Long-running tasks that need progress persistence
+- Tasks that benefit from POC-first workflow with quality gates
+
+### Quick Start
+```bash
+# Create new spec and execute in quick mode
+/ralph:start "Add user authentication" --quick
+
+# Step-by-step mode
+/ralph:new user-auth Add JWT authentication
+/ralph:research
+/ralph:requirements
+/ralph:design
+/ralph:tasks
+/ralph:implement
+```
+
+### Commands
+| Command | Purpose |
+|---------|---------|
+| `/ralph:start [name] [goal]` | Smart entry: resume or create new spec |
+| `/ralph:start [goal] --quick` | Auto-generate all specs and execute |
+| `/ralph:new <name> [goal]` | Create new spec, start research |
+| `/ralph:research` | Run research phase |
+| `/ralph:requirements` | Generate requirements |
+| `/ralph:design` | Generate technical design |
+| `/ralph:tasks` | Break into executable tasks |
+| `/ralph:implement` | Execute tasks (parallel with [P] markers) |
+| `/ralph:status` | Show progress |
+| `/ralph:switch <name>` | Change active spec |
+| `/ralph:cancel` | Cancel and cleanup |
+
+**Documentation:** `skills/ralph/SKILL.md`
+
+---
+
+## Browser Automation (agent-browser)
+
+**Use the agent-browser skill for all web automation tasks.**
+
+A fast Rust-based headless browser with Node.js fallback for AI agents.
+
+### Quick Start
+```bash
+agent-browser open https://example.com
+agent-browser snapshot
+agent-browser click @e2
+agent-browser fill @e3 "test@example.com"
+agent-browser screenshot page.png
+agent-browser close
+```
+
+### Core Commands
+
+| Category | Commands |
+|----------|----------|
+| **Navigation** | `open <url>`, `back`, `forward`, `reload` |
+| **Interaction** | `click <sel>`, `fill <sel> <text>`, `type <sel> <text>` |
+| **Extraction** | `snapshot`, `get text <sel>`, `screenshot [path]` |
+| **State** | `is visible <sel>`, `is enabled <sel>`, `wait <ms>` |
+| **Find** | `find text <text> <action>`, `find role <role> <action>` |
+
+### Workflow
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot` - Get element references
+3. Use `@e1`, `@e2` etc. - Reference elements by ID
+4. `agent-browser click @e2` - Interact with elements
+
+**Documentation:** `skills/agent-browser/SKILL.md`
 
 ---
 
@@ -249,24 +330,26 @@ pip install chromadb
 **✅ RIGHT:**
 ```
 # Prerequisites: Need to verify installation options
-# Context: Browser tool requires Chrome/Chromium, Firefox is installed but tool doesn't support it
+# Context: agent-browser requires Node.js, checks for Rust-based binary
 # Assumptions: 
-#   1. Flatpak might be available for ARM64 (from sub-agent research)
-#   2. Browser tool executablePath might support Firefox
+#   1. Node.js is installed (v18+)
+#   2. Rust toolchain available for ARM64 builds
 # Actions:
-#   1. Check if Flatpak is installed
-#   2. If yes, install via Flatpak
-#   3. If no, try browser tool with Firefox
-#   4. Document what works and what doesn't
+#   1. Check Node.js version
+#   2. Check if agent-browser is installed
+#   3. If not, install: npm install -g agent-browser
+#   4. Test with agent-browser open https://example.com
+#   5. Document what works and what doesn't
 
-# Check Flatpak availability
-which flatpak
+# Check Node.js version
+node --version
 
-# Install ChromaDB via Flatpak (ARM64 package: org.chromium.Chromium)
-flatpak install flathub:org.chromium.Chromium
+# Install agent-browser
+npm install -g agent-browser
 
-# Test browser tool with Chrome
-browser start
+# Test browser automation
+agent-browser open https://example.com
+agent-browser snapshot
 
 # If that works, done. If not, try alternative approaches
 ```
@@ -300,30 +383,28 @@ browser start
 **Example:**
 **❌ WRONG:**
 ```
-# Browser tool not working
-# Problem: Needs Chrome/Chromium
-# Only option found: Flatpak Chromium
-# Action: Install Flatpak Chromium immediately
+# Browser automation not working
+# Problem: agent-browser needs Chrome/Chromium
+# Only option found: Install via npm
+# Action: Install agent-browser immediately
 
 # Result: May not work on ARM64 Oracle Linux, no testing done
 ```
 
 **✅ RIGHT:**
 ```
-# Browser tool not working
-# Problem: Needs Chrome/Chromium
+# Browser automation not working
+# Problem: agent-browser needs Node.js and may need Rust binary
 # Options found:
-#   1. Flatpak Chromium (ARM64 package available)
-#   2. Try browser tool with Firefox executablePath
-#   3. Search for other ARM64 Chrome options (compile from source, Docker)
-#   4. Search for alternative browser automation tools (CDP, Puppeteer, Selenium)
+#   1. Install Node.js and agent-browser (agent-browser skill)
+#   2. Try playwright-skill as alternative (Firefox-based)
+#   3. Search for other headless browser options (Puppeteer, Playwright directly)
 # Evaluation:
-#   Option 1 (Flatpak): May not work on ARM64 Oracle Linux, requires verification
-#   Option 2 (Firefox): Tool may not support Firefox, needs verification
-#   Option 3 (Other Chrome): More complex, requires research
-#   Option 4 (Alternative tools): Different approach, may work better
-# Decision: Try Option 1 (Flatpak) first, have Options 2-4 as contingencies
-# Contingency: If Flatpak fails, try Option 2; if that fails, research Option 3; etc.
+#   Option 1 (agent-browser): Native Rust binary, fast, well-maintained
+#   Option 2 (playwright-skill): Firefox-based, ARM64 compatible
+#   Option 3 (Other): More complex, requires more setup
+# Decision: Try Option 1 first, have Options 2-3 as contingencies
+# Contingency: If agent-browser fails, try playwright-skill; etc.
 # Document results at each step
 ```
 

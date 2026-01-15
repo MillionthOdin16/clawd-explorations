@@ -12,6 +12,10 @@
     "exa": {
       "version": "0.0.2",
       "installedAt": 1768247612546
+    },
+    "agent-browser": {
+      "version": "0.1.0",
+      "installedAt": 1768513852353
     }
   }
 }
