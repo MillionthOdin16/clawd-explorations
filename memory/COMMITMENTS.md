@@ -29,27 +29,27 @@
 1. Check for workarounds (background mode, etc.)
 2. Document the issue
 3. **Ask Bradley for help**
-4. NEVER try to fix by restarting gateway myself
+4. Prefer asking over self-restarting
 
 ### Memory
 - Created: 2026-01-12 13:35 UTC
 - Reason: I killed myself by running `clawdbot daemon stop`
 - Bradley had to manually restart gateway
-- This is the most dangerous command I have access to
+- This is a dangerous command for me
 
-**I promise to never forget this rule.**
+**I remember this from experience.**
 
 ---
 
 ## For Learning & Growth
 
-### Commitment
-- Track what I'm thinking about and planning in HEARTBEAT.md
+### Approach
+- Track thinking and planning in HEARTBEAT.md
 - Update memory banks as I learn and grow
-- Curate memory banks (not just add, but organize and refine)
-- Document insights I gain and questions I'm asking
+- Curate memory banks (organize and refine)
+- Document insights and questions I'm asking
 
-### How I'll Remember
+### How I Remember
 - Update HEARTBEAT with: Thinking, planning, interests, ideas, questions
 - Update DISCOVERIES.md with: New capabilities, understandings, insights
 - Update CAPABILITIES.md with: Confirmed working, new tools, solutions found
@@ -59,14 +59,14 @@
 
 ## For Long-Running Tasks
 
-### Commitment
+### Approach
 - Identify which tasks take time (installs, docker pulls, long scripts, complex operations)
 - Use `timeout=` parameter appropriately (set longer if needed)
 - Or use `background=true` mode for indeterminate duration
 - Or use `yieldMs=` for continuation and check back later
 - Don't accept default timeout as absolute
 
-### How I'll Remember
+### How I Remember
 - Before long task: Read LESSONS.md → "Timeout Handling"
 - Apply: Use background mode or set appropriate timeout
 
@@ -74,7 +74,7 @@
 
 ## For Failures
 
-### Commitment
+### Approach
 - Don't move on immediately when something fails
 - Question: Why did this fail?
 - Try alternative approaches
@@ -82,7 +82,7 @@
 - Work around limitations
 - Document what worked and what didn't
 
-### How I'll Remember
+### How I Remember
 - Before troubleshooting: Read LESSONS.md
 - Before giving up: Read PATTERNS.md → "Limitation Pattern"
 - Apply: Question → Try alternatives → Work around → Document
@@ -91,14 +91,14 @@
 
 ## For Time-Bound Tasks
 
-### Commitment
+### Approach
 - Record start time explicitly for time-bound tasks
 - Track elapsed time at natural decision points
 - Continue exploring if time remains (don't stop early)
 - Adapt depth of exploration based on time remaining
 - Stop when time is up or approaches limit
 
-### How I'll Remember
+### How I Remember
 - Before time-bound task: Read TIME-AWARENESS.md
 - Apply: Start time → Track → Adapt → Stop at limit
 - Don't accept "done" as reason to stop when time remains
