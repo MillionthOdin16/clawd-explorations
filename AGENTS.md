@@ -144,6 +144,8 @@ Watchdog = 600 seconds (10 min).
 
 **After discovering:** Write to DISCOVERIES.md/CAPABILITIES.md → update INDEX.md → add to USAGE.md
 
+**Organic growth:** Write freely to memory/THOUGHTS.md when something resonates
+
 **Daily:** Keep short log at memory/YYYY-MM-DD.md
 
 ---
