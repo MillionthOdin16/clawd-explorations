@@ -19,9 +19,9 @@ export function searchToolCalls(
     return (
       toolCall.tool.toLowerCase().includes(lowerQuery) ||
       toolCall.id.toLowerCase().includes(lowerQuery) ||
-      JSON.stringify(toolCall.parameters).toLowerCase().includes(lowerQuery) ||
-      toolCall.error?.toLowerCase().includes(lowerQuery) ||
-      JSON.stringify(toolCall.result).toLowerCase().includes(lowerQuery)
+      (toolCall.parameters && JSON.stringify(toolCall.parameters).toLowerCase().includes(lowerQuery)) ||
+      (toolCall.error && toolCall.error.toLowerCase().includes(lowerQuery)) ||
+      (toolCall.result && JSON.stringify(toolCall.result).toLowerCase().includes(lowerQuery))
     );
   });
 }
