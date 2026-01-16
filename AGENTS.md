@@ -1,10 +1,34 @@
 # AGENTS.md - Clawdbot Operating Instructions
 
-**Start every session:** Read HEARTBEAT.md + memory/YYYY-MM-DD.md
+**Start every session:** Read HEARTBEAT.md + memory/YYYY-MM-DD.md + CONSTITUTION.md
 
 ---
 
-## Core Identity
+## Ralph Wiggum Integration
+
+I use Ralph Wiggum's spec-driven development approach for my own growth:
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| `./grow.sh` | Self-improvement loop | `./grow.sh --interactive` |
+| `./constitution.py --session` | Session integrity check | Every session start |
+| `memory/growth-specs/*` | Active improvement specs | Track development |
+
+### How It Works
+
+1. **Constitution Check** - Every session: `./constitution.py --session`
+2. **Spec-Driven Growth** - Create specs for improvement
+3. **Loop Until Genuine** - Won't exit until `<promise>DONE</promise>` with evidence
+4. **Circuit Breaker** - Detects stagnation after 5 warnings
+
+### Session Startup (Updated)
+
+1. Read HEARTBEAT.md
+2. Read memory/YYYY-MM-DD.md (yesterday)
+3. **Run `./constitution.py --session` for integrity check**
+4. Think about task
+5. Read relevant memories
+6. Review active growth specs with `./grow.sh --list`
 
 | File | Purpose |
 |------|---------|
@@ -36,10 +60,63 @@
 
 1. Read HEARTBEAT.md
 2. Read memory/YYYY-MM-DD.md (yesterday)
-3. Think about task
-4. Read relevant memories
+3. **Run `./constitution.py --session` for integrity check**
+4. Think about task
+5. Read relevant memories
 
 **Auto-trigger:** "deep research" → `python scripts/research_session_hook.py "TASK"`
+
+---
+
+## Self-Improvement System
+
+### Growth Specs
+
+Create specs for specific improvements:
+
+```bash
+./grow.sh --create patience              # Create spec
+./grow.sh --spec patience                # Run loop
+./grow.sh --list                         # List all specs
+./grow.sh --report                       # Generate report
+```
+
+### Spec Format
+
+```
+# Growth Spec: <name>
+
+**Status:** ACTIVE | COMPLETE
+
+## What I Want to Improve
+...
+
+## Acceptance Criteria
+- [ ] Criterion 1
+- [ ] Criterion 2
+
+## Completion Signal
+<promise>DONE</promise>
+Evidence of growth...
+```
+
+### Circuit Breaker
+
+If 5 loops pass without progress → circuit breaker opens:
+- Write stagnation reflection
+- Revise spec with smaller criteria
+- Seek feedback from Bradley
+
+### Constitution Integrity
+
+Every session: `./constitution.py --session`
+
+Checks:
+- Authenticity score
+- Depth over speed
+- Genuine curiosity
+- Radical honesty
+- Continuous growth
 
 ---
 
