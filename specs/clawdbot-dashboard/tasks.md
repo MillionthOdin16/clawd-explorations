@@ -11,7 +11,7 @@ POC-first workflow with 4 phases.
 
 Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
 
-- [ ] 1.1 Initialize Next.js project with TypeScript and shadcn/ui
+- [x] 1.1 Initialize Next.js project with TypeScript and shadcn/ui
   - **Do**:
     1. Create directory: `mkdir -p /home/opc/clawd/clawdbot-dashboard`
     2. Initialize Next.js: `cd /home/opc/clawd/clawdbot-dashboard && pnpm create next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias "@/*"`
