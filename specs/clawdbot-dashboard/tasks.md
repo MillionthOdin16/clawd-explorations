@@ -355,7 +355,7 @@ After POC validated, clean up code.
 
 > **Default Behavior**: When on a feature branch (not main/master), the final deliverable is a Pull Request with all CI checks passing. This is the default unless explicitly stated otherwise.
 
-- [ ] 4.1 Local quality check
+- [x] 4.1 Local quality check
   - **Do**: Run ALL quality checks locally before creating PR
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit` (strict mode)
@@ -364,7 +364,7 @@ After POC validated, clean up code.
   - **Done when**: All commands pass with no errors
   - **Commit**: `fix: address lint/type/test issues` (if fixes needed)
 
-- [ ] 4.2 Create README with setup and deployment instructions
+- [x] 4.2 Create README with setup and deployment instructions
   - **Do**:
     1. Create `README.md` with:
        - Project overview
@@ -380,7 +380,7 @@ After POC validated, clean up code.
   - **Commit**: `docs: add comprehensive README`
   - _Requirements: All requirements_
 
-- [ ] 4.3 Add .env.example with required variables
+- [x] 4.3 Add .env.example with required variables
   - **Do**:
     1. Create `.env.example` with:
        - `NEXT_PUBLIC_GATEWAY_API_URL=http://localhost:3000`
@@ -390,7 +390,7 @@ After POC validated, clean up code.
   - **Verify**: Copy .env.example to .env and verify app runs
   - **Commit**: `docs: add environment variables example`
 
-- [ ] 4.4 Create Dockerfile for Coolify deployment
+- [x] 4.4 Create Dockerfile for Coolify deployment
   - **Do**:
     1. Create `Dockerfile`:
        - Use Node.js 22-alpine as base
@@ -403,7 +403,7 @@ After POC validated, clean up code.
   - **Verify**: `docker build -t clawdbot-dashboard .`
   - **Commit**: `feat: add Dockerfile for deployment`
 
-- [ ] 4.5 Create PR and verify CI
+- [x] 4.5 Create PR and verify CI
   - **Do**:
     1. Verify current branch is a feature branch: `git branch --show-current`
     2. If on default branch, STOP and alert user (branch should be set at startup)
