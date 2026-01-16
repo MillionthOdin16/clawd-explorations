@@ -1,18 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { EmptyState } from '@/components/ui/EmptyState';
-
-// Mock react-window to avoid complexity
-vi.mock('react-window', () => ({
-  FixedSizeList: ({ children, itemCount }: any) => (
-    <div data-testid="virtualized-list" data-count={itemCount}>
-      {Array.from({ length: itemCount }).map((_, index) =>
-        children({ index, style: {} })
-      )}
-    </div>
-  ),
-}));
 
 describe('UI Components', () => {
   describe('StatusBadge', () => {
@@ -39,6 +28,28 @@ describe('UI Components', () => {
     it('should render processing status correctly', () => {
       render(<StatusBadge status="processing" />);
       expect(screen.getByText('processing')).toBeInTheDocument();
+    });
+
+    it('should render pending status correctly', () => {
+      render(<StatusBadge status="pending" />);
+      expect(screen.getByText('pending')).toBeInTheDocument();
+    });
+
+    it('should render in-progress status correctly', () => {
+      render(<StatusBadge status="in-progress" />);
+      expect(screen.getByText('in-progress')).toBeInTheDocument();
+    });
+
+    it('should render complete status correctly', () => {
+      render(<StatusBadge status="complete" />);
+      expect(screen.getByText('complete')).toBeInTheDocument();
+    });
+
+    it('should apply custom className', () => {
+      const { container } = render(
+        <StatusBadge status="running" className="custom-class" />
+      );
+      expect(container.firstChild).toHaveClass('custom-class');
     });
   });
 
