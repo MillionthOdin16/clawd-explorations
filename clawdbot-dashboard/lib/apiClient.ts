@@ -4,6 +4,10 @@ import type { SessionStatus, ToolCall, Message, Task } from './types';
 const GATEWAY_API_URL = process.env.NEXT_PUBLIC_GATEWAY_API_URL || 'http://localhost:3000';
 const API_KEY = process.env.NEXT_PUBLIC_GATEWAY_API_KEY || '';
 
+// Data limits for performance
+const MAX_TOOL_CALLS = 500;
+const MAX_MESSAGES = 1000;
+
 // API Response Types
 interface ApiResponse<T> {
   success: boolean;
@@ -161,8 +165,8 @@ export class ApiClient {
     // }
     // throw new Error(response.error || 'Failed to fetch tool calls');
 
-    // Mock data for POC
-    return [
+    // Mock data for POC (with pruning)
+    const toolCalls: ToolCall[] = [
       {
         id: 'tool-1',
         timestamp: new Date(Date.now() - 5000).toISOString(),
@@ -187,6 +191,9 @@ export class ApiClient {
         parameters: { path: '/tmp/test.txt', content: 'Hello' },
       },
     ];
+
+    // Prune to max tool calls
+    return toolCalls.slice(-MAX_TOOL_CALLS);
   }
 
   /**
@@ -203,8 +210,8 @@ export class ApiClient {
     // }
     // throw new Error(response.error || 'Failed to fetch messages');
 
-    // Mock data for POC
-    return [
+    // Mock data for POC (with pruning)
+    const messages: Message[] = [
       {
         id: 'msg-1',
         timestamp: new Date(Date.now() - 10000).toISOString(),
@@ -218,6 +225,9 @@ export class ApiClient {
         content: 'I\'m doing great! I just helped deploy a Minecraft server and I\'m now working on a web dashboard. How can I help you today?',
       },
     ];
+
+    // Prune to max messages
+    return messages.slice(-MAX_MESSAGES);
   }
 
   /**
