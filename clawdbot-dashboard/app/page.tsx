@@ -7,6 +7,7 @@ import ToolCallStream from '@/components/ToolCallStream';
 import MessageStream from '@/components/MessageStream';
 import ReasoningPanel from '@/components/ReasoningPanel';
 import TaskTracker from '@/components/TaskTracker';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { apiClient } from '@/lib';
 import type { SessionStatus, ToolCall, Message, Task } from '@/lib/types';
@@ -16,13 +17,14 @@ export default function DashboardPage() {
   const [toolCalls, setToolCalls] = useState<ToolCall[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [reasoningCollapsed, setReasoningCollapsed] = useState(true);
 
   // Fetch data on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsError(false);
         const [status, tools, msgs, taskList] = await Promise.all([
           apiClient.getSessionStatus(),
           apiClient.getToolCalls(),
@@ -34,10 +36,9 @@ export default function DashboardPage() {
         setToolCalls(tools);
         setMessages(msgs);
         setTasks(taskList);
-        setIsConnected(true);
       } catch (error) {
         console.error('Failed to fetch data:', error);
-        setIsConnected(false);
+        setIsError(true);
       }
     };
 
@@ -51,70 +52,83 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
-        {/* Session Header */}
-        {sessionStatus && (
-          <SessionHeader sessionStatus={sessionStatus} isConnected={isConnected} />
-        )}
+      <ErrorBoundary>
+        <div className="space-y-6">
+          {/* Error State */}
+          {isError && (
+            <div className="rounded-lg border border-destructive bg-destructive/10 p-4 text-destructive">
+              <p className="font-medium">Connection Error</p>
+              <p className="text-sm">
+                Unable to connect to Clawdbot Gateway. Please check your
+                connection and try again.
+              </p>
+            </div>
+          )}
 
-        {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="tools">Tool Calls</TabsTrigger>
-            <TabsTrigger value="messages">Messages</TabsTrigger>
-            <TabsTrigger value="tasks">Tasks</TabsTrigger>
-          </TabsList>
+          {/* Session Header */}
+          {sessionStatus && (
+            <SessionHeader sessionStatus={sessionStatus} />
+          )}
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid gap-6 lg:grid-cols-2">
-              {/* Recent Tool Calls */}
-              <div>
-                <h3 className="mb-4 text-lg font-semibold">Recent Tool Calls</h3>
-                <ToolCallStream toolCalls={toolCalls.slice(-10)} />
+          {/* Main Content Tabs */}
+          <Tabs defaultValue="overview" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="tools">Tool Calls</TabsTrigger>
+              <TabsTrigger value="messages">Messages</TabsTrigger>
+              <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            </TabsList>
+
+            {/* Overview Tab */}
+            <TabsContent value="overview" className="space-y-6">
+              <div className="grid gap-6 lg:grid-cols-2">
+                {/* Recent Tool Calls */}
+                <div>
+                  <h3 className="mb-4 text-lg font-semibold">Recent Tool Calls</h3>
+                  <ToolCallStream toolCalls={toolCalls.slice(-10)} />
+                </div>
+
+                {/* Recent Messages */}
+                <div>
+                  <h3 className="mb-4 text-lg font-semibold">Recent Messages</h3>
+                  <MessageStream messages={messages.slice(-10)} />
+                </div>
               </div>
 
-              {/* Recent Messages */}
+              {/* Reasoning Panel */}
               <div>
-                <h3 className="mb-4 text-lg font-semibold">Recent Messages</h3>
-                <MessageStream messages={messages.slice(-10)} />
+                <h3 className="mb-4 text-lg font-semibold">Reasoning Process</h3>
+                <ReasoningPanel
+                  reasoning="Analyzing current session state and planning next actions based on user requirements and system constraints."
+                  isCollapsed={reasoningCollapsed}
+                  onToggle={() => setReasoningCollapsed(!reasoningCollapsed)}
+                />
               </div>
-            </div>
 
-            {/* Reasoning Panel */}
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Reasoning Process</h3>
-              <ReasoningPanel
-                reasoning="Analyzing current session state and planning next actions based on user requirements and system constraints."
-                isCollapsed={reasoningCollapsed}
-                onToggle={() => setReasoningCollapsed(!reasoningCollapsed)}
-              />
-            </div>
+              {/* Task Overview */}
+              <div>
+                <h3 className="mb-4 text-lg font-semibold">Active Tasks</h3>
+                <TaskTracker tasks={tasks} />
+              </div>
+            </TabsContent>
 
-            {/* Task Overview */}
-            <div>
-              <h3 className="mb-4 text-lg font-semibold">Active Tasks</h3>
+            {/* Tool Calls Tab */}
+            <TabsContent value="tools">
+              <ToolCallStream toolCalls={toolCalls} />
+            </TabsContent>
+
+            {/* Messages Tab */}
+            <TabsContent value="messages">
+              <MessageStream messages={messages} />
+            </TabsContent>
+
+            {/* Tasks Tab */}
+            <TabsContent value="tasks">
               <TaskTracker tasks={tasks} />
-            </div>
-          </TabsContent>
-
-          {/* Tool Calls Tab */}
-          <TabsContent value="tools">
-            <ToolCallStream toolCalls={toolCalls} />
-          </TabsContent>
-
-          {/* Messages Tab */}
-          <TabsContent value="messages">
-            <MessageStream messages={messages} />
-          </TabsContent>
-
-          {/* Tasks Tab */}
-          <TabsContent value="tasks">
-            <TaskTracker tasks={tasks} />
-          </TabsContent>
-        </Tabs>
-      </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </ErrorBoundary>
     </DashboardLayout>
   );
 }

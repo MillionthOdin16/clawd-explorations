@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle2, Clock, Circle, ListTodo } from 'lucide-react';
+import { ListTodo } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { EmptyState } from '@/components/ui/EmptyState';
 import type { TaskTrackerProps, TaskStatus, Task } from '@/lib/types';
 
 interface TaskItemProps {
@@ -13,32 +15,6 @@ interface TaskItemProps {
 }
 
 function TaskItem({ task }: TaskItemProps) {
-  const getStatusIcon = (status: TaskStatus) => {
-    switch (status) {
-      case 'complete':
-        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
-      case 'in-progress':
-        return <Clock className="h-5 w-5 text-blue-500 animate-pulse" />;
-      case 'pending':
-        return <Circle className="h-5 w-5 text-gray-400" />;
-      default:
-        return <Circle className="h-5 w-5" />;
-    }
-  };
-
-  const getStatusColor = (status: TaskStatus) => {
-    switch (status) {
-      case 'complete':
-        return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'in-progress':
-        return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
-      case 'pending':
-        return 'bg-gray-500/10 text-gray-500 border-gray-500/20';
-      default:
-        return '';
-    }
-  };
-
   const formatDate = (dateString?: string) => {
     if (!dateString) return '-';
     const date = new Date(dateString);
@@ -48,18 +24,14 @@ function TaskItem({ task }: TaskItemProps) {
   return (
     <div className="border-b last:border-b-0">
       <div className="flex items-start gap-3 p-4 hover:bg-muted/50">
-        {getStatusIcon(task.status)}
+        <StatusBadge status={task.status} />
         <div className="flex-1 space-y-2">
           <p className="font-medium">{task.description}</p>
           <div className="flex items-center gap-2">
-            <Badge
-              variant="outline"
-              className={getStatusColor(task.status)}
-            >
-              {task.status}
-            </Badge>
             {task.priority && (
-              <Badge variant="secondary">Priority: {task.priority}</Badge>
+              <span className="text-xs text-muted-foreground">
+                Priority: {task.priority}
+              </span>
             )}
           </div>
           {task.completedAt && (
@@ -125,13 +97,13 @@ export default function TaskTracker({
         <ScrollArea className="h-[400px]">
           <div>
             {filteredTasks.length === 0 ? (
-              <div className="flex h-[300px] items-center justify-center text-muted-foreground">
-                No tasks found
-              </div>
+              <EmptyState
+                icon={<ListTodo className="h-12 w-12" />}
+                title="No tasks found"
+                description="Tasks will appear here as Clawdbot processes work"
+              />
             ) : (
-              filteredTasks.map((task) => (
-                <TaskItem key={task.id} task={task} />
-              ))
+              filteredTasks.map((task) => <TaskItem key={task.id} task={task} />)
             )}
           </div>
         </ScrollArea>

@@ -1,26 +1,13 @@
 'use client';
 
 import { Clock, Cpu, Database, Activity } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { StatusBadge } from '@/components/ui/StatusBadge';
 import type { SessionHeaderProps } from '@/lib/types';
 
 export default function SessionHeader({
   sessionStatus,
 }: Omit<SessionHeaderProps, 'isConnected'>) {
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'running':
-        return 'bg-green-500';
-      case 'idle':
-        return 'bg-yellow-500';
-      case 'processing':
-        return 'bg-blue-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString();
@@ -41,9 +28,7 @@ export default function SessionHeader({
                 Session ID: {sessionStatus.sessionId}
               </p>
             </div>
-            <Badge className={getStatusColor(sessionStatus.status)}>
-              {sessionStatus.status}
-            </Badge>
+            <StatusBadge status={sessionStatus.status} />
           </div>
 
           {/* Details Grid */}

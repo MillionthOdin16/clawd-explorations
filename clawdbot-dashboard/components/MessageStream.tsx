@@ -5,6 +5,7 @@ import { User, Bot, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { EmptyState } from '@/components/ui/EmptyState';
 import ReactMarkdown from 'react-markdown';
 import type { MessageStreamProps, Message } from '@/lib/types';
 
@@ -51,7 +52,9 @@ function MessageItem({ message }: MessageItemProps) {
                 View Reasoning
               </summary>
               <div className="mt-2 rounded-lg bg-muted p-3">
-                <p className="text-sm text-muted-foreground">{message.reasoning}</p>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                  {message.reasoning}
+                </p>
               </div>
             </details>
           )}
@@ -89,9 +92,11 @@ export default function MessageStream({
         <ScrollArea className="h-[500px]">
           <div ref={scrollRef} className="space-y-4 pr-4">
             {messages.length === 0 ? (
-              <div className="flex h-[400px] items-center justify-center text-muted-foreground">
-                No messages yet
-              </div>
+              <EmptyState
+                icon={<MessageSquare className="h-12 w-12" />}
+                title="No messages yet"
+                description="Messages will appear here as you chat with Clawdbot"
+              />
             ) : (
               messages.map((message) => (
                 <MessageItem key={message.id} message={message} />

@@ -12,6 +12,71 @@ interface ApiResponse<T> {
 }
 
 /**
+ * Retry configuration
+ */
+interface RetryConfig {
+  maxRetries: number;
+  initialDelay: number;
+  maxDelay: number;
+  backoffMultiplier: number;
+}
+
+const DEFAULT_RETRY_CONFIG: RetryConfig = {
+  maxRetries: 3,
+  initialDelay: 1000,
+  maxDelay: 10000,
+  backoffMultiplier: 2,
+};
+
+/**
+ * Sleep utility for retry delays
+ */
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Retry with exponential backoff
+ */
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  config: RetryConfig = DEFAULT_RETRY_CONFIG,
+): Promise<T> {
+  let lastError: Error | undefined;
+
+  for (let attempt = 0; attempt < config.maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+
+      // Don't retry on certain errors
+      if (
+        error instanceof TypeError ||
+        (error as Error).message?.includes('401') ||
+        (error as Error).message?.includes('403')
+      ) {
+        throw lastError;
+      }
+
+      // Don't retry after last attempt
+      if (attempt === config.maxRetries - 1) {
+        break;
+      }
+
+      // Calculate delay with exponential backoff
+      const delay = Math.min(
+        config.initialDelay * Math.pow(config.backoffMultiplier, attempt),
+        config.maxDelay,
+      );
+
+      console.warn(`Retry attempt ${attempt + 1}/${config.maxRetries} after ${delay}ms`);
+      await sleep(delay);
+    }
+  }
+
+  throw lastError;
+}
+
+/**
  * API Client for Clawdbot Gateway
  */
 export class ApiClient {
@@ -24,36 +89,39 @@ export class ApiClient {
   }
 
   /**
-   * Get request with authentication
+   * Get request with authentication and retry logic
    */
   private async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    try {
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(this.apiKey && { 'Authorization': `Bearer ${this.apiKey}` }),
-        },
-      });
+    return retryWithBackoff(async () => {
+      try {
+        const response = await fetch(`${this.baseUrl}${endpoint}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(this.apiKey && { 'Authorization': `Bearer ${this.apiKey}` }),
+          },
+          signal: AbortSignal.timeout(30000), // 30 second timeout
+        });
 
-      if (!response.ok) {
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(
+            `HTTP ${response.status}: ${response.statusText}${errorText ? ` - ${errorText}` : ''}`,
+          );
+        }
+
+        const data = await response.json();
         return {
-          success: false,
-          error: `HTTP ${response.status}: ${response.statusText}`,
+          success: true,
+          data,
         };
+      } catch (error) {
+        if (error instanceof Error) {
+          throw error;
+        }
+        throw new Error('Unknown error occurred');
       }
-
-      const data = await response.json();
-      return {
-        success: true,
-        data,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
-      };
-    }
+    });
   }
 
   /**

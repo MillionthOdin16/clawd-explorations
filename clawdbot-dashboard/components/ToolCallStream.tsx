@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { ChevronDown, ChevronRight, CheckCircle, XCircle, Clock, Play } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDown, ChevronRight, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import type { ToolCallStreamProps, ToolCallStatus, ToolCall } from '@/lib/types';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { EmptyState } from '@/components/ui/EmptyState';
+import type { ToolCallStreamProps, ToolCall } from '@/lib/types';
 
 interface ToolCallItemProps {
   toolCall: ToolCall;
@@ -17,23 +19,13 @@ interface ToolCallItemProps {
 }
 
 function ToolCallItem({ toolCall, isExpanded, onToggle }: ToolCallItemProps) {
-  const getStatusIcon = (status: ToolCallStatus) => {
-    switch (status) {
-      case 'running':
-        return <Play className="h-4 w-4 text-yellow-500" />;
-      case 'success':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'error':
-        return <XCircle className="h-4 w-4 text-red-500" />;
-      default:
-        return <Clock className="h-4 w-4" />;
-    }
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString();
   };
+
+  const parametersJson = JSON.stringify(toolCall.parameters as Record<string, unknown>, null, 2);
+  const resultJson = toolCall.result ? JSON.stringify(toolCall.result as Record<string, unknown>, null, 2) : null;
 
   return (
     <div className="border-b">
@@ -41,11 +33,10 @@ function ToolCallItem({ toolCall, isExpanded, onToggle }: ToolCallItemProps) {
         className="flex cursor-pointer items-center gap-3 p-4 hover:bg-muted/50"
         onClick={onToggle}
       >
-        {getStatusIcon(toolCall.status)}
+        <StatusBadge status={toolCall.status} />
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <span className="font-mono font-medium">{toolCall.tool}</span>
-            <Badge variant="outline">{toolCall.status}</Badge>
           </div>
           <p className="text-xs text-muted-foreground">{formatDate(toolCall.timestamp)}</p>
         </div>
@@ -61,14 +52,14 @@ function ToolCallItem({ toolCall, isExpanded, onToggle }: ToolCallItemProps) {
           <div>
             <p className="mb-1 text-sm font-semibold">Parameters</p>
             <pre className="overflow-x-auto rounded bg-background p-2 text-xs">
-              {JSON.stringify(toolCall.parameters, null, 2)}
+              {parametersJson}
             </pre>
           </div>
-          {toolCall.result && (
+          {resultJson && (
             <div>
               <p className="mb-1 text-sm font-semibold">Result</p>
               <pre className="overflow-x-auto rounded bg-background p-2 text-xs">
-                {JSON.stringify(toolCall.result, null, 2)}
+                {resultJson}
               </pre>
             </div>
           )}
@@ -171,9 +162,11 @@ export default function ToolCallStream({
         <ScrollArea className="h-[500px]">
           <div ref={scrollRef}>
             {filteredToolCalls.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">
-                No tool calls found
-              </div>
+              <EmptyState
+                icon={<MessageSquare className="h-12 w-12" />}
+                title="No tool calls found"
+                description="Tool calls will appear here as Clawdbot executes commands"
+              />
             ) : (
               filteredToolCalls.map((toolCall) => (
                 <ToolCallItem
