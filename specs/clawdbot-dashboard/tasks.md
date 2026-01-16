@@ -224,7 +224,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
 
 After POC validated, clean up code.
 
-- [ ] 2.1 Extract common UI patterns
+- [x] 2.1 Extract common UI patterns
   - **Do**:
     1. Create `components/ui/StatusBadge.tsx` for consistent status display
     2. Create `components/ui/LoadingSpinner.tsx` for loading states
@@ -236,7 +236,7 @@ After POC validated, clean up code.
   - **Commit**: `refactor: extract common UI components`
   - _Design: Component refactoring_
 
-- [ ] 2.2 Improve error handling
+- [x] 2.2 Improve error handling
   - **Do**:
     1. Add try/catch to all API client methods
     2. Add error boundary in app layout
@@ -249,7 +249,7 @@ After POC validated, clean up code.
   - **Commit**: `refactor: add comprehensive error handling`
   - _Design: Error Handling_
 
-- [ ] 2.3 Quality Checkpoint
+- [x] 2.3 Quality Checkpoint
   - **Do**: Run all quality checks to verify refactoring doesn't break the build
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit`
@@ -257,7 +257,7 @@ After POC validated, clean up code.
   - **Done when**: All quality checks pass with no errors
   - **Commit**: `chore: pass quality checkpoint` (only if fixes needed)
 
-- [ ] 2.4 Optimize performance
+- [x] 2.4 Optimize performance
   - **Do**:
     1. Add React.memo() to expensive components
     2. Implement virtual scrolling for long lists (use react-window)
@@ -272,7 +272,7 @@ After POC validated, clean up code.
   - _Design: Performance Considerations_
   - _Requirements: NFR-1, NFR-4_
 
-- [ ] 2.5 Code cleanup and type safety
+- [x] 2.5 Code cleanup and type safety
   - **Do**:
     1. Remove all TODOs and hardcoded values
     2. Add proper TypeScript types for all props
@@ -286,7 +286,7 @@ After POC validated, clean up code.
   - **Commit**: `refactor: cleanup code and improve type safety`
   - _Design: TypeScript_
 
-- [ ] 2.6 Quality Checkpoint
+- [x] 2.6 Quality Checkpoint
   - **Do**: Run all quality checks to verify refactoring doesn't break the build
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit` (strict mode)
