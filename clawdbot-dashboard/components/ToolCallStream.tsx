@@ -158,7 +158,7 @@ export default function ToolCallStream({
               key={status}
               variant={selectedStatus === status ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setSelectedStatus(status as any)}
+              onClick={() => setSelectedStatus(status as typeof statusFilter)}
             >
               {status}
             </Button>

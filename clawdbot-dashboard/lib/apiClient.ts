@@ -84,9 +84,9 @@ export class ApiClient {
   /**
    * Get tool calls with optional filter
    */
-  async getToolCalls(after?: string): Promise<ToolCall[]> {
+  async getToolCalls(_after?: string): Promise<ToolCall[]> {
     // TODO: Replace with actual API call
-    // const endpoint = after ? `/api/session/tools?after=${after}` : '/api/session/tools';
+    // const endpoint = _after ? `/api/session/tools?after=${_after}` : '/api/session/tools';
     // const response = await this.get<ToolCall[]>(endpoint);
     // if (response.success && response.data) {
     //   return response.data;
@@ -124,11 +124,11 @@ export class ApiClient {
   /**
    * Get messages with pagination
    */
-  async getMessages(after?: string, limit: number = 50): Promise<Message[]> {
+  async getMessages(after?: string, _limit: number = 50): Promise<Message[]> {
     // TODO: Replace with actual API call
     // const endpoint = after
-    //   ? `/api/session/messages?after=${after}&limit=${limit}`
-    //   : `/api/session/messages?limit=${limit}`;
+    //   ? `/api/session/messages?after=${after}&limit=${_limit}`
+    //   : `/api/session/messages?limit=${_limit}`;
     // const response = await this.get<Message[]>(endpoint);
     // if (response.success && response.data) {
     //   return response.data;

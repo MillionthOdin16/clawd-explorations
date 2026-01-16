@@ -17,8 +17,8 @@ export interface ToolCall {
   timestamp: string;
   tool: string;
   status: 'running' | 'success' | 'error';
-  parameters?: Record<string, any>;
-  result?: any;
+  parameters?: Record<string, unknown>;
+  result?: unknown;
   error?: string;
 }
 

@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Activity, Wifi, WifiOff, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useTheme } from 'next-themes';
 import { apiClient } from '@/lib';
-import type { SessionHeaderProps } from '@/lib/types';
 
 /**
  * Connection status indicator
@@ -81,7 +79,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       try {
         await apiClient.getSessionStatus();
         setIsConnected(true);
-      } catch (error) {
+      } catch {
         setIsConnected(false);
       }
     };

@@ -7,8 +7,7 @@ import type { SessionHeaderProps } from '@/lib/types';
 
 export default function SessionHeader({
   sessionStatus,
-  isConnected,
-}: SessionHeaderProps) {
+}: Omit<SessionHeaderProps, 'isConnected'>) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'running':

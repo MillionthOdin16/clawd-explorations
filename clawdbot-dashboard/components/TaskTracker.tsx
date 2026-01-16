@@ -121,19 +121,6 @@ export default function TaskTracker({
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {['all', 'pending', 'in-progress', 'complete'].map((status) => (
-            <Badge
-              key={status}
-              variant={selectedStatus === status ? 'default' : 'secondary'}
-              className="cursor-pointer capitalize"
-              onClick={() => setSelectedStatus(status as any)}
-            >
-              {status}: {statusCounts[status as keyof typeof statusCounts]}
-            </Badge>
-          ))}
-        </div>
-
         {/* Task List */}
         <ScrollArea className="h-[400px]">
           <div>
