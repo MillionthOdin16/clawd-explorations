@@ -4,6 +4,7 @@ A beautiful, real-time web dashboard that provides complete visibility into Claw
 
 ## 🚀 Features
 
+### Core Features
 - **Session Status Display**: View current session information, model, runtime environment
 - **Tool Call Stream**: Real-time monitoring of all tool executions with expandable details
 - **Message Stream**: Conversation history with markdown rendering
@@ -13,6 +14,17 @@ A beautiful, real-time web dashboard that provides complete visibility into Claw
 - **Auto-Refresh**: Automatic updates every 5 seconds
 - **Error Handling**: Graceful error handling with retry logic
 - **Responsive Design**: Works on mobile, tablet, and desktop
+
+### New Features
+- **Global Search**: Search across all data types (tool calls, messages, tasks) with real-time results
+- **Data Export**: Export session data to JSON or CSV format with one click
+- **Session Summary**: Visual overview showing:
+  - Total tool calls with success/failure breakdown
+  - Total messages count
+  - Task status distribution (completed/active)
+  - Session duration
+- **Manual Refresh**: Refresh button to force data update
+- **Search Toggle**: Collapsible search bar to save screen space
 
 ## 🛠️ Tech Stack
 
@@ -172,6 +184,18 @@ pnpm build
 ```
 
 ## 🔍 Troubleshooting
+
+### Search not working
+
+- Check browser console for JavaScript errors
+- Verify search query is properly formatted
+- Ensure data is loaded before searching
+
+### Export not downloading files
+
+- Check browser pop-up blocker settings
+- Verify browser allows downloads
+- Check browser console for errors
 
 ### Dashboard not connecting to Gateway
 
