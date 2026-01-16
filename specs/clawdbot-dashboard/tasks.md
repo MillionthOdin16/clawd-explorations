@@ -25,7 +25,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-9, FR-10_
   - _Design: Component A, Technical Decisions_
 
-- [ ] 1.2 Create TypeScript types and interfaces
+- [x] 1.2 Create TypeScript types and interfaces
   - **Do**:
     1. Create `lib/types.ts` with SessionStatus, ToolCall, Message, Task interfaces
     2. Create `lib/apiClient.ts` with ApiClient interface
@@ -36,7 +36,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - **Commit**: `feat: add TypeScript types and interfaces`
   - _Design: Interfaces_
 
-- [ ] 1.3 Create API client with mocked Gateway responses
+- [x] 1.3 Create API client with mocked Gateway responses
   - **Do**:
     1. Implement `ApiClient` class in `lib/apiClient.ts`
     2. Add methods: `getSessionStatus()`, `getToolCalls()`, `getMessages()`, `getTasks()`
@@ -49,7 +49,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-6_
   - _Design: ApiClient_
 
-- [ ] 1.4 Quality Checkpoint
+- [x] 1.4 Quality Checkpoint
   - **Do**: Run all quality checks to verify recent changes don't break the build
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit`
@@ -57,7 +57,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - **Done when**: All quality checks pass with no errors
   - **Commit**: `chore: pass quality checkpoint` (only if fixes needed)
 
-- [ ] 1.5 Create DashboardLayout component
+- [x] 1.5 Create DashboardLayout component
   - **Do**:
     1. Create `components/DashboardLayout.tsx`
     2. Add theme toggle (light/dark mode) using next-themes
@@ -71,7 +71,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-9, FR-10_
   - _Design: DashboardLayout_
 
-- [ ] 1.6 Create SessionHeader component
+- [x] 1.6 Create SessionHeader component
   - **Do**:
     1. Create `components/SessionHeader.tsx`
     2. Display session ID, creation time, model info
@@ -85,7 +85,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-1, AC-1.1, AC-1.2, AC-1.3, AC-1.4_
   - _Design: SessionHeader_
 
-- [ ] 1.7 Create ToolCallStream component
+- [x] 1.7 Create ToolCallStream component
   - **Do**:
     1. Create `components/ToolCallStream.tsx`
     2. Display tool calls in chronological order
@@ -102,7 +102,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-2, AC-2.1, AC-2.2, AC-2.3, AC-2.4, AC-2.5, AC-2.6_
   - _Design: ToolCallStream_
 
-- [ ] 1.8 Quality Checkpoint
+- [x] 1.8 Quality Checkpoint
   - **Do**: Run all quality checks to verify recent changes don't break the build
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit`
@@ -110,7 +110,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - **Done when**: All quality checks pass with no errors
   - **Commit**: `chore: pass quality checkpoint` (only if fixes needed)
 
-- [ ] 1.9 Create MessageStream component
+- [x] 1.9 Create MessageStream component
   - **Do**:
     1. Create `components/MessageStream.tsx`
     2. Display messages in chronological order
@@ -126,7 +126,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-3, AC-3.1, AC-3.2, AC-3.3, AC-3.4, AC-3.5_
   - _Design: MessageStream_
 
-- [ ] 1.10 Create ReasoningPanel component
+- [x] 1.10 Create ReasoningPanel component
   - **Do**:
     1. Create `components/ReasoningPanel.tsx`
     2. Display reasoning tokens/content when available
@@ -141,7 +141,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-4, AC-4.1, AC-4.2, AC-4.3, AC-4.4_
   - _Design: ReasoningPanel_
 
-- [ ] 1.11 Create TaskTracker component
+- [x] 1.11 Create TaskTracker component
   - **Do**:
     1. Create `components/TaskTracker.tsx`
     2. Display task list with status indicators (pending, in-progress, complete)
@@ -156,7 +156,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: FR-5, AC-5.1, AC-5.2, AC-5.3, AC-5.4, AC-5.5_
   - _Design: TaskTracker_
 
-- [ ] 1.12 Quality Checkpoint
+- [x] 1.12 Quality Checkpoint
   - **Do**: Run all quality checks to verify recent changes don't break the build
   - **Verify**: All commands must pass:
     - Type check: `pnpm tsc --noEmit`
@@ -164,7 +164,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - **Done when**: All quality checks pass with no errors
   - **Commit**: `chore: pass quality checkpoint` (only if fixes needed)
 
-- [ ] 1.13 Create Zustand store for global state
+- [x] 1.13 Create Zustand store for global state
   - **Do**:
     1. Create `lib/store.ts` with Zustand store
     2. Store: sessionStatus, toolCalls, messages, reasoning, tasks
@@ -176,7 +176,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - **Commit**: `feat: add Zustand global state store`
   - _Design: State_
 
-- [ ] 1.14 Integrate React Query for data fetching
+- [x] 1.14 Integrate React Query for data fetching
   - **Do**:
     1. Wrap app with QueryProvider in `app/layout.tsx`
     2. Create hooks for each data type:
@@ -193,7 +193,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: NFR-2_
   - _Design: React Query_
 
-- [ ] 1.15 Connect components to real data
+- [x] 1.15 Connect components to real data
   - **Do**:
     1. Replace mock data in components with React Query hooks
     2. Update DashboardLayout to use real session status
@@ -207,7 +207,7 @@ Focus: Validate the idea works end-to-end. Skip tests, accept hardcoded values.
   - _Requirements: All FRs_
   - _Design: Data Flow_
 
-- [ ] 1.16 POC Checkpoint
+- [x] 1.16 POC Checkpoint
   - **Do**: Verify feature works end-to-end
   - **Done when**:
     - Dashboard loads and displays session data
