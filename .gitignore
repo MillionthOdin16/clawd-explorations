@@ -5,6 +5,9 @@
 *.pem
 *.secrets
 
+# Server access information (CRITICAL - NEVER COMMIT)
+SERVER-ACCESS.md
+
 # DigitalOcean API tokens (CRITICAL - NEVER COMMIT)
 DIGITALOCEAN_API_TOKEN
 
