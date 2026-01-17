@@ -548,6 +548,8 @@ python scripts/file-trim.py full --apply
 - ✅ Archive completed work
 - ✅ Keep INDEX.md updated
 
+---
+
 ### Cron Jobs
 
 - **Weekly (Sunday 18:00):** Memory consolidation
