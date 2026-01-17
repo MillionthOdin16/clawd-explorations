@@ -67,21 +67,33 @@
 
 ## Missing Information
 
-### Oracle Server IP
+### GCloud Domain
 
-**Status:** ⚠️ Placeholder in SERVER-ACCESS.md
+**Status:** ⚠️ Add detailed domain configuration if needed
 
-**Action Needed:**
-1. Get Oracle server IP address (instance-20250109-1732)
-2. Edit `/home/opc/clawd/SERVER-ACCESS.md`
-3. Find: `IP Address: (Add Oracle server IP here)`
-4. Replace with actual IP address
-5. Update SSH connection command with IP
+**Available Information:**
+- Domain: availability.ad-1.fault.io
+- IP: 34.23.251.6
+- SSH: bhallier@34.23.251.6 with ~/.ssh/clawdbot
 
-**How to Find IP:**
-- Oracle Cloud Console
-- Previous sessions or configs
-- Ask Bradley
+---
+
+### Oracle Server
+
+**Status:** ✅ Added (no longer missing!)
+
+**Added Information:**
+- IP Address: 129.153.132.33
+- SSH User: opc
+- SSH Key: ~/.ssh/clawdbot
+- OCID: ocid1.instance.oc1.iad.anuwcljtg7mpexicjuiacgzerlyuhssjebjrtcvzw6ox3pdque3swijlkeqq
+- Shape: VM.Standard.E2.1.Micro
+- Launched: Dec 30, 2024, 21:06:41 UTC
+
+**Action Taken:**
+- Updated `/home/opc/clawd/SERVER-ACCESS.md` with full Oracle server details
+- Created `/home/opc/clawd/.env` with environment variables
+- SSH connection configured
 
 ---
 
