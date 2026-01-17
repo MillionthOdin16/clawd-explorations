@@ -36,7 +36,10 @@ What do you need?
 │   └── `eza -la` (not `ls -la`)
 │
 └── EDIT FILE?
-    └── Use `edit` tool (not `exec`)
+    ├── Know line number → `fe line path.md N "content"`
+    ├── Know text, not line → `fe text path.md "old" "new"`
+    ├── Fuzzy match needed → `fe text path.md "old" "new" --fuzzy`
+    └── AVOID: Native `edit` tool (8.4% error rate)
 ```
 
 ---
@@ -67,13 +70,14 @@ qmd search "topic" -c sessions         # Search conversation history
 |------|------|------|
 | 🔍 Find information | `qmd search "topic"` | ALWAYS FIRST for knowledge |
 | Quick check | `rg "pattern"` | Only if qmd too slow |
-| Read file | `bat file` | Always |
+| Read file | `read` tool | Always |
 | Find files | `fd pattern` | Finding by name |
 | Git | `lazygit` | Visual git ops |
 | Web content | `r.jina.ai url` | Static pages |
 | Navigate | `z name` | Terminal navigation |
 | List | `eza -la` | File listing |
-| Edit | `edit` tool | File modification |
+| Edit file (line) | `fe line path.md N "text"` | Know line number |
+| Edit file (text) | `fe text path.md "old" "new"` | Exact or --fuzzy |
 
 ---
 
@@ -133,9 +137,9 @@ rg "pattern" --type md
 | Topic | Reference |
 |-------|-----------|
 | qmd full docs | `memory/QMD-WORKFLOW.md` |
-| Tool comparison | `HIGH-IMPACT-TOOLS.md` |
-| Installation | `HIGH-IMPACT-TOOLS.md` (Phase 1-3) |
-| Browser needs | `BROWSER-AUTOMATION.md` |
+| Tool catalog | `AGENTS-TOOLS.md` |
+| File operations | `TOOLS.md` |
+| Research patterns | `AGENTS-RESEARCH.md` |
 
 ---
 
@@ -149,14 +153,14 @@ When user asks about past decisions, research, or conversations:
 3. Piece together context
 
 ### After (2026.1.14)
-1. `clawdbot memory search "query"` for semantic search
+1. `memory_search "query"` for semantic search
 2. Returns matches with snippets + line numbers
 3. Read full context from specific lines
 
 ### Example
 ```
 User: "What did we decide about the research framework?"
-Me: → clawdbot memory search "research framework decision"
+Me: → memory_search "research framework decision"
     → Results with snippets
     → Read relevant files with line context
     → Provide answer with citations
@@ -176,17 +180,18 @@ agents:
 
 ✅ DO:
 - **🔍 qmd** over rg for knowledge work
-- `bat` over `cat`
+- `read` tool over `cat`
+- `fe` (with --fuzzy) for edits
 - `fd` over `find`
 - `lazygit` for visual git
-- `zoxide` for navigation
+- `zoxide` (z) for navigation
 - `r.jina.ai` for web
 
 ❌ DON'T:
+- Native `edit` tool (use `fe` instead!)
 - `rg` for finding information (use qmd!)
 - `cat`, `grep`, `find` for simple tasks
 - `exec` for file operations
-- raw `curl` for web scraping
 
 ---
 

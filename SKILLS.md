@@ -4,6 +4,19 @@
 
 ---
 
+## Skills Directory Structure
+
+Clawdbot has two skills directories:
+
+| Directory | Purpose | Skills |
+|-----------|---------|---------|
+| `/home/opc/clawdbot/skills/` | **PRIMARY** - Production skills | 47 skills |
+| `/home/opc/clawd/skills/` | Workspace - Development/testing | 10 skills |
+
+**Important:** Use `/home/opc/clawdbot/skills/` as the primary source. The workspace directory is for developing new skills before merging into the system directory.
+
+---
+
 ## Quick Start
 
 ```bash
