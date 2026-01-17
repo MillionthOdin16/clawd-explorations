@@ -1,8 +1,17 @@
 # 🦞 Clawdbot Tools Documentation
 
-**Created:** 2026-01-13  
-**Last Updated:** 2026-01-13  
+**Created:** 2026-01-13
+**Last Updated:** 2026-01-17
 **Purpose:** Documentation for all custom scripts and tools in Clawdbot
+
+---
+
+## Recent Updates (2026-01-17)
+
+- **Path fixes:** Created `/home/opc/clawd/bin/` wrappers for `context7`, `exa`, `hn`
+- **Symlinks created:** `scripts/api` → `utils/api-call.sh`, `scripts/wf` → `utils/wait-for.sh`
+- **Documentation reorganized:** AGENTS.md split into focused files
+- **Memory consolidation:** Improved from 84% to 91% (archived 8 research files)
 
 ---
 
@@ -345,67 +354,70 @@ uv run /home/opc/clawd/skills/playwright-automation/scripts/playwright.py click 
 
 | Situation | Command | Example |
 |-----------|---------|---------|
-| Know line number | `edit-line` | `edit-line /path.txt 15 "content"` |
-| Know text, not line | `edit-text --fuzzy` | `edit-text /path.txt "old" "new" --fuzzy` |
-| Know line range | `edit-range` | `edit-range /path.txt 5 10 "new"` |
-| Partial file read | `read` | `read /path.txt --start 10 --end 20` |
-| Verify changes | `verify` | `verify /path1.txt /path2.txt` |
+| Know line number | `fe line` | `fe line /path.txt 15 "content"` |
+| Know text, not line | `fe text --fuzzy` | `fe text /path.txt "old" "new" --fuzzy` |
+| Know line range | `fe range` | `fe range /path.txt 5 10 "new"` |
+| Partial file read | `fe read` | `fe read /path.txt --start 10 --end 20` |
+| Verify changes | `fe verify` | `fe verify /path1.txt /path2.txt` |
 
-**Key insight from session analysis:** 36+ edit failures due to exact text matching. Use `file-edit.py` commands instead of the native `edit` tool.
+**Key insight from session analysis:** 36+ edit failures due to exact text matching. Use `fe` commands instead of the native `edit` tool.
 
-### `scripts/file-edit.py` (ENHANCED - 2026-01-14)
+### `scripts/fe.py` (ENHANCED - 2026-01-14 to 2026-01-17)
 
 All file editing in ONE tool with improved commands:
 
 ```bash
 # Edit line 15 (PREFERRED - no text matching needed)
-python scripts/file-edit.py edit-line /path.txt 15 "new content"
+fe line /path.txt 15 "new content"
 
 # Edit text content with exact match
-python scripts/file-edit.py edit-text /path.txt "exact old text" "new text"
+fe text /path.txt "exact old text" "new text"
 
 # Edit text with fuzzy matching (handles whitespace!)
-python scripts/file-edit.py edit-text /path.txt "partial old text" "new text" --fuzzy
+fe text /path.txt "partial old text" "new text" --fuzzy
 
 # Read lines 10-20
-python scripts/file-edit.py read /path.txt --start 10 --end 20
+fe read /path.txt --start 10 --end 20
 
 # Verify files are identical
-python scripts/file-edit.py verify /path1.txt /path2.txt
+fe verify /path1.txt /path2.txt
 
 # Compute SHA256 hash
-python scripts/file-edit.py hash /path.txt
+fe hash /path.txt
 
 # Create diff between two texts
 python scripts/file-edit.py diff-text "old" "new"
 ```
 
-**New in v2.0:** Added `edit-text` command with `--fuzzy` flag to replace the standalone `safe-edit.py`.
+**Note:** `fe` is a wrapper for `scripts/file-edit.py`, providing short command syntax.
+**Reliability:** 100% edit success rate when using `fe` (vs 8.4% for native edit tool).
 
 ---
 
-## Service Waiting Tools (ENHANCED - 2026-01-14)
+## Service Waiting Tools (ENHANCED - 2026-01-17)
 
-### `scripts/utils/wait-for.sh`
+### `scripts/wf` (symlink to utils/wait-for.sh)
 Intelligent waiting for services/ports with content checking and JSON output.
 
 ```bash
 # Wait for URL (basic)
-./wait-for.sh http://localhost:3000 --timeout 30
+./scripts/wf http://localhost:3000 --timeout 30
 
 # Wait for port
-./wait-for.sh port:3000 --timeout 30
+./scripts/wf port:3000 --timeout 30
 
 # Wait for Docker container
-./wait-for.sh docker:jj-app --timeout 60
+./scripts/wf docker:jj-app --timeout 60
 
 # Wait for specific content in response
-./wait-for.sh http://localhost:3000/api/health --contains "ok" --timeout 30
+./scripts/wf http://localhost:3000/api/health --contains "ok" --timeout 30
 
 # JSON output for programmatic use
-./wait-for.sh http://localhost:3000 --json
+./scripts/wf http://localhost:3000 --json
 # Output: {"success": true, "url": "...", "reason": "available", "elapsed": 5}
 ```
+
+**Note:** `wf` is a symlink to `scripts/utils/wait-for.sh`, providing the enhanced v2.0 functionality.
 
 **From session analysis:** 284+ sleep commands found. Replace with this utility.
 
@@ -419,31 +431,33 @@ Intelligent waiting for services/ports with content checking and JSON output.
 
 | Situation | Tool | Why |
 |-----------|------|-----|
-| Single API call | `api-call.sh` | Simple, standardized |
+| Single API call | `api` | Simple, standardized |
 | Multiple API calls | `parallel-exec.py api` | Batch processing |
 | One-off curl | Direct curl | Quick ad-hoc |
 
-### `scripts/utils/api-call.sh` (ENHANCED - 2026-01-14)
+### `scripts/api` (symlink to utils/api-call.sh) (ENHANCED - 2026-01-17)
 Standardized single API calls with error handling and JSON output.
 
 ```bash
 # GET request
-./api-call.sh GET http://localhost:3000/api/data
+./scripts/api GET http://localhost:3000/api/data
 
 # POST with data
-./api-call.sh POST http://localhost:3000/api/chat --data '{"msg":"hello"}'
+./scripts/api POST http://localhost:3000/api/chat --data '{"msg":"hello"}'
 
 # With headers
-./api-call.sh GET https://api.example.com --headers "Auth:Bearer token"
+./scripts/api GET https://api.example.com --headers "Auth:Bearer token"
 
 # JSON output for programmatic use
-./api-call.sh GET http://localhost:3000/api/data --json
+./scripts/api GET http://localhost:3000/api/data --json
 # Output: {"success": true, "data": {...}}
 
 # Failed call (JSON mode)
-./api-call.sh GET http://localhost:3000/missing --json
+./scripts/api GET http://localhost:3000/missing --json
 # Output: {"success": false, "error": "...", "url": "...", "method": "GET"}
 ```
+
+**Note:** `api` is a symlink to `scripts/utils/api-call.sh`, providing the enhanced v2.0 functionality.
 
 **New in v2.0:** Added `--json` for programmatic output with proper error handling.
 

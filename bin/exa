@@ -1,0 +1,3 @@
+#!/bin/bash
+# Exa wrapper script
+exec /home/opc/clawd/skills/exa/scripts/search.sh "$@"
