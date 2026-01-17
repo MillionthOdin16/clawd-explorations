@@ -2,13 +2,11 @@
 
 import * as React from 'react';
 import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react';
-import { Button } from './button';
-
-export type ToastType = 'success' | 'error' | 'warning' | 'info';
+import { cn } from '@/lib/utils';
 
 export interface ToastProps {
   id: string;
-  type: ToastType;
+  type: 'success' | 'error' | 'warning' | 'info';
   title: string;
   message?: string;
   duration?: number;
@@ -52,16 +50,15 @@ export function ToastProvider({ children }: ToastProviderProps) {
 
       setToasts((prev) => [...prev, newToast]);
 
-      // Auto-dismiss after duration
-      if (newToast.duration > 0) {
+      if (newToast.duration && newToast.duration > 0) {
         setTimeout(() => {
-          removeToast(id);
+          setToasts((prev) => prev.filter((t) => t.id !== id));
         }, newToast.duration);
       }
 
       return id;
     },
-    [removeToast]
+    []
   );
 
   const removeToast = React.useCallback((id: string) => {
@@ -85,7 +82,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
   return (
     <ToastContext.Provider value={value}>
       {children}
-      <ToastContainer toasts={toasts} onRemove={removeToast} />
+      {toasts.length > 0 && <ToastContainer toasts={toasts} onRemove={removeToast} />}
     </ToastContext.Provider>
   );
 }
@@ -96,8 +93,6 @@ interface ToastContainerProps {
 }
 
 function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
-  if (toasts.length === 0) return null;
-
   return (
     <div className="fixed top-0 right-0 z-[100] flex flex-col gap-2 p-4 w-full max-w-md pointer-events-none">
       {toasts.map((toast) => (
@@ -129,7 +124,7 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
         return <AlertCircle className="h-5 w-5 text-yellow-500" />;
       case 'info':
         return <Info className="h-5 w-5 text-blue-500" />;
-    default:
+      default:
         return <Info className="h-5 w-5 text-blue-500" />;
     }
   };
@@ -151,11 +146,11 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
 
   return (
     <div
-      className={`
-        pointer-events-auto w-full rounded-lg border shadow-lg transition-all duration-300 transform
-        ${getColors()}
-        ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}
-      `}
+      className={cn(
+        'pointer-events-auto w-full rounded-lg border shadow-lg transition-all duration-300',
+        getColors(),
+        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
+      )}
       role="alert"
       aria-live="polite"
     >
@@ -171,21 +166,18 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
             </p>
           )}
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
           onClick={() => onRemove(toast.id)}
-          className="h-6 w-6 flex-shrink-0 opacity-70 hover:opacity-100"
+          className="h-6 w-6 flex-shrink-0 opacity-70 hover:opacity-100 rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/5"
           aria-label="Close notification"
         >
           <X className="h-4 w-4" />
-        </Button>
+        </button>
       </div>
     </div>
   );
 }
 
-// Helper hooks for common toast types
 export function useSuccessToast() {
   const toast = useToast();
   return React.useCallback(

@@ -15,11 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { ToastProvider, useSuccessToast, useErrorToast, useInfoToast } from '@/components/ToastProvider';
-import {
-  EnhancedFilters,
-  DateRangeFilter,
-  type FilterOption,
-} from '@/components/ui/enhanced-filters';
+import { SimpleFilter, DateRangeFilterSimple, type FilterOption } from '@/components/ui/simple-filters';
 import {
   EmptyToolCalls,
   EmptyMessages,
@@ -74,11 +70,14 @@ export default function DashboardPage() {
         setMessages(msgs);
         setTasks(taskList);
         setIsLoading(false);
+
+        // Show success toast on initial load
+        infoToast('Dashboard Loaded', 'Session data fetched successfully');
       } catch (error) {
         console.error('Failed to fetch data:', error);
         setIsError(true);
         setIsLoading(false);
-        errorToast('Connection Error', 'Unable to fetch data from Gateway API');
+        errorToast('Connection Error', 'Unable to connect to Clawdbot Gateway');
       }
     };
 
@@ -88,7 +87,7 @@ export default function DashboardPage() {
     const interval = setInterval(fetchData, 5000);
 
     return () => clearInterval(interval);
-  }, [errorToast]);
+  }, [errorToast, infoToast]);
 
   // Search functionality
   const searchResults = useMemo(() => {
@@ -181,9 +180,9 @@ export default function DashboardPage() {
     try {
       exportSessionData({ 
         sessionStatus: sessionStatus || undefined, 
-        toolCalls, 
-        messages, 
-        tasks 
+        toolCalls: filteredToolCalls, 
+        messages: filteredMessages, 
+        tasks: filteredTasks 
       });
       successToast('Export Complete', 'Session data exported successfully');
     } catch (error) {
@@ -230,7 +229,7 @@ export default function DashboardPage() {
                 {showSearch ? (
                   <>
                     <div className="relative flex-1 min-w-[200px]">
-                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
                         placeholder="Search across all data..."
                         value={searchQuery}
@@ -265,24 +264,26 @@ export default function DashboardPage() {
                   </Button>
                 )}
 
-                {/* Filter Buttons */}
+                {/* Filter Buttons - Only show when not searching */}
                 {!searchQuery && (
                   <>
-                    <EnhancedFilters
+                    <SimpleFilter
                       label="Tool Status"
                       options={toolStatusOptions}
                       selected={toolStatusFilter}
                       onChange={setToolStatusFilter}
                       multiSelect={true}
+                      placeholder="Filter tools..."
                     />
-                    <EnhancedFilters
+                    <SimpleFilter
                       label="Task Status"
                       options={taskStatusOptions}
                       selected={taskStatusFilter}
                       onChange={setTaskStatusFilter}
                       multiSelect={true}
+                      placeholder="Filter tasks..."
                     />
-                    <DateRangeFilter
+                    <DateRangeFilterSimple
                       value={dateRange}
                       onChange={setDateRange}
                       label="Date Range"
@@ -432,9 +433,9 @@ export default function DashboardPage() {
                     <SkeletonList items={5} />
                   ) : displayData.tasks.length === 0 ? (
                       <EmptyTasks onRefresh={handleRefresh} />
-                    ) : (
-                      <TaskTracker tasks={displayData.tasks} />
-                    )}
+                  ) : (
+                    <TaskTracker tasks={displayData.tasks} />
+                  )}
                 </div>
               </TabsContent>
 
