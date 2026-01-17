@@ -34,7 +34,7 @@
   "bind": "lan",
   "auth": {
     "mode": "token",
-    "token": "3b2ebf428c1591116ea06bee9a76493407f3efb7cd0d7b73"
+    "token": "[REDACTED_OLD_TOKEN]"
   }
 }
 ```
@@ -196,8 +196,8 @@
 
 | Source | Token |
 |--------|--------|
-| Systemd env var | `fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf` |
-| Config file | `7959117aed5acbfe0c84812f8d016d383181e142649fb13d` |
+| Systemd env var | `[REDACTED_OLD_TOKEN]` |
+| Config file | `[REDACTED_OLD_TOKEN]` |
 
 Gateway process was started with `CLAWDBOT_GATEWAY_TOKEN` environment variable in systemd service. Environment variables have higher priority than config files. When the agent tried to connect using the config file token, the gateway rejected it as "unauthorized" (WebSocket error 1008).
 
@@ -207,8 +207,8 @@ Gateway process was started with `CLAWDBOT_GATEWAY_TOKEN` environment variable i
 
 **Changed:**
 ```diff
-- Environment=CLAWDBOT_GATEWAY_TOKEN=fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf
-+ # Environment=CLAWDBOT_GATEWAY_TOKEN=fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf
+- Environment=CLAWDBOT_GATEWAY_TOKEN=[REDACTED_OLD_TOKEN]
++ # Environment=CLAWDBOT_GATEWAY_TOKEN=[REDACTED_OLD_TOKEN]
 ```
 
 **Steps:**
@@ -236,7 +236,7 @@ When troubleshooting authentication issues:
 
 ### Why Previous Hypotheses Were Wrong
 
-**Token Mismatch:** Correct hypothesis, but wrong source. Thought it was old token vs new token. It was env var vs config.
+**Token Mismatch:** Correct hypothesis, but wrong source. The tokens in env var and config file didn't match.
 
 **Gateway State Reset:** Not the issue. State persisted because env var was still set after each restart.
 

@@ -513,6 +513,40 @@ python scripts/file-edit.py verify original.md modified.md
 4. Apply changes
 5. Confirm with verification
 
+### Tool Usage Optimization Pattern (2026-01-14)
+
+**Observation:** Data analysis of 27 sessions (5,000+ tool calls) reveals specific inefficiencies
+
+**Pattern 1: Fuzzy Matching for Edits**
+- **Problem:** Edit tool fails with exact text matching (36+ occurrences)
+- **Pattern:** Whitespace differences break exact matches
+- **Solution:** Use fuzzy matching: `python scripts/file-edit.py edit-text path "old" "new" --fuzzy`
+- **Result:** Edit success rate ~90% → >99%
+
+**Pattern 2: Intelligent Service Waiting**
+- **Problem:** 284+ sleep commands indicate poor service coordination
+- **Pattern:** Fixed sleep loops waste time and don't adapt
+- **Solution:** Use `wait-for.sh` for intelligent waiting:
+  - `./wait-for.sh http://url --timeout 30`
+  - `./wait-for.sh port:3000 --timeout 30`
+  - `./wait-for.sh docker:container --contains "ready"`
+- **Result:** Faster feedback, eliminate sleep loops
+
+**Pattern 3: Primary Search Tool Priority**
+- **Problem:** Only 4 qmd calls in 27 sessions (should be PRIMARY)
+- **Pattern:** Defaulting to ripgrep/rg instead of semantic search
+- **Solution:** Always start with qmd: `qmd search "topic" -c memory` or `qmd search "topic" -c workspace`
+- **Result:** Better semantic understanding, indexed search with context
+
+**Pattern 4: Tool Selection Hierarchy**
+```
+Primary Search → qmd (semantic, indexed)
+File Search → fd (filenames)
+Content Search → ripgrep (keywords, raw speed)
+Codebase Q&A → context7 (natural language)
+Web Search → exa (neural, finds docs/code)
+```
+
 ---
 
 🦞

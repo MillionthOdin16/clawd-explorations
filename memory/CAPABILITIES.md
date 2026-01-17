@@ -692,6 +692,37 @@ memory/
 
 **See:** `/home/opc/clawd/migration/WORKFLOW-ADAPTATION-GUIDE.md`
 
+#### Research Framework V2.0 (2026-01-14)
+**Major evolution from data collection to intelligence analysis:**
+
+| Aspect | V1.0 | V2.0 |
+|--------|------|------|
+| **Philosophy** | Data collection | Intelligence analysis |
+| **Internal Knowledge** | Ignored | Integrated (qmd first) |
+| **AI Reasoning** | None | Pattern detection |
+| **Workflow** | Linear checklist | 4-phase iterative |
+| **Quality Metrics** | None | RQS, CS, ID scores |
+
+**4-Phase Research Flow:**
+1. **Ground Truth (5 min)** - Check internal knowledge (qmd), define success criteria, assess complexity
+2. **Discover & Map (5-10 min)** - Parallel API sweep, creative exploration, DIG DEEPER on high-value discoveries
+3. **Synthesize & Build (5 min)** - Pattern detection (skills, themes, timeline), narrative construction, quality scoring
+4. **Insight & Output (5 min)** - Visual intelligence (ASCII diagrams), confidence dashboard, final output
+
+**Quality Metrics:**
+- **RQS (Research Quality Score):** 0-100 scale (verified facts ×2 + high confidence ×1 + internal knowledge + patterns + narrative)
+- **CS (Completeness Score):** % of critical items found
+- **ID (Insight Density):** Unique insights / total facts (target: >0.15)
+
+**Key Improvements:**
+- Internal knowledge integration (check qmd before external research)
+- Pattern detection framework (skill progression, theme clustering, influence mapping)
+- Iterative discovery loop (dig deeper on high-value findings)
+- Quality quantification (RQS > 70 = good, >85 = excellent)
+- Visual intelligence (skill maps, timelines, confidence dashboards)
+
+**Source:** `memory/RESEARCH_FRAMEWORK_V2.md`
+
 ---
 
 🦞

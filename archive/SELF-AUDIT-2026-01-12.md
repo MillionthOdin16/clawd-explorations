@@ -201,7 +201,7 @@ This is my first comprehensive self-audit. I reviewed:
 **Problem:** Gateway returns "unauthorized" on config tools (sessions_spawn, cron, gateway config)
 
 **Root Cause Found:**
-- Gateway systemd service had `CLAWDBOT_GATEWAY_TOKEN=fd08c830f9b3aa94a90841c91b05f5ef04474eeaf1c87baf`
+- Gateway systemd service had `CLAWDBOT_GATEWAY_TOKEN=[REDACTED_OLD_TOKEN]`
 - Config file had `gateway.auth.token=7959117aed5acbfe0c84812f8d016d383181e142649fb13d`
 - Gateway uses env var (priority) → agent uses config (rejected)
 
