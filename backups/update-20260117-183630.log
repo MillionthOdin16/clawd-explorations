@@ -1,0 +1,8 @@
+Clawdbot Update Log - 20260117-183630
+========================================
+[2026-01-17 18:36:30] [INFO] Target config: /home/opc/.clawdbot/clawdbot.json
+[2026-01-17 18:36:30] [INFO] Config validation: VALID
+[2026-01-17 18:36:30] [INFO] Checking for new config parameters...
+[2026-01-17 18:36:30] [WARN] New config parameters detected but NOT automatically added
+[2026-01-17 18:36:30] [INFO] Manual review recommended
+[2026-01-17 18:36:30] [INFO] To add these parameters, run:

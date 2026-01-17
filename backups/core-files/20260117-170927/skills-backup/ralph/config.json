@@ -1,0 +1,31 @@
+{
+  "ralph": {
+    "version": "1.0.0"
+  },
+  "execution": {
+    "max_task_retries": 3,
+    "git_lock_timeout": 30,
+    "verify_timeout": 120,
+    "parallel_max_workers": 3
+  },
+  "paths": {
+    "specs_dir": "./specs",
+    "logs_dir": "./logs"
+  },
+  "logging": {
+    "level": "INFO",
+    "max_files": 5,
+    "max_file_size_mb": 10
+  },
+  "webhook": {
+    "url": "",
+    "enabled": false,
+    "on_task_complete": true,
+    "on_spec_complete": true
+  },
+  "statistics": {
+    "enabled": true,
+    "track_execution_time": true,
+    "track_success_rate": true
+  }
+}

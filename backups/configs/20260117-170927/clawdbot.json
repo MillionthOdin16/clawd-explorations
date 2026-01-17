@@ -1,0 +1,541 @@
+{
+  "env": {
+    "MINIMAX_API_KEY": "sk-..."
+  },
+  "wizard": {
+    "lastRunAt": "2026-01-15T07:33:34.608Z",
+    "lastRunVersion": "2026.1.14",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "zai:default": {
+        "provider": "zai",
+        "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "minimax": {
+        "baseUrl": "https://api.minimax.io/anthropic",
+        "apiKey": "${MINIMAX_API_KEY}",
+        "api": "anthropic-messages",
+        "models": [
+          {
+            "id": "MiniMax-M2.1",
+            "name": "MiniMax M2.1",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 15,
+              "output": 60,
+              "cacheRead": 2,
+              "cacheWrite": 10
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "MiniMax-M2.1-lightning",
+            "name": "MiniMax M2.1 Lightning",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 15,
+              "output": 60,
+              "cacheRead": 2,
+              "cacheWrite": 10
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "MiniMax-M2",
+            "name": "MiniMax M2",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 15,
+              "output": 60,
+              "cacheRead": 2,
+              "cacheWrite": 10
+            },
+            "contextWindow": 200000,
+            "maxTokens": 128000
+          },
+          {
+            "id": "MiniMax-Text-01-Coding",
+            "name": "MiniMax Coding",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 1,
+              "output": 1,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 245760,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "zai": {
+        "baseUrl": "https://api.z.ai/api/coding/paas/v4",
+        "apiKey": "${ZAI_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "glm-4.7",
+            "name": "GLM-4.7",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 128000
+          },
+          {
+            "id": "glm-4.6",
+            "name": "GLM-4.6",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 128000
+          }
+        ]
+      },
+      "opencodezen": {
+        "baseUrl": "https://opencode.ai/zen/v1",
+        "apiKey": "${OPENCODE_ZEN_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "grok-code",
+            "name": "Grok Code (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "glm-4.7-free",
+            "name": "GLM 4.7 Free (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 4096
+          },
+          {
+            "id": "minimax-m2.1-free",
+            "name": "MiniMax M2.1 Free (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "alpha-glm-4.7",
+            "name": "Alpha GLM 4.7 (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 4096
+          },
+          {
+            "id": "alpha-gd4",
+            "name": "Alpha GD4 (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "big-pickle",
+            "name": "Big Pickle (OCZ)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "${OPENROUTER_API_KEY}",
+        "api": "anthropic-messages",
+        "models": [
+          {
+            "id": "qwen/qwen3-coder:free",
+            "name": "Qwen3 Coder (Free)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "mistralai/devstral-2512:free",
+            "name": "Devstral 2512 (Free)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "deepseek/deepseek-r1-0528:free",
+            "name": "DeepSeek R1 (Free)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "meta-llama/llama-3.3-70b-instruct:free",
+            "name": "Llama 3.3 70B (Free)",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 4096
+          },
+          {
+            "id": "google/gemini-2.0-flash-exp:free",
+            "name": "Gemini 2.0 Flash (Free)",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 1000000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen/qwen-2.5-vl-7b-instruct:free",
+            "name": "Qwen 2.5 VL 7B (Free)",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32768,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "minimax/MiniMax-M2.1"
+      },
+      "imageModel": {
+        "primary": "openrouter/google/gemini-2.0-flash-exp:free"
+      },
+      "models": {
+        "minimax/MiniMax-M2.1": {
+          "alias": "Minimax M2.1"
+        },
+        "minimax/MiniMax-M2.1-lightning": {
+          "alias": "Minimax M2.1 Lightning"
+        },
+        "minimax/MiniMax-M2": {
+          "alias": "Minimax M2"
+        },
+        "minimax/MiniMax-Text-01-Coding": {
+          "alias": "Minimax Coding"
+        },
+        "zai/glm-4.7": {
+          "alias": "GLM 4.7"
+        },
+        "zai/glm-4.6": {
+          "alias": "GLM 4.6"
+        },
+        "opencodezen/grok-code": {
+          "alias": "Grok Code"
+        },
+        "opencodezen/glm-4.7-free": {
+          "alias": "GLM 4.7 Free"
+        },
+        "opencodezen/minimax-m2.1-free": {
+          "alias": "Minimax M2.1 Free"
+        },
+        "opencodezen/alpha-glm-4.7": {
+          "alias": "Alpha GLM 4.7"
+        },
+        "opencodezen/alpha-gd4": {
+          "alias": "Alpha GD4"
+        },
+        "opencodezen/big-pickle": {
+          "alias": "Big Pickle"
+        },
+        "openrouter/qwen/qwen3-coder:free": {
+          "alias": "Qwen3 Coder"
+        },
+        "openrouter/mistralai/devstral-2512:free": {
+          "alias": "Devstral 2512"
+        },
+        "openrouter/deepseek/deepseek-r1-0528:free": {
+          "alias": "DeepSeek R1"
+        },
+        "openrouter/meta-llama/llama-3.3-70b-instruct:free": {
+          "alias": "Llama 3.3 70B"
+        },
+        "openrouter/google/gemini-2.0-flash-exp:free": {
+          "alias": "Gemini 2.0 Flash"
+        },
+        "openrouter/qwen/qwen-2.5-vl-7b-instruct:free": {
+          "alias": "Qwen 2.5 VL 7B"
+        }
+      },
+      "memorySearch": {
+        "enabled": true,
+        "provider": "local",
+        "sync": {
+          "onSessionStart": true,
+          "watch": true
+        }
+      },
+      "compaction": {
+        "mode": "safeguard",
+        "reserveTokensFloor": 24000,
+        "memoryFlush": {
+          "enabled": true,
+          "softThresholdTokens": 6000,
+          "prompt": "Write any lasting notes to memory/YYYY-MM-DD.md; reply with NO_REPLY if nothing to store.",
+          "systemPrompt": "Session nearing compaction. Store durable memories now."
+        }
+      },
+      "thinkingDefault": "high",
+      "verboseDefault": "on",
+      "timeoutSeconds": 3600,
+      "heartbeat": {
+        "includeReasoning": true
+      },
+      "maxConcurrent": 3,
+      "subagents": {
+        "maxConcurrent": 2,
+        "archiveAfterMinutes": 120,
+        "model": "minimax/MiniMax-M2.1-lightning"
+      }
+    },
+    "list": [
+      {
+        "id": "default",
+        "name": "Main Agent",
+        "model": {
+          "primary": "minimax/MiniMax-M2.1"
+        },
+        "memorySearch": {
+          "enabled": true
+        },
+        "subagents": {
+          "allowAgents": [
+            "coder",
+            "researcher",
+            "vision",
+            "fast",
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "coder",
+        "name": "Code Specialist",
+        "model": {
+          "primary": "zai/glm-4.7"
+        },
+        "memorySearch": {
+          "enabled": true
+        },
+        "subagents": {
+          "allowAgents": [
+            "researcher",
+            "vision",
+            "fast",
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "researcher",
+        "name": "Research Specialist",
+        "model": {
+          "primary": "zai/glm-4.7"
+        },
+        "subagents": {
+          "allowAgents": [
+            "vision",
+            "fast"
+          ]
+        }
+      },
+      {
+        "id": "vision",
+        "name": "Vision Specialist",
+        "model": {
+          "primary": "openrouter/google/gemini-2.0-flash-exp:free"
+        },
+        "subagents": {
+          "allowAgents": [
+            "coder",
+            "fast"
+          ]
+        }
+      },
+      {
+        "id": "fast",
+        "name": "Fast Tasks",
+        "model": {
+          "primary": "minimax/MiniMax-M2.1-lightning"
+        },
+        "subagents": {}
+      }
+    ]
+  },
+  "tools": {
+    "agentToAgent": {
+      "enabled": true
+    },
+    "bash": {
+      "timeoutSec": 3600
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto"
+  },
+  "channels": {
+    "telegram": {
+      "dmPolicy": "pairing",
+      "botToken": "8221252276:AAHnT1MCCMxDcTMl3D3EiCrHEXi04cP6bfo",
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "bind": "lan",
+    "auth": {
+      "mode": "token",
+      "token": "8d655fd558f04f38fd4aa733194924917ed653d5ffec2157"
+    }
+  }
+}

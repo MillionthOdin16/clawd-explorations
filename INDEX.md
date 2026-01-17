@@ -43,6 +43,9 @@
 
 | File | Purpose |
 |------|---------|
+| **UPDATE-PROCEDURE.md** | Complete update procedures (v5.0) |
+| **git-safe-commit.sh** | Safe commit with secret scanning |
+| **update-clawdbot.sh** | Robust update script (v5.0, auto-stash handling) |
 | **memory/FILE-MANAGEMENT.md** | Bloat prevention, size limits, anti-bloat rules |
 | **memory/TRIM-LOG.md** | Log of all file trims |
 | **specs/4CHAN-EXPLORATION.md** | Multi-source strategy for fringe community exploration |

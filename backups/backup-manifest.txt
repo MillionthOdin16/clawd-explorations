@@ -1,0 +1,11 @@
+Clawdbot Backup Manifest
+========================
+Timestamp: 20260117-170927
+Working Directory: /home/opc/clawd
+
+Backed Up:
+  - Core files: /home/opc/clawd/backups/core-files/20260117-170927/
+  - Git state: /home/opc/clawd/backups/git-state/20260117-170927/
+  - Configs: /home/opc/clawd/backups/configs/20260117-170927/
+
+To restore: See RESTORE-PROCEDURE.md

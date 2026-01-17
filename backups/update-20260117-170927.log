@@ -1,0 +1,22 @@
+Clawdbot Update Log - 20260117-170927
+========================================
+[2026-01-17 17:09:27] [INFO] [0;34mCopying core files...[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: AGENTS.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: SOUL.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: TOOLS.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: IDENTITY.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: USER.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: HEARTBEAT.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: SKILLS.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: SUBAGENTS.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: INDEX.md[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: memory/ directory[0m
+[2026-01-17 17:09:27] [INFO] [0;34m  ✓ Backed up: skills/ directory[0m
+[2026-01-17 17:09:27] [SUCCESS] [0;32mCore files backed up to: /home/opc/clawd/backups/core-files/20260117-170927[0m
+[2026-01-17 17:09:34] [INFO] [0;34mGit state backed up to: /home/opc/clawd/backups/git-state/20260117-170927[0m
+[2026-01-17 17:09:34] [INFO] [0;34mCurrent commit: 5570403[0m
+[2026-01-17 17:09:34] [INFO] [0;34m  ✓ Backed up: .bashrc[0m
+[2026-01-17 17:09:34] [SUCCESS] [0;32mConfigs backed up to: /home/opc/clawd/backups/configs/20260117-170927[0m
+[2026-01-17 17:09:34] [SUCCESS] [0;32mFull backup created successfully![0m
+[2026-01-17 17:09:34] [INFO] [0;34mBackup location: /home/opc/clawd/backups[0m
+[2026-01-17 17:09:34] [INFO] [0;34mLog file: /home/opc/clawd/backups/update-20260117-170927.log[0m
